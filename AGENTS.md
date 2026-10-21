@@ -87,7 +87,8 @@ supabase/
 ## Git workflow
 
 - Funkcjonalności: `feat/nazwa-funkcji`; poprawki: `fix/nazwa-poprawki`.
-- Nowy branch twórz z uzgodnionej, aktualnej bazy. Kontynuuj istniejący, jeśli dotyczy bieżącego zadania.
+- Każda nowa, odrębna funkcjonalność dostaje własny branch, także w ramach tego samego etapu. Drobne poprawki bieżącej funkcjonalności pozostają na jej gałęzi.
+- Przed kodowaniem nowej funkcjonalności podaj użytkownikowi komendy utworzenia i publikacji brancha, a następnie czekaj na potwierdzenie. Nowy branch opieraj na uzgodnionej, aktualnej bazie; jawnie opisz zależność od innej niescalonej gałęzi.
 - Pierwszy push: `git push -u origin nazwa-brancha`. Sprawdź `git branch -vv`, aby branch funkcjonalności nie śledził przypadkowo `origin/main`.
 - W obecnym trybie agent nie wykonuje `git add`, `git commit`, `git push` ani zmiany brancha. Operacje Git wykonuje użytkownik do czasu zmiany tej instrukcji.
 - Stosuj Conventional Commits, np. `feat(layout): add application sidebar`, `fix(auth): handle expired sessions`, `docs: add project architecture and roadmap`.

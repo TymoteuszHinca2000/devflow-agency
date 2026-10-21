@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAP 1 zakończony, ETAP 2 w realizacji.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Na gałęzi `feat/app-shell` powstaje design system i układ aplikacji; gotowe są wspólne tokeny, zapamiętywany wybór motywu, podstawowe komponenty shadcn/ui i routing. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: ETAP 1 zakończony, ETAP 2 w realizacji.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Design system, routing i układ aplikacji rozwinięto na `feat/app-shell`. Bieżąca gałąź `feat/ui-states` dodaje wspólne stany ładowania i braku danych. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -21,6 +21,8 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Lokalne komponenty shadcn/ui: `Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet` i `Table`, dostosowane do palety DevFlow.
 - Dialogi i panele z tytułem, opisem, zamykaniem przez Escape i tło, blokadą przewijania oraz zarządzaniem fokusem.
 - Wspólna tabela z podpisem, nagłówkami kolumn i wierszy, stopką oraz obszarem przewijania dostępnym klawiaturą. Komponent jest przygotowany do użycia w kolejnych modułach.
+- `Skeleton`, `LoadingState` w układzie kart lub listy oraz `EmptyState` z opisem i akcjami. Ozdobne szkielety są ukryte przed czytnikami ekranu, a animacja respektuje ograniczenie ruchu.
+- Wspólny stan informacyjny w planowanych modułach; komponent ładowania jest przygotowany do przyszłych widoków pobierających dane.
 - React Router: publiczny ekran `/`, lista obszarów `/app` i osobne adresy dziesięciu planowanych modułów.
 - Link „Zobacz moduły aplikacji” na stronie głównej oraz strona 404 z działającymi linkami powrotu.
 - Zmiana tytułu dokumentu i fokusu po przejściu między stronami, historia przeglądarki i powrót do sekcji planu rozwoju.
@@ -38,7 +40,7 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 2.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Następne małe zadanie ETAPU 2 to wspólne stany ładowania i braku danych. Toasty i obsługa błędów pozostają kolejnymi zadaniami. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych.
+Następne małe zadanie ETAPU 2 to wspólne toasty, rozpoczęte na osobnej gałęzi po potwierdzeniu bieżącego commita. Obsługa błędów pozostaje kolejnym zadaniem. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych. [Stany interfejsu i przykłady użycia](docs/ui-states.md).
 
 ## Podgląd aktualnej sekcji powitalnej
 
@@ -85,7 +87,7 @@ Dla nowej kopii repozytorium:
 ```powershell
 git clone https://github.com/TymoteuszHinca2000/devflow-agency.git
 cd devflow-agency
-git switch feat/app-shell
+git switch feat/ui-states
 npm ci
 npm run dev
 ```
@@ -157,8 +159,8 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 **Weryfikacja ekranu powitalnego, katalogu i roadmapy na Node 24.19.0:**
 
 - Lint, formatowanie, TypeScript i build: poprawne.
-- Vitest / Testing Library: 17 zaliczonych testów.
-- Playwright / Chromium: 74 zaliczone scenariusze na desktopie i telefonie; proces zakończył się kodem `0`.
+- Vitest / Testing Library: 19 zaliczonych testów.
+- Playwright / Chromium: 76 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
 - Sprawdzono filtrowanie, licznik wyników, nawigację do sekcji, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
 - Roadmapa: domyślnie otwarty bieżący obszar, niezależne rozwijanie pozostałych, obsługa Enter i Spacji oraz zachowanie fokusu.
 - Sprawdzono ręczne nadpisanie motywu systemowego, zapis i odświeżanie, reakcję na zmiany systemu, klawiaturę, synchronizację kart, nieprawidłowy zapis i blokadę pamięci przeglądarki.
@@ -241,7 +243,9 @@ To zakres docelowy, a nie obecnie dostępne funkcje.
 
 ## Git workflow
 
-Branch roboczy ETAPU 2: `feat/app-shell`, utworzony z `main` po scaleniu ETAPU 1 przez PR #1 (`56029a8`). Agent przygotowuje zmiany, a użytkownik wykonuje operacje Git po otrzymaniu instrukcji. Agent wstrzymuje edycję do potwierdzenia wykonania poleceń.
+Każda nowa funkcjonalność ma osobną gałąź, także w ramach tego samego etapu. Agent podaje polecenia jej utworzenia i publikacji oraz czeka na potwierdzenie przed kodowaniem. Użytkownik wykonuje także staging, commity i push. Po każdym logicznym zadaniu agent zatrzymuje edycję do potwierdzenia wykonania poleceń.
+
+Bieżący branch: `feat/ui-states`, utworzony z `feat/app-shell` przy commicie `4e080ce`. Zawiera tę zależność, ponieważ układ aplikacji nie został jeszcze scalony do `main`. Wcześniejsza gałąź ETAPU 2, `feat/app-shell`, powstała z `main` po scaleniu ETAPU 1 przez PR #1 (`56029a8`).
 
 Przed pracą sprawdzaj:
 

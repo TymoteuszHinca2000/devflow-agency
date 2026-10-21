@@ -36,10 +36,12 @@ Etap zakończono raportem i decyzją użytkownika o dalszej pracy. Zmiany scalon
 - [x] Sidebar, responsywny topbar i nawigacja mobilna.
 - [x] React Router, trasy modułów i strona nieznalezionego adresu.
 - [x] Motyw jasny, ciemny i systemowy z zapamiętaniem preferencji.
-- [ ] Skeletony, empty states, toasty i obsługa błędów.
+- [x] Skeletony i wspólne stany ładowania oraz braku danych.
+- [ ] Toasty.
+- [ ] Obsługa błędów.
 - [ ] Weryfikacja klawiatury, kontrastu, dialogów i urządzeń mobilnych.
 
-Gałąź: `feat/app-shell`. Przygotowano wspólne tokeny, wybór motywu i komponenty shadcn/ui (`Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet`, `Table`). Akcje strony i katalog korzystają ze wspólnych komponentów, a nawigacja mobilna z modalnego panelu. React Router obsługuje ekran publiczny, `/app`, dziesięć adresów planowanych modułów i stronę 404. Układ aplikacji ma sidebar, topbar ze ścieżką strony i motywem oraz lewe menu mobilne. Bieżące kontrole: lint, formatowanie, typy, build, 17 testów React i 74 scenariusze E2E, w tym routing, aktywne linki, fokus, przewijanie, zmiana rozmiaru oraz audyty axe z otwartym i zamkniętym menu w obu motywach. Dialog oraz cztery kierunki panelu sprawdzono również w odizolowanym podglądzie w 20 kombinacjach, a tabelę w 6 wariantach szerokości i motywu. Stany interfejsu i końcowa weryfikacja pozostają do wykonania.
+Bieżąca gałąź: `feat/ui-states`, utworzona z `feat/app-shell` przy `4e080ce`. Przygotowano wspólne tokeny, wybór motywu i komponenty shadcn/ui (`Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet`, `Table`). Akcje strony i katalog korzystają ze wspólnych komponentów, a nawigacja mobilna z modalnego panelu. React Router obsługuje ekran publiczny, `/app`, dziesięć adresów planowanych modułów i stronę 404. Układ aplikacji ma sidebar, topbar ze ścieżką strony i motywem oraz lewe menu mobilne. Bieżące kontrole: lint, formatowanie, typy, build, 19 testów React i 76 scenariuszy E2E, w tym routing, aktywne linki, fokus, przewijanie, zmiana rozmiaru oraz audyty axe z otwartym i zamkniętym menu w obu motywach. Dialog oraz cztery kierunki panelu sprawdzono również w odizolowanym podglądzie w 20 kombinacjach, a tabelę w 6 wariantach szerokości i motywu. Gotowe są również `Skeleton`, `LoadingState` i `EmptyState`; wspólny stan informacyjny jest używany w planowanych modułach. Toasty, obsługa błędów i końcowa weryfikacja pozostają do wykonania.
 
 ## ETAP 3 — Supabase i relacyjny model danych · TODO
 
@@ -172,7 +174,7 @@ Gałąź: `feat/app-shell`. Przygotowano wspólne tokeny, wybór motywu i kompon
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza i zapisuje układ: `feat(layout): add responsive application sidebar and topbar`.
-2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje wspólne stany ładowania i braku danych.
-3. Toasty, obsługa błędów i końcowa weryfikacja powstaną w kolejnych małych zadaniach ETAPU 2.
+1. Użytkownik sprawdza i zapisuje stany interfejsu: `feat(ui): add loading and empty states`.
+2. Agent czeka na potwierdzenie commita i push, a następnie podaje komendy nowej gałęzi dla toastów. Kodowanie zaczyna dopiero po potwierdzeniu gałęzi.
+3. Obsługa błędów i końcowa weryfikacja powstaną w kolejnych małych zadaniach ETAPU 2.
 4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia. Kolejny etap wymaga osobnej decyzji użytkownika.

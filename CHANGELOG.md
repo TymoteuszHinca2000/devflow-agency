@@ -47,7 +47,11 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 - Wysuwane z lewej menu aplikacji do szerokości 1000 px, z fokusem na bieżącym module, obsługą klawiatury i zamykaniem po nawigacji.
 - Obsługę zmiany szerokości na desktop, przywracanie fokusu i dostępność linków na niskich ekranach.
 - Zachowanie układu aplikacji przy nieznanych adresach wewnątrz `/app`.
-- Aktualne screenshoty oraz testy ekranu: 17 testów React i 74 scenariusze E2E.
+- `Skeleton`, `LoadingState` z wariantami kart i listy oraz wspólny `EmptyState` z nagłówkiem, opisem i akcjami.
+- Komunikat ładowania `role="status"` poza grupą `aria-busy`, ukrycie dekoracyjnych szkieletów przed czytnikami ekranu i obsługę ograniczenia ruchu.
+- Wykorzystanie wspólnego stanu w planowanych modułach, bez dodawania sztucznego oczekiwania na dane.
+- Osobną gałąź `feat/ui-states` oraz zasadę nowej gałęzi dla każdej odrębnej funkcjonalności, z potwierdzeniem użytkownika przed kodowaniem.
+- Aktualne screenshoty oraz testy ekranu: 19 testów React i 76 scenariuszy E2E.
 
 ### Naprawiono
 
@@ -58,7 +62,8 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 - ETAP 1 zakończono i scalono do `main` przez PR #1 (`56029a8`).
 - ETAP 2 rozpoczęto na `feat/app-shell`; pierwsze zadanie obejmuje wspólne tokeny i wybór motywu.
-- Przygotowano podstawowe komponenty UI, dialogi, panel nawigacji mobilnej, wspólną tabelę, routing oraz sidebar i topbar aplikacji; pozostałe stany interfejsu pozostają kolejnymi zadaniami.
+- Przygotowano podstawowe komponenty UI, dialogi, panel nawigacji mobilnej, wspólną tabelę, routing, sidebar i topbar oraz stany ładowania i braku danych. Toasty i obsługa błędów pozostają kolejnymi zadaniami.
+- `feat/ui-states` powstał z `feat/app-shell` przy `4e080ce`; zależność od niescalonego układu jest opisana w dokumentacji.
 - Logowanie, baza danych i moduły biznesowe nie są zaimplementowane.
-- Kontrole aktualnego ekranu i pełny przebieg 74 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0; axe-core sprawdza ekran powitalny, roadmapę, nawigację mobilną, listę modułów, podgląd modułu, 404 oraz otwarte menu aplikacji w obu motywach. Dialog i cztery kierunki panelu przeszły osobną kontrolę w 20 kombinacjach rozmiarów i motywów.
+- Kontrole aktualnego ekranu i pełny przebieg 76 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0; axe-core sprawdza ekran powitalny, roadmapę, nawigację mobilną, listę modułów, podgląd modułu, 404 oraz otwarte menu aplikacji w obu motywach. Dialog i cztery kierunki panelu przeszły osobną kontrolę w 20 kombinacjach rozmiarów i motywów.
 - Operacje Git wykonuje użytkownik po sprawdzeniu zmian i otrzymaniu poleceń od agenta.
