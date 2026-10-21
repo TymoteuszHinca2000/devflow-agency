@@ -32,14 +32,14 @@ Etap zakończono raportem i decyzją użytkownika o dalszej pracy. Zmiany scalon
 - [x] Tokeny kolorów, typografii, odstępów i stanów interakcji.
 - [x] Konfiguracja shadcn/ui oraz wspólne przyciski, pola, etykiety i karty.
 - [x] Dostępne dialogi i wysuwany panel mobilny.
-- [ ] Wspólna tabela.
+- [x] Wspólna tabela.
 - [ ] Sidebar, responsywny topbar i nawigacja mobilna.
 - [ ] React Router, trasy modułów i strona nieznalezionego adresu.
 - [x] Motyw jasny, ciemny i systemowy z zapamiętaniem preferencji.
 - [ ] Skeletony, empty states, toasty i obsługa błędów.
 - [ ] Weryfikacja klawiatury, kontrastu, dialogów i urządzeń mobilnych.
 
-Gałąź: `feat/app-shell`. Przygotowano wspólne tokeny, wybór motywu i komponenty shadcn/ui (`Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet`). Akcje strony i katalog korzystają ze wspólnych komponentów, a nawigacja mobilna z modalnego panelu. Bieżące kontrole: lint, formatowanie, typy, build, 12 testów React i 50 scenariuszy E2E. Testy obejmują fokus, zamykanie, blokadę przewijania i przełączanie na nawigację desktopową. Dialog oraz cztery kierunki panelu sprawdzono w odizolowanym podglądzie w 20 kombinacjach, także narzędziem axe. Sidebar, topbar i routing aplikacji pozostają do wykonania. Pozostałe elementy etapu otrzymają osobne zadania i weryfikację.
+Gałąź: `feat/app-shell`. Przygotowano wspólne tokeny, wybór motywu i komponenty shadcn/ui (`Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet`, `Table`). Akcje strony i katalog korzystają ze wspólnych komponentów, a nawigacja mobilna z modalnego panelu. Bieżące kontrole: lint, formatowanie, typy, build, 12 testów React i 50 scenariuszy E2E. Testy obejmują fokus, zamykanie, blokadę przewijania i przełączanie na nawigację desktopową. Dialog oraz cztery kierunki panelu sprawdzono w odizolowanym podglądzie w 20 kombinacjach, także narzędziem axe. Tabela przeszła osobną kontrolę klawiatury, przewijania, pustego widoku i axe w 6 wariantach szerokości i motywu. Sidebar, topbar i routing aplikacji pozostają do wykonania. Pozostałe elementy etapu otrzymają osobne zadania i weryfikację.
 
 ## ETAP 3 — Supabase i relacyjny model danych · TODO
 
@@ -172,7 +172,7 @@ Gałąź: `feat/app-shell`. Przygotowano wspólne tokeny, wybór motywu i kompon
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza i zapisuje dialogi oraz panel: `feat(ui): add accessible dialogs and mobile navigation sheet`.
-2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje wspólną tabelę.
-3. Routing i responsywny układ panelu powstaną w kolejnych małych zadaniach ETAPU 2.
+1. Użytkownik sprawdza i zapisuje tabelę: `feat(ui): add accessible shared table primitives`.
+2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje React Router i podstawowe trasy aplikacji.
+3. Responsywny układ panelu powstanie w kolejnych małych zadaniach ETAPU 2.
 4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia. Kolejny etap wymaga osobnej decyzji użytkownika.

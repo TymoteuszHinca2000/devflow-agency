@@ -45,4 +45,4 @@ Style modalnych okien i paneli są w `src/styles/overlays.css`, w warstwie `comp
 
 ## Dalszy zakres etapu 2
 
-Gotowe są komponenty shadcn/ui: `Button`, `Card`, `Input`, `Label`, `Dialog` i `Sheet`. Przykłady oraz opis integracji są w [ui-components.md](ui-components.md). Wspólna tabela, routing i układ aplikacji powstaną w kolejnych małych zadaniach.
+Gotowe są komponenty shadcn/ui: `Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet` i `Table`. Tabela używa semantycznych klas istniejących tokenów i nie wymaga dodatkowego arkusza CSS. Przykłady oraz opis integracji są w [ui-components.md](ui-components.md). Routing i układ aplikacji powstaną w kolejnych małych zadaniach.

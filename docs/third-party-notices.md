@@ -2,7 +2,7 @@
 
 ## shadcn/ui
 
-The UI primitives in `src/components/ui/button.tsx`, `button-variants.ts`, `card.tsx`, `input.tsx`, `label.tsx`, `dialog.tsx` and `sheet.tsx` are adapted from the shadcn/ui `radix-nova` registry, retrieved on 2026-10-21.
+The UI primitives in `src/components/ui/button.tsx`, `button-variants.ts`, `card.tsx`, `input.tsx`, `label.tsx`, `dialog.tsx`, `sheet.tsx` and `table.tsx` are adapted from the shadcn/ui `radix-nova` registry, retrieved on 2026-10-21.
 
 Source: [shadcn/ui](https://github.com/shadcn-ui/ui).
 

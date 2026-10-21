@@ -1,6 +1,6 @@
 # Wspólne komponenty UI
 
-Biblioteka obejmuje `Button`, `Card`, `Input`, `Label`, `Dialog` i `Sheet`. To lokalne, typowane komponenty dostosowane z oficjalnego rejestru [shadcn/ui](https://ui.shadcn.com/docs/components/radix/button), wariant `radix-nova`. Są zapisane w repozytorium i można je rozwijać zgodnie z potrzebami aplikacji.
+Biblioteka obejmuje `Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet` i `Table`. To lokalne, typowane komponenty dostosowane z oficjalnego rejestru [shadcn/ui](https://ui.shadcn.com/docs/components/radix/button), wariant `radix-nova`. Są zapisane w repozytorium i można je rozwijać zgodnie z potrzebami aplikacji.
 
 `components.json` opisuje aliasy i integrację z Tailwind CSS 4. `src/lib/utils.ts` udostępnia `cn`, które łączy klasy i rozstrzyga konflikty klas Tailwind. Warianty przycisku są w osobnym pliku, aby plik komponentu był zgodny z regułami React Fast Refresh.
 
@@ -73,6 +73,48 @@ Każde okno powinno mieć tytuł i krótki opis. `closeLabel` zmienia dostępną
 
 Nawigacja strony powitalnej używa `Sheet` do szerokości 1000 px. Po otwarciu aktywny jest link „Start”; Tab i Shift+Tab pozostają w panelu. Escape, kliknięcie tła i przycisk zamknięcia przywracają fokus do przycisku menu. Po wyborze sekcji fokus trafia do jej treści. Poszerzenie okna do co najmniej 1001 px zamyka panel i przenosi fokus do widocznej nawigacji desktopowej.
 
+## Tabela
+
+`Table` udostępnia `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell` i `TableCaption`. Komponenty zachowują natywne elementy `table`, `thead`, `tbody`, `tfoot`, `tr`, `th`, `td` i `caption`. Bazują na [shadcn/ui Table](https://ui.shadcn.com/docs/components/radix/table). Podpis i nagłówki określają temat tabeli oraz relacje między komórkami, zgodnie z [poradnikiem W3C WAI](https://www.w3.org/WAI/tutorials/tables/).
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+
+;<Table containerProps={{ 'aria-label': 'Planowane moduły — przewijanie' }}>
+  <TableCaption>Planowane moduły — zakres docelowy</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Moduł</TableHead>
+      <TableHead>Etap</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableHead scope="row">Projekty</TableHead>
+      <TableCell>8</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+`TableHead` domyślnie ustawia `scope="col"`; dla nagłówka wiersza ustaw `scope="row"`. Przy bardziej złożonych układach można przekazać natywne `id`, `headers`, `scope`, `rowSpan` i `colSpan`. Nadpisania klas i refy trafiają do odpowiednich elementów HTML.
+
+Tabela ma obramowany kontener z przewijaniem poziomym, nazwą regionu, `tabIndex={0}` i widocznym fokusem. Tab przechodzi do kontenera, strzałki przewijają jego zawartość, a kolejny Tab pozwala przejść dalej. Kontener pozostaje punktem tabulacji także na desktopie. `containerProps` umożliwia nadanie własnej nazwy przez `aria-label` lub powiązanie opisu przez `aria-describedby`; używaj odrębnych nazw przy wielu tabelach. `className` na `Table` styluje element `table`, a `containerProps.className` jego kontener. Minimalną szerokość szerokiej tabeli ustalaj na potrzeby konkretnego zestawu kolumn.
+
+Treść komórek domyślnie się zawija. Pusty widok można przekazać jako wiersz z `TableCell colSpan={liczbaKolumn}`. Dane, sortowanie, filtry i paginację zapewni właściwy moduł; komponent nie dodaje własnej logiki danych ani dodatkowych zależności.
+
+Podgląd poniżej powstał poza aplikacją i używa istniejących opisów planowanych modułów. Przełącznik pustego widoku służy wyłącznie kontroli komponentu.
+
+[Tabela — jasny motyw](screenshots/table-light.png) · [Ciemny motyw](screenshots/table-dark.png) · [Widok mobilny](screenshots/table-mobile.png)
+
 ## Integracja z motywem
 
 `src/styles/ui.css` mapuje semantyczne klasy shadcn/ui na istniejącą paletę DevFlow, zgodnie z [modelem tokenów shadcn/ui](https://ui.shadcn.com/docs/theming). Na przykład `bg-card` używa powierzchni, `text-muted-foreground` tekstu pomocniczego, a `bg-muted` delikatnego tła. Nie zmienia to znaczenia starszej zmiennej `--muted`, która określa kolor tekstu w ekranie powitalnym.
@@ -91,6 +133,7 @@ Wariant Tailwind `dark:` rozpoznaje `data-theme="dark"`. Pola mają mocniejszy o
 - Scenariusze panelu mobilnego obejmują blokadę i przywracanie przewijania, wszystkie sposoby zamknięcia, przejście do sekcji, zmianę rozmiaru okna oraz widok 320 × 320 px. Audyt axe sprawdza stronę z panelem otwartym i zamkniętym w obu motywach.
 - W odizolowanym podglądzie czterech komponentów sprawdzono motywy, fokus, wysokość 44 px, font 16 px na telefonie, brak przepełnienia oraz automatyczny audyt axe. Podgląd nie jest formularzem biznesowym w aplikacji.
 - Osobny podgląd dialogu oraz panelu z każdej z czterech stron przeszedł kontrolę w 20 kombinacjach rozmiarów i motywów. Sprawdzono klawiaturę, granice ekranu, błędy wykonania i axe. Aktualny pełny zestaw: 12 testów React i 50 scenariuszy Playwright.
+- Tabela przeszła kontrolę przeglądarkową w 6 wariantach szerokości i motywu: 320, 390, 640, 768 i 1440 px. Sprawdzono podpis i nagłówki, Tab i Shift+Tab, widoczny fokus, przewijanie strzałką, przejście do pustego widoku i powrót oraz brak poziomego przepełnienia strony i błędów wykonania. Audyt axe nie wykrył naruszeń sprawdzanych reguł zarówno z danymi, jak i bez danych. Tabela nie jest jeszcze używana na publicznej stronie; jej podgląd jest osobną kontrolą, poza 50 scenariuszami E2E aplikacji.
 
 ```powershell
 npm test -- src/components/ui/primitives.test.tsx

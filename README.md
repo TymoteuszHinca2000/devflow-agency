@@ -18,8 +18,9 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Sekcja powitalna z ilustracją koncepcji produktu oraz linkami do kodu i planu rozwoju.
 - Wspólne logo, przyciski w formie linków, lokalne fonty i favicon.
 - Wspólne tokeny kolorów, fontów, odstępów, zaokrągleń i fokusu, dostępne również w Tailwind CSS.
-- Lokalne komponenty shadcn/ui: `Button`, `Card`, `Input`, `Label`, `Dialog` i `Sheet`, dostosowane do palety DevFlow.
+- Lokalne komponenty shadcn/ui: `Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet` i `Table`, dostosowane do palety DevFlow.
 - Dialogi i panele z tytułem, opisem, zamykaniem przez Escape i tło, blokadą przewijania oraz zarządzaniem fokusem.
+- Wspólna tabela z podpisem, nagłówkami kolumn i wierszy, stopką oraz obszarem przewijania dostępnym klawiaturą. Komponent jest przygotowany do użycia w kolejnych modułach.
 - Wspólny przycisk w akcjach strony i wspólna karta w katalogu; stany pól przygotowane do kolejnych formularzy.
 - Wybór motywu jasnego, ciemnego lub systemowego z zapamiętywaniem ustawienia i obsługą ograniczenia ruchu.
 - Reakcja na zmianę motywu systemu i synchronizacja wyboru między kartami przeglądarki.
@@ -31,7 +32,7 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 2.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Następne małe zadanie ETAPU 2 to wspólna tabela. Routing, układ panelu aplikacji i dalsze komponenty pozostają w planie tego etapu. Nie ma jeszcze wdrożonego demo.
+Następne małe zadanie ETAPU 2 to React Router i podstawowe trasy aplikacji. Układ panelu oraz dalsze komponenty pozostają w planie tego etapu. Nie ma jeszcze wdrożonego demo.
 
 ## Podgląd aktualnej sekcji powitalnej
 
@@ -159,6 +160,7 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 - W odizolowanym podglądzie komponentów UI sprawdzono oba motywy, fokus pól, opisy błędów, wysokość 44 px i brak przepełnienia; axe nie wykrył naruszeń sprawdzanych reguł WCAG A/AA.
 - Testy panelu obejmują zapętlenie fokusu, zamknięcie przez Escape, przycisk i tło, przywracanie przewijania, przejście do sekcji i zmianę szerokości okna. Sprawdzono też widok 320 × 320 px z ograniczeniem ruchu.
 - W osobnym podglądzie sprawdzono dialog i cztery kierunki panelu w 20 kombinacjach rozmiarów i motywów, z kontrolą klawiatury, granic ekranu, błędów wykonania i axe. Podgląd nie jest dodatkową stroną aplikacji.
+- W odizolowanym podglądzie tabeli sprawdzono 6 wariantów szerokości i motywu oraz widok z danymi i pusty. Przewijanie strzałkami, przechodzenie fokusu, semantyka nagłówków i podpisu, brak przepełnienia strony oraz audyty axe zakończyły się poprawnie. Szczegóły i zrzuty: [Wspólne komponenty UI](docs/ui-components.md).
 
 Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Kolejne sekcje i moduły otrzymają testy w ramach swoich zadań.
 
