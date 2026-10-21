@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router'
+import { PageErrorBoundary } from '@/app/errors/page-error-boundary'
 import { Brand } from '@/components/shared/brand'
 import { ThemeSelector } from '@/components/shared/theme-selector'
 
@@ -21,7 +22,9 @@ export function RouteLayout() {
         tabIndex={-1}
         aria-labelledby="route-title"
       >
-        <Outlet />
+        <PageErrorBoundary>
+          <Outlet />
+        </PageErrorBoundary>
       </main>
       <footer className="route-footer page-width">
         <span>DevFlow Agency · Rozwijane krok po kroku.</span>

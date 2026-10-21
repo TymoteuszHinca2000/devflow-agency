@@ -54,7 +54,9 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 - Globalny `Toaster` na Sonner 2.0.8 i wspólne API `notify` dla informacji, potwierdzeń, ostrzeżeń i błędów; opcjonalną akcję, aktualizację przez identyfikator i jawne zamknięcie.
 - Polskie etykiety, skrót `Alt+T`, powrót fokusu przez Escape, przyciski 44 px i style toastów zgodne z motywem oraz ograniczeniem ruchu.
 - Kontrolowany czas wyświetlania: 8 sekund dla informacji i potwierdzeń oraz ręczne zamykanie ostrzeżeń, błędów i komunikatów z akcją.
-- Aktualne screenshoty oraz testy ekranu: 22 testy React i 76 scenariuszy E2E; dodatkowy podgląd toastów w 5 wariantach rozmiaru i motywu z kontrolami klawiatury, czasu, akcji i axe.
+- Wspólny `ErrorState`, `ApplicationErrorBoundary` i `PageErrorBoundary` na react-error-boundary 6.1.6; bezpieczne komunikaty, ponowienie oraz nawigację po błędzie strony.
+- Ekran awarii aplikacji działający bez providerów i routera oraz odzyskiwanie tytułu i fokusu po udanym ponowieniu.
+- Aktualne screenshoty oraz testy ekranu: 27 testów React i 76 scenariuszy E2E; dodatkowe podglądy toastów w 5 wariantach oraz błędów w 10 widokach, z kontrolą klawiatury, akcji, ponowienia, nawigacji i axe.
 
 ### Naprawiono
 
@@ -65,9 +67,10 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 - ETAP 1 zakończono i scalono do `main` przez PR #1 (`56029a8`).
 - ETAP 2 rozpoczęto na `feat/app-shell`; pierwsze zadanie obejmuje wspólne tokeny i wybór motywu.
-- Przygotowano podstawowe komponenty UI, dialogi, panel nawigacji mobilnej, wspólną tabelę, routing, sidebar i topbar, stany ładowania i braku danych oraz toasty. Obsługa błędów pozostaje kolejnym zadaniem.
+- Przygotowano podstawowe komponenty UI, dialogi, panel nawigacji mobilnej, wspólną tabelę, routing, sidebar i topbar, stany ładowania i braku danych, toasty oraz obsługę błędów renderowania. Do zamknięcia ETAPU 2 pozostaje końcowa weryfikacja i raport.
 - `feat/ui-states` powstał z `feat/app-shell` przy `4e080ce`; zależność od niescalonego układu jest opisana w dokumentacji.
 - `feat/toasts` powstał z `feat/ui-states` przy `455e832` i obejmuje obie zależności. Nie dodano demonstracyjnych operacji biznesowych.
+- `feat/error-handling` powstał z `feat/toasts` przy `12174ff` i obejmuje wcześniejsze zmiany ETAPU 2. Kontrolowane awarie były wywoływane wyłącznie w testach i odizolowanym podglądzie.
 - Logowanie, baza danych i moduły biznesowe nie są zaimplementowane.
 - Kontrole aktualnego ekranu i pełny przebieg 76 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0; axe-core sprawdza ekran powitalny, roadmapę, nawigację mobilną, listę modułów, podgląd modułu, 404 oraz otwarte menu aplikacji w obu motywach. Dialog i cztery kierunki panelu przeszły osobną kontrolę w 20 kombinacjach rozmiarów i motywów.
 - Operacje Git wykonuje użytkownik po sprawdzeniu zmian i otrzymaniu poleceń od agenta.

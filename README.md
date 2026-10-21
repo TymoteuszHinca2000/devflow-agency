@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAP 1 zakończony, ETAP 2 w realizacji.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Design system, routing i układ aplikacji rozwinięto na `feat/app-shell`, a stany interfejsu na `feat/ui-states`. Bieżąca gałąź `feat/toasts` dodaje wspólne krótkie powiadomienia. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: ETAP 1 zakończony, ETAP 2 w realizacji.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Design system, routing i układ aplikacji rozwinięto na `feat/app-shell`, stany interfejsu na `feat/ui-states`, a toasty na `feat/toasts`. Bieżąca gałąź `feat/error-handling` dodaje obsługę błędów renderowania i wspólny stan błędu. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -24,6 +24,7 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - `Skeleton`, `LoadingState` w układzie kart lub listy oraz `EmptyState` z opisem i akcjami. Ozdobne szkielety są ukryte przed czytnikami ekranu, a animacja respektuje ograniczenie ruchu.
 - Wspólny stan informacyjny w planowanych modułach; komponent ładowania jest przygotowany do przyszłych widoków pobierających dane.
 - Globalny `Toaster` i typowane API `notify`: informacje, potwierdzenia, ostrzeżenia i błędy, opcjonalna akcja, aktualizacja komunikatu oraz obsługa klawiatury. Przygotowane do rzeczywistych operacji w kolejnych modułach.
+- Wspólny `ErrorState` oraz granice błędów renderowania całej aplikacji i pojedynczej strony. Ponowienie, zachowanie nawigacji przy awarii strony oraz odzyskanie tytułu i fokusu.
 - React Router: publiczny ekran `/`, lista obszarów `/app` i osobne adresy dziesięciu planowanych modułów.
 - Link „Zobacz moduły aplikacji” na stronie głównej oraz strona 404 z działającymi linkami powrotu.
 - Zmiana tytułu dokumentu i fokusu po przejściu między stronami, historia przeglądarki i powrót do sekcji planu rozwoju.
@@ -41,7 +42,7 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 2.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Następne małe zadanie ETAPU 2 to obsługa błędów, rozpoczęta na osobnej gałęzi po potwierdzeniu bieżącego commita. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych. [Stany interfejsu i przykłady użycia](docs/ui-states.md) · [Toasty i zasady wyświetlania](docs/toasts.md).
+Do zamknięcia ETAPU 2 pozostaje końcowa weryfikacja i raport, po potwierdzeniu bieżącego commita. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych. [Stany interfejsu](docs/ui-states.md) · [Toasty](docs/toasts.md) · [Obsługa błędów](docs/error-handling.md).
 
 ## Podgląd aktualnej sekcji powitalnej
 
@@ -88,7 +89,7 @@ Dla nowej kopii repozytorium:
 ```powershell
 git clone https://github.com/TymoteuszHinca2000/devflow-agency.git
 cd devflow-agency
-git switch feat/toasts
+git switch feat/error-handling
 npm ci
 npm run dev
 ```
@@ -160,7 +161,7 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 **Weryfikacja ekranu powitalnego, katalogu i roadmapy na Node 24.19.0:**
 
 - Lint, formatowanie, TypeScript i build: poprawne.
-- Vitest / Testing Library: 22 zaliczone testy.
+- Vitest / Testing Library: 27 zaliczonych testów.
 - Playwright / Chromium: 76 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
 - Sprawdzono filtrowanie, licznik wyników, nawigację do sekcji, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
 - Roadmapa: domyślnie otwarty bieżący obszar, niezależne rozwijanie pozostałych, obsługa Enter i Spacji oraz zachowanie fokusu.
@@ -248,7 +249,7 @@ To zakres docelowy, a nie obecnie dostępne funkcje.
 
 Każda nowa funkcjonalność ma osobną gałąź, także w ramach tego samego etapu. Agent podaje polecenia jej utworzenia i publikacji oraz czeka na potwierdzenie przed kodowaniem. Użytkownik wykonuje także staging, commity i push. Po każdym logicznym zadaniu agent zatrzymuje edycję do potwierdzenia wykonania poleceń.
 
-Bieżący branch: `feat/toasts`, utworzony z `feat/ui-states` przy commicie `455e832`. Zawiera stany interfejsu i wcześniejszy układ aplikacji, które nie zostały jeszcze scalone do `main`. Gałąź `feat/ui-states` powstała z `feat/app-shell` przy `4e080ce`. Gałąź ETAPU 2, `feat/app-shell`, powstała z `main` po scaleniu ETAPU 1 przez PR #1 (`56029a8`).
+Bieżący branch: `feat/error-handling`, utworzony z `feat/toasts` przy commicie `12174ff`. Zawiera toasty, stany interfejsu i wcześniejszy układ aplikacji, które nie zostały jeszcze scalone do `main`. Gałąź `feat/toasts` powstała z `feat/ui-states` przy `455e832`, a `feat/ui-states` z `feat/app-shell` przy `4e080ce`. Gałąź ETAPU 2, `feat/app-shell`, powstała z `main` po scaleniu ETAPU 1 przez PR #1 (`56029a8`).
 
 Przed pracą sprawdzaj:
 

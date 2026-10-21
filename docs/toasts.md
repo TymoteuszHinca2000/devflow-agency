@@ -58,7 +58,7 @@ npm run check
 npm run test:e2e
 ```
 
-Testy React sprawdzają aktualizację bez duplikatu, usuwanie poprzedniej akcji i opisu, wykonanie akcji, brak automatycznej zmiany fokusu, skrót, zamknięcie klawiaturą, powrót fokusu i zmianę motywu. Aktualny pełny zestaw aplikacji obejmuje 22 testy React i 76 scenariuszy E2E.
+Testy React sprawdzają aktualizację bez duplikatu, usuwanie poprzedniej akcji i opisu, wykonanie akcji, brak automatycznej zmiany fokusu, skrót, zamknięcie klawiaturą, powrót fokusu i zmianę motywu. Aktualny pełny zestaw aplikacji obejmuje 27 testów React i 76 scenariuszy E2E.
 
 Osobny podgląd prawdziwych komponentów sprawdzono w pięciu wariantach: jasny i ciemny desktop 1440 px, tablet 768 px, telefon 390 px oraz mały ekran 320 px. Kontrole objęły czas wyświetlania i jego wstrzymanie, trwałe komunikaty, aktualizację, akcję, klawiaturę, motyw ręczny i systemowy, granice ekranu, 44-pikselowe przyciski oraz axe w obu motywach. Nie wykryto naruszeń sprawdzanych reguł WCAG A/AA ani błędów wykonania. Podgląd nie jest trasą aplikacji. Kontrole automatyczne nie zastępują pełnego audytu z czytnikiem ekranu.
 

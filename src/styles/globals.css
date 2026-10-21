@@ -6,6 +6,7 @@
 @import './app-shell.css';
 @import './ui-states.css';
 @import './toasts.css';
+@import './errors.css';
 
 @layer base {
   :root {

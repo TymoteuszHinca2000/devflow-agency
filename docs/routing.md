@@ -65,7 +65,7 @@ npm run build
 npm run test:e2e -- e2e/routing.spec.ts
 ```
 
-Pełna kontrola zakończyła się poprawnie na Node 24.19.0: lint, formatowanie, TypeScript, build, 22 testy React i 76 scenariuszy E2E. Testy routingu obejmują dziesięć adresów modułów, odświeżanie, historię, nawigację bez przeładowania, motyw, tytuły, fokus, kotwice, nieznane adresy i nieprawidłowy fragment URL. Audyty axe na liście obszarów, podglądzie modułu, stronie 404 i otwartym menu aplikacji przeszły w obu motywach na desktopie i telefonie. Sprawdzono też skip link, aktywne linki, krótkie ekrany i szerokość 320 px.
+Pełna kontrola zakończyła się poprawnie na Node 24.19.0: lint, formatowanie, TypeScript, build, 27 testów React i 76 scenariuszy E2E. Testy routingu obejmują dziesięć adresów modułów, odświeżanie, historię, nawigację bez przeładowania, motyw, tytuły, fokus, kotwice, nieznane adresy i nieprawidłowy fragment URL. Audyty axe na liście obszarów, podglądzie modułu, stronie 404 i otwartym menu aplikacji przeszły w obu motywach na desktopie i telefonie. Sprawdzono też skip link, aktywne linki, krótkie ekrany i szerokość 320 px.
 
 Bezpośrednie adresy i odświeżanie sprawdzono na lokalnym podglądzie produkcyjnego buildu Vite. W ETAPIE 15 zweryfikujemy konfigurację hostingu Vercel i odpowiedzi HTTP. Obecne 404 jest widokiem routera w aplikacji SPA, nie serwerowym statusem HTTP 404. Automatyczne testy dostępności nie zastępują pełnego audytu.
 

@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { Link, Outlet } from 'react-router'
+import { PageErrorBoundary } from '@/app/errors/page-error-boundary'
 import { AppSidebar } from './app-sidebar'
 import { AppTopbar } from './app-topbar'
 
@@ -15,7 +16,9 @@ export function AppLayout() {
       <div className="app-shell-body">
         <AppTopbar sidebarRef={sidebarRef} />
         <main id="main-content" className="app-main" tabIndex={-1} aria-labelledby="route-title">
-          <Outlet />
+          <PageErrorBoundary>
+            <Outlet />
+          </PageErrorBoundary>
         </main>
         <footer className="app-footer">
           <span>DevFlow Agency · Rozwijane krok po kroku.</span>

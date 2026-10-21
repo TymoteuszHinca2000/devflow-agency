@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react'
 import { useLocation } from 'react-router'
+import { updatePageTitle } from './page-title'
 
 export function RouteEffects() {
   const { pathname, hash } = useLocation()
@@ -7,11 +8,7 @@ export function RouteEffects() {
 
   useLayoutEffect(() => {
     const main = document.querySelector<HTMLElement>('main')
-    const heading = main?.querySelector('h1')?.textContent?.trim()
-    document.title =
-      pathname === '/'
-        ? 'DevFlow Agency — Twoja agencja. Jeden flow.'
-        : `${heading ?? 'DevFlow Agency'} — DevFlow Agency`
+    if (!document.querySelector('[data-page-error]')) updatePageTitle(pathname)
 
     const firstVisit = previousPath.current === null
     const pathChanged = previousPath.current !== pathname
