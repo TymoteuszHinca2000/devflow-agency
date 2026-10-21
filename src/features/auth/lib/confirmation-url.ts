@@ -11,7 +11,11 @@ export type ConfirmationCallback =
   | { status: 'invalid'; returnTo: string }
 
 /** Accept PKCE only. Never ingest access tokens, recovery tokens or server descriptions. */
-export function readConfirmationCallback(search: string, hash: string): ConfirmationCallback {
+export function readConfirmationCallback(
+  search: string,
+  hash: string,
+  purpose: 'signup' | 'recovery' = 'signup',
+): ConfirmationCallback {
   const query = new URLSearchParams(search)
   const fragment = new URLSearchParams(hash.slice(1))
   const returnTo = getSafeReturnTo(query.get('returnTo'))
@@ -26,7 +30,7 @@ export function readConfirmationCallback(search: string, hash: string): Confirma
       'token_hash',
     ].some((key) => query.has(key) || fragment.has(key)) ||
     fragment.has('code') ||
-    (query.has('type') && query.get('type') !== 'signup')
+    (query.has('type') && (query.getAll('type').length !== 1 || query.get('type') !== purpose))
   )
     return invalid
   const code = query.get('code')

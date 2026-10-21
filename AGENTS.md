@@ -109,3 +109,4 @@ supabase/
 - Dla zmian wyłącznie dokumentacyjnych sprawdź formatowanie, opisane komendy i diff. Nie deklaruj testów, których nie uruchomiono.
 - Sprawdź kod zakończenia testów. Częściowy log lub zawieszony runner nie oznacza zaliczonego przebiegu.
 - Dokumentuj ograniczenia środowiska i brakujące kontrole. Nie commituj niewyjaśnionych błędów.
+- Przed ręczną próbą Auth przez użytkownika zakończ edycję i formatowanie kodu aplikacji. Podczas tej próby nie zmieniaj plików źródłowych: przeładowanie Vite może przerwać callback. Odczytowe kontrole i dokumentację można kończyć niezależnie.

@@ -15,7 +15,12 @@ export function AppTopbar({
   const { pathname } = useLocation()
   const module = appModules.find(({ path }) => matchPath(`/app/${path}`, pathname))
   const title =
-    module?.title ?? (matchPath('/app', pathname) ? 'Wszystkie moduły' : 'Nieznany adres')
+    module?.title ??
+    (matchPath('/app', pathname)
+      ? 'Wszystkie moduły'
+      : matchPath('/app/account', pathname)
+        ? 'Moje konto'
+        : 'Nieznany adres')
 
   return (
     <header className="app-topbar">

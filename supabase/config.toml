@@ -23,7 +23,7 @@ port = 54323
 [auth]
 enabled = true
 site_url = "http://127.0.0.1:5173"
-additional_redirect_urls = ["http://127.0.0.1:5173/auth/confirm**", "http://localhost:5173/auth/confirm**"]
+additional_redirect_urls = ["http://127.0.0.1:5173/auth/confirm**", "http://localhost:5173/auth/confirm**", "http://127.0.0.1:5173/auth/recovery**", "http://localhost:5173/auth/recovery**"]
 jwt_expiry = 3600
 enable_signup = true
 

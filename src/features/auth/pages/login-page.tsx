@@ -40,6 +40,9 @@ export function LoginPage() {
           <LoginForm />
         </Suspense>
         <p className="auth-secondary-link">
+          <Link to="/forgot-password">Nie pamiętasz hasła?</Link>
+        </p>
+        <p className="auth-secondary-link">
           Nie masz konta?{' '}
           <Link to={`/register?${new URLSearchParams({ returnTo })}`}>Utwórz konto</Link>
         </p>

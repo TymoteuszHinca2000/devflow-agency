@@ -6,6 +6,10 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 ### Dodano
 
+- Trzecią część ETAPU 4 na `feat/account-management`: reset e-mailem i callback recovery PKCE, zmianę hasła z weryfikacją obecnego hasła, profil i prywatny awatar.
+- Dekodowanie i ponowne kodowanie awatarów, kontrolę typu i rozmiaru, wygenerowane ścieżki bez nadpisywania, ochronę przed konfliktem zapisu i obsługę częściowego sukcesu sprzątania plików.
+- 27 testów aplikacji i 24 przebiegi E2E zarządzania kontem; pełny zestaw obejmuje 143 testy aplikacji, 100 testów SQL oraz 144 scenariusze E2E. Raport oddziela kontrole izolowane od rzeczywistych prób użytkownika.
+- Dokumentację odzyskiwania i profilu, raport ETAPU 4, screenshoty i lokalne adresy powrotu `/auth/recovery**`.
 - Drugą część ETAPU 4: rejestrację z imieniem/nazwą i powtórzeniem hasła, neutralny ekran sprawdzania poczty oraz ponowną wysyłkę potwierdzenia z odliczaniem 60 sekund zachowanym po odświeżeniu.
 - Jawny callback PKCE wymagający kliknięcia przed wymianą kodu, zachowanie niewykorzystanego kodu przy odświeżeniu i usuwanie go z adresu po próbie, `no-referrer`, obsługę wygasłego linku i brakującego weryfikatora oraz ochronę przed zastąpieniem aktywnego konta linkiem innego użytkownika.
 - Wymóg 12–128 znaków dla nowych haseł, zachowanie hasła bez przycinania, neutralne odpowiedzi dla istniejących kont i przesyłanie wyłącznie `display_name` jako metadanych profilu.

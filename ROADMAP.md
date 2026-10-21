@@ -72,18 +72,21 @@ Etap scalono do `main` przez PR #3 (`11c4c21`). Uzgodnione dwie gałęzie i trzy
 - [x] Potwierdzenie e-maila, ponowna wysyłka i callback PKCE z obsługą nieprawidłowych linków.
 - [x] Rzeczywista rejestracja, otrzymanie wiadomości, potwierdzenie adresu i logowanie hasłem potwierdzone przez użytkownika.
 - [ ] Ponowny test otwarcia sesji bezpośrednio z nowej rzeczywistej wiadomości po poprawce callbacku.
-- [ ] Reset i zmiana hasła, wygasłe i nieprawidłowe linki.
+- [x] Reset i zmiana hasła, wygasłe i nieprawidłowe linki — kod i testy izolowane.
 - [x] Weryfikowane sesje, wylogowanie z bieżącej przeglądarki, chronione trasy i obsługa wygaśnięcia sesji.
-- [ ] Edycja profilu i bezpieczne przesyłanie awatara.
+- [x] Edycja profilu i bezpieczne przesyłanie awatara — kod i testy izolowane.
 - [x] Testy logowania, sesji, bezpiecznych przekierowań i dostępu do tras.
 - [x] Izolowane testy rejestracji, ponownej wysyłki, callbacków i ponownego użycia linku.
-- [ ] Testy odzyskiwania konta i profilu oraz końcowa weryfikacja etapu.
+- [x] Testy izolowane odzyskiwania konta i profilu, pełna regresja i raport.
+- [x] Rzeczywisty zapis nazwy, upload/podgląd i usunięcie awatara potwierdzone przez użytkownika.
+- [x] Wznowienie rzeczywistego resetu po odświeżeniu, zapis nowego hasła i logowanie nim potwierdzone przez użytkownika.
+- [ ] Trzeci commit, publikacja zmian i decyzja o zamknięciu etapu.
 
 **Google OAuth odłożono decyzją użytkownika.** Obecny zakres uwierzytelniania to e-mail i hasło; odłożony dostawca nie blokuje zamknięcia tego zakresu etapu.
 
-Uzgodniony podział: dwie gałęzie i około trzy commity. Użytkownik utworzył i opublikował `feat/authentication` z `main` przy `11c4c21`. Pierwszy commit logowania i sesji, `a42bb25`, jest wypchnięty. Drugi zakres na tej samej gałęzi dodaje rejestrację i potwierdzenie e-maila. Trzeci, na nowej gałęzi utworzonej przez użytkownika, obejmie odzyskiwanie konta, profil i końcową weryfikację. Po każdym zestawie poleceń commit/push agent czeka na potwierdzenie przed dalszą edycją.
+Uzgodniony podział: dwie gałęzie i około trzy commity. Użytkownik utworzył `feat/authentication` z `main` przy `11c4c21` i wypchnął `a42bb25` (logowanie/sesje) oraz `1d2942e` (rejestracja/potwierdzenie). Następnie utworzył i opublikował `feat/account-management` z `1d2942e`. Trzeci zakres obejmuje odzyskiwanie konta, profil i końcową weryfikację; czeka na commit użytkownika. Po przekazaniu komend agent zatrzymuje edycję do potwierdzenia.
 
-Obecny zakres: 116 testów aplikacji, 100 testów SQL i 120 scenariuszy Playwright. E2E korzysta z osobnego buildu i izolowanych odpowiedzi Auth; nie tworzy kont w Supabase. Zdalny odczyt kontrolny przeszedł 16 kontroli Auth i anonimowej odmowy danych. Użytkownik potwierdził zapisanie adresów powrotu w panelu developerskiego projektu. Użytkownik potwierdził rzeczywistą pocztę, akceptację adresu i logowanie hasłem; ponowny test sesji z nowego linku po poprawce pozostaje do końcowej weryfikacji. [Sesje](docs/authentication.md) · [Rejestracja i konfiguracja](docs/registration.md).
+Obecny zakres: 143 testy aplikacji, 100 testów SQL i 144 scenariusze Playwright. E2E używa osobnego buildu i izolowanych odpowiedzi HTTP; nie tworzy kont w Supabase. Użytkownik potwierdził rzeczywistą rejestrację, pocztę, akceptację adresu, logowanie hasłem, profil z awatarem oraz wznowienie resetu po odświeżeniu, zmianę hasła i logowanie nowym hasłem. Zapisał adresy powrotu potwierdzania i recovery. Powtórna próba sesji bezpośrednio z nowej wiadomości signup pozostaje niepotwierdzona. [Raport ETAPU 4](docs/stage-4-report.md) · [Profil i recovery](docs/account-management.md).
 
 ## ETAP 5 — Organizacje i uprawnienia · TODO
 
@@ -192,7 +195,7 @@ Obecny zakres: 116 testów aplikacji, 100 testów SQL i 120 scenariuszy Playwrig
 
 ## Najbliższy krok
 
-1. Użytkownik zapisuje i publikuje trzeci commit ETAPU 3 na istniejącej `feat/supabase-integration`.
-2. Po potwierdzeniu można przygotować jeden PR tej gałęzi do `main`, obejmujący wszystkie trzy commity etapu. Nie trzeba osobno scalać gałęzi fundamentu.
-3. ETAP 4 — formularze logowania, callbacki i sesje — rozpocznie się po osobnej decyzji użytkownika i potwierdzeniu właściwej nowej gałęzi.
+1. Zapisano potwierdzenie użytkownika dla profilu, awatara, wznowienia resetu i logowania nowym hasłem; pozostałe granice kontroli opisuje raport ETAPU 4.
+2. Użytkownik zapisuje i publikuje trzeci commit na `feat/account-management`.
+3. Po potwierdzeniu można przygotować jeden PR tej gałęzi do `main`, obejmujący cały ETAP 4. ETAP 5 wymaga osobnej decyzji użytkownika.
 4. Agent zatrzymuje edycję po przekazaniu poleceń commita i push, do potwierdzenia użytkownika.

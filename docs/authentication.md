@@ -1,6 +1,6 @@
 # Logowanie i weryfikowane sesje — ETAP 4
 
-Gotowe są logowanie e-mailem/hasłem, utrzymanie sesji, ochrona `/app` oraz wylogowanie z bieżącej przeglądarki. Użytkownik wypchnął ten zakres jako `a42bb25`. Druga część dodaje rejestrację, potwierdzenie e-maila i callback PKCE; [instrukcja oraz ograniczenia poczty](registration.md). Odzyskiwanie konta i profil pozostają do trzeciego commita na drugiej gałęzi. Google OAuth odłożono. ETAP 4 pozostaje w trakcie.
+Gotowe są logowanie e-mailem/hasłem, utrzymanie sesji, ochrona `/app` oraz wylogowanie z bieżącej przeglądarki. Użytkownik wypchnął ten zakres jako `a42bb25`. Drugi commit `1d2942e` dodał [rejestrację i potwierdzenie e-maila](registration.md). Trzeci zakres na `feat/account-management` dodaje [odzyskiwanie, zmianę hasła i profil](account-management.md). Google OAuth odłożono. ETAP 4 pozostaje w końcowej weryfikacji; aktualne wyniki zawiera [raport](stage-4-report.md).
 
 ## Uruchomienie
 

@@ -23,12 +23,17 @@ export const authTestUser = {
   identities: [],
 }
 
-export function createAuthTestSession(expired = false) {
+export function createAuthTestSession(
+  expired = false,
+  method: 'password' | 'email/signup' | 'recovery' = 'password',
+) {
   const expires = Math.floor(Date.now() / 1000) + (expired ? -3600 : 3600)
   const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url')
   const claims = Buffer.from(
     JSON.stringify({
       sub: authTestUser.id,
+      iss: `${authTestUrl}/auth/v1`,
+      amr: [{ method, timestamp: Math.floor(Date.now() / 1000) }],
       aud: 'authenticated',
       role: 'authenticated',
       exp: expires,
@@ -49,7 +54,9 @@ export function createAuthTestSession(expired = false) {
 
 export async function installAuthFixture(context: BrowserContext, scenario: AuthScenario) {
   let challenge: string | undefined
+  let purpose: 'recovery' | 'email/signup' = 'email/signup'
   let consumed = false
+  let password = authTestPassword
   const apiHeaders = {
     'x-supabase-api-version': '2024-01-01',
     'access-control-expose-headers': 'X-Supabase-Api-Version',
@@ -79,6 +86,16 @@ export async function installAuthFixture(context: BrowserContext, scenario: Auth
       return
     }
     if (url.pathname === '/auth/v1/user') {
+      if (request.method() === 'PUT') {
+        const change: unknown = request.postDataJSON()
+        if (
+          typeof change === 'object' &&
+          change !== null &&
+          'password' in change &&
+          typeof change.password === 'string'
+        )
+          password = change.password
+      }
       await route.fulfill({
         status: scenario === 'rejected' ? 401 : 200,
         headers: {
@@ -92,7 +109,7 @@ export async function installAuthFixture(context: BrowserContext, scenario: Auth
       })
       return
     }
-    if (url.pathname === '/auth/v1/signup' || url.pathname === '/auth/v1/resend') {
+    if (['/auth/v1/signup', '/auth/v1/resend', '/auth/v1/recover'].includes(url.pathname)) {
       if (scenario === 'signup-limited') {
         await route.fulfill({
           status: 429,
@@ -113,6 +130,7 @@ export async function installAuthFixture(context: BrowserContext, scenario: Auth
       )
         challenge = body.code_challenge
       consumed = false
+      purpose = url.pathname.endsWith('/recover') ? 'recovery' : 'email/signup'
       await route.fulfill({
         status: 200,
         json: url.pathname.endsWith('/signup') ? { ...authTestUser, email_confirmed_at: null } : {},
@@ -133,7 +151,7 @@ export async function installAuthFixture(context: BrowserContext, scenario: Auth
           !consumed
         if (valid) {
           consumed = true
-          await route.fulfill({ status: 200, json: createAuthTestSession() })
+          await route.fulfill({ status: 200, json: createAuthTestSession(false, purpose) })
         } else
           await route.fulfill({
             status: 400,
@@ -156,7 +174,7 @@ export async function installAuthFixture(context: BrowserContext, scenario: Auth
         'email' in body &&
         'password' in body &&
         body.email === authTestEmail &&
-        body.password === authTestPassword
+        body.password === password
       if (url.searchParams.get('grant_type') === 'refresh_token' || credentials) {
         await route.fulfill({ status: 200, json: createAuthTestSession() })
       } else {

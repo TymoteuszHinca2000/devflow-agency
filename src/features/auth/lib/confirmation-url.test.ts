@@ -4,6 +4,17 @@ import { getConfirmationUrl, readConfirmationCallback } from './confirmation-url
 const code = 'test-only-confirmation-code-12345'
 
 describe('confirmation links', () => {
+  it('keeps recovery and signup purposes separate and rejects duplicate type markers', () => {
+    expect(readConfirmationCallback(`?code=${code}&type=recovery`, '', 'recovery').status).toBe(
+      'ready',
+    )
+    expect(readConfirmationCallback(`?code=${code}&type=signup`, '', 'recovery').status).toBe(
+      'invalid',
+    )
+    expect(
+      readConfirmationCallback(`?code=${code}&type=recovery&type=signup`, '', 'recovery').status,
+    ).toBe('invalid')
+  })
   it('builds the callback on the app origin and only carries a safe application target', () => {
     const result = new URL(
       getConfirmationUrl('https://devflow.example', '/app/tasks?view=list#work'),

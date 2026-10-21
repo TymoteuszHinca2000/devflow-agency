@@ -14,6 +14,9 @@ import { useAuth } from '@/features/auth/hooks/use-auth'
 import { RegisterPage } from '@/features/auth/pages/register-page'
 import { CheckEmailPage } from '@/features/auth/pages/check-email-page'
 import { ConfirmEmailPage } from '@/features/auth/pages/confirm-email-page'
+import { ForgotPasswordPage } from '@/features/auth/pages/forgot-password-page'
+import { RecoveryPage } from '@/features/auth/pages/recovery-page'
+import { AccountPage } from '@/features/auth/pages/account-page'
 
 export function AppRoutes() {
   const { state } = useAuth()
@@ -24,6 +27,7 @@ export function AppRoutes() {
         <Route element={<RequireAuth />}>
           <Route path="app" element={<AppLayout accountControls={<AccountControls />} />}>
             <Route index element={<WorkspaceIndexPage />} />
+            <Route path="account" element={<AccountPage />} />
             {appModules.map((module) => (
               <Route
                 key={module.path}
@@ -39,6 +43,8 @@ export function AppRoutes() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="check-email" element={<CheckEmailPage />} />
           <Route path="auth/confirm" element={<ConfirmEmailPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="auth/recovery" element={<RecoveryPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

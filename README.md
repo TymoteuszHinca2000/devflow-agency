@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAPY 1–3 scalone do `main`; ETAP 4 w trakcie, przygotowany drugi z trzech commitów.** PR #1 (`56029a8`) wprowadził fundament, PR #2 (`dc8d1ad`) design system, a PR #3 (`11c4c21`) model danych i integrację developerskiego Supabase. Gałąź `feat/authentication` zawiera logowanie e-mailem/hasłem, weryfikowane sesje, ochronę `/app`, rejestrację i potwierdzenie adresu e-mail. Odzyskiwanie konta i profil pozostają do trzeciej części etapu. Google OAuth odłożono decyzją użytkownika. [Logowanie i sesje](docs/authentication.md) · [Rejestracja i konfiguracja poczty](docs/registration.md) · [Raport ETAPU 3](docs/stage-3-report.md) · [Integracja](docs/supabase-integration.md) · [Model bazy](docs/database.md). Aplikacja nie prezentuje fixture testów jako rzeczywistych statystyk.
+**Stan: ETAPY 1–3 scalone do `main`; ETAP 4 w końcowej weryfikacji, przygotowany trzeci z trzech commitów.** PR #1 (`56029a8`) wprowadził fundament, PR #2 (`dc8d1ad`) design system, a PR #3 (`11c4c21`) integrację Supabase. `feat/account-management` zawiera cały dotychczasowy zakres uwierzytelniania oraz odzyskiwanie i zmianę hasła, profil i prywatny awatar. Google OAuth odłożono decyzją użytkownika. [Raport ETAPU 4](docs/stage-4-report.md) · [Sesje](docs/authentication.md) · [Rejestracja](docs/registration.md) · [Profil i reset hasła](docs/account-management.md) · [Model bazy](docs/database.md). Aplikacja nie prezentuje fixture testów jako rzeczywistych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -19,6 +19,8 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Zweryfikowana integracja zdalnych Auth, Data API, RLS i fizycznego Storage HTTP; jawny skrypt bezpiecznego odczytu kontrolnego.
 - `/login`: React Hook Form i Zod, walidacja e-maila, podgląd hasła, czytelne błędy i blokada ponownego wysłania podczas żądania.
 - `/register`, `/check-email` i `/auth/confirm`: rejestracja, ponowna wysyłka z odliczaniem, jawna obsługa PKCE, wygasłych linków i braku weryfikatora w przeglądarce.
+- `/forgot-password` i `/auth/recovery`: odzyskiwanie konta e-mailem z PKCE i formularzem nowego hasła.
+- `/app/account`: edycja nazwy profilu, prywatny awatar z walidacją, trwały zapis oraz zmiana hasła po ponownym sprawdzeniu obecnego hasła.
 - Sesja zapamiętywana przez SDK, tożsamość sprawdzana przez Auth, ochrona `/app`, bezpieczny powrót do pierwotnego adresu i wylogowanie z bieżącej przeglądarki.
 - Obsługa wygaśnięcia sesji i błędów sieci z możliwością ponowienia; odświeżenie tego samego konta zachowuje otwarty widok i fokus.
 - Vitest, React Testing Library i konfiguracja Playwright dla desktopu i telefonu.
@@ -63,14 +65,14 @@ Motyw wybierzesz w nawigacji. Przy szerokości do 1000 px otwórz wysuwany panel
 
 ## Stack
 
-| Obszar                  | Zainstalowane                                                                                       | Planowane                                   |
-| ----------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4, React Router 8.4.0                                      | TanStack Query                              |
-| Interfejs               | Tailwind CSS 4.3.3, shadcn/ui (Radix), Sonner 2.0.8, Lucide React, fonty Manrope i DM Sans          | Recharts, dnd-kit                           |
-| Formularze i stan       | React Hook Form 7.90.0, Zod 4.6.7, resolvers 5.9.2 i stan lokalny React                             | Zustand przy rzeczywistej potrzebie         |
-| Backend                 | Supabase JS 2.118.0, Auth, CLI 2.121.0, PostgreSQL, RLS, prywatny Storage, PGlite i generator typów | Odzyskiwanie konta i profil, Edge Functions |
-| Jakość                  | ESLint 10, Prettier 3, Vitest 5, Testing Library, Playwright, axe-core                              | Testy modułów i izolacji organizacji        |
-| Automatyzacja i hosting | Lokalne skrypty kontroli jakości                                                                    | GitHub Actions, Vercel                      |
+| Obszar                  | Zainstalowane                                                                                       | Planowane                            |
+| ----------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4, React Router 8.4.0                                      | TanStack Query                       |
+| Interfejs               | Tailwind CSS 4.3.3, shadcn/ui (Radix), Sonner 2.0.8, Lucide React, fonty Manrope i DM Sans          | Recharts, dnd-kit                    |
+| Formularze i stan       | React Hook Form 7.90.0, Zod 4.6.7, resolvers 5.9.2 i stan lokalny React                             | Zustand przy rzeczywistej potrzebie  |
+| Backend                 | Supabase JS 2.118.0, Auth, CLI 2.121.0, PostgreSQL, RLS, prywatny Storage, PGlite i generator typów | Edge Functions                       |
+| Jakość                  | ESLint 10, Prettier 3, Vitest 5, Testing Library, Playwright, axe-core                              | Testy modułów i izolacji organizacji |
+| Automatyzacja i hosting | Lokalne skrypty kontroli jakości                                                                    | GitHub Actions, Vercel               |
 
 Dokładne wersje są w `package.json` i `package-lock.json`. TypeScript 6.0.3 wybrano dla zgodności: zainstalowane `typescript-eslint` wspiera TypeScript `<6.1.0`. Nie wymuszamy nieobsługiwanych zależności przez `--force` ani `--legacy-peer-deps`.
 
@@ -170,7 +172,7 @@ npm run test:e2e
 
 Testy importują `test` i `expect` z `e2e/fixtures.ts`. Każdy test uruchamia podgląd `dist-e2e/` na wolnym porcie przez API Vite i zamyka go w `finally` przez `server.close()`. Ten build ma fikcyjny publiczny adres Auth i przechwytywane odpowiedzi HTTP: nie wymaga `.env.local`, nie wysyła haseł do rzeczywistego projektu i nie tworzy kont. Testy chronionego układu jawnie wybierają stan zalogowany. Zwykłe `npm run build` nadal tworzy produkcyjny `dist/` z konfiguracją środowiska. Nie publikuj `dist-e2e/` jako aplikacji.
 
-**Bieżąca weryfikacja dwóch pierwszych części ETAPU 4:** 116 testów aplikacji, 100 testów SQL, zgodność typów bazy i 120 scenariuszy E2E. Nowe 22 scenariusze sprawdzają rejestrację i potwierdzenie, w tym generowanie i porównanie wyzwania PKCE przez SDK, odświeżenie przed wymianą oraz nową kartę na izolowanym API. Przejrzano 11 wariantów ekranów Auth. Zdalny test odczytowy przeszedł 16 kontroli bez zapisów. Użytkownik potwierdził rzeczywistą rejestrację, otrzymanie wiadomości, akceptację adresu i logowanie hasłem. Po błędnym stanie callbacku poprawiono zachowanie odświeżenia i przejścia do logowania; otwarcia sesji z nowej rzeczywistej wiadomości po tej poprawce nie sprawdzono ponownie. [Zakres i ograniczenia](docs/registration.md).
+**Bieżąca weryfikacja ETAPU 4:** pełna regresja 144 scenariuszy E2E, 143 testy aplikacji w końcowym zestawie, 100 testów SQL i zgodność typów bazy. Nowe kontrole obejmują reset i zmianę hasła, profil, awatar, błędy oraz dostępność. Zdalny odczyt kontrolny przeszedł 16 kontroli bez zapisów. Rzeczywiste próby użytkownika oraz ich granice opisuje [raport](docs/stage-4-report.md).
 
 Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `test-results/`; oba katalogi są ignorowane przez Git.
 
@@ -272,7 +274,7 @@ To zakres docelowy, a nie obecnie dostępne funkcje.
 
 Każda nowa funkcjonalność ma osobną gałąź, także w ramach tego samego etapu. Agent podaje polecenia jej utworzenia i publikacji oraz czeka na potwierdzenie przed kodowaniem. Użytkownik wykonuje także staging, commity i push. Po każdym logicznym zadaniu agent zatrzymuje edycję do potwierdzenia wykonania poleceń.
 
-Bieżący branch: `feat/authentication`, utworzony i opublikowany przez użytkownika z `main` przy `11c4c21`. Uzgodniony ETAP 4 obejmuje dwie gałęzie i około trzy commity: logowanie/sesje oraz rejestrację/potwierdzenie e-maila na tej gałęzi, a odzyskiwanie konta i profil na drugiej. Ten uzgodniony podział ma pierwszeństwo przed ogólną zasadą gałęzi dla każdej funkcjonalności. Użytkownik wypchnął pierwszy commit `a42bb25`; drugi zakres czeka na commit i push. Po każdym commicie agent czeka na potwierdzenie; utworzenie kolejnej gałęzi również wykonuje użytkownik przed rozpoczęciem jej kodowania.
+Bieżący branch: `feat/account-management`, utworzony i opublikowany przez użytkownika z `feat/authentication` przy `1d2942e`. Uzgodniony ETAP 4 obejmuje dwie gałęzie i trzy commity. `a42bb25` (logowanie/sesje) oraz `1d2942e` (rejestracja/potwierdzenie) są wypchnięte; trzeci zakres odzyskiwania i profilu czeka na commit użytkownika. Ten podział ma pierwszeństwo przed ogólną zasadą gałęzi dla każdej funkcjonalności. Po przekazaniu poleceń Git agent zatrzymuje edycję do potwierdzenia wykonania.
 
 Przed pracą sprawdzaj:
 

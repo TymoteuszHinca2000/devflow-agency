@@ -1,6 +1,6 @@
 # Rejestracja i potwierdzenie e-maila — ETAP 4, część 2
 
-Drugi zakres na `feat/authentication` dodaje rejestrację, ekran sprawdzania poczty, ponowną wysyłkę i jawny callback PKCE. Pierwszy commit `a42bb25` jest wypchnięty; ten zakres czeka na commit użytkownika. Hasła, linki i tokeny nie trafiają do repozytorium. Odzyskiwanie konta i profil pozostają do trzeciej części na drugiej gałęzi. Google OAuth jest odłożony.
+Drugi zakres na `feat/authentication` dodaje rejestrację, ekran sprawdzania poczty, ponowną wysyłkę i jawny callback PKCE. Commity `a42bb25` i `1d2942e` zostały wypchnięte przez użytkownika. Hasła, linki i tokeny nie trafiają do repozytorium. Odzyskiwanie konta i profil opisano w [trzeciej części](account-management.md) na `feat/account-management`. Google OAuth jest odłożony.
 
 ## Adresy i zachowanie
 
@@ -26,7 +26,7 @@ SDK używa PKCE i przechowuje weryfikator w przeglądarce. Wiadomość powinna p
 Automatyczne wykrywanie sesji z URL pozostaje wyłączone. Callback:
 
 - Przyjmuje wyłącznie jednoznaczny kod PKCE i opcjonalny, zwalidowany `sb_flow_id`, przekazywany do SDK bez szukania innego weryfikatora.
-- Odrzuca access/refresh tokeny z URL, hashe OTP i linki oznaczone jako odzyskiwanie hasła. Przepływ recovery zostanie dodany osobno w trzeciej części.
+- Odrzuca access/refresh tokeny z URL, hashe OTP i linki oznaczone jako odzyskiwanie hasła. Osobny przepływ recovery działa pod `/auth/recovery` w trzeciej części.
 - Zachowuje niewykorzystany kod w adresie do próby wymiany, aby odświeżenie przed kliknięciem nie gubiło linku. Po próbie usuwa dane przez przekierowanie lub oczyszczenie adresu. Nie zapisuje kodu we własnym storage; dokument ma politykę `no-referrer`. Błędne parametry i surowe szczegóły błędów usuwa od razu.
 - Wymienia kod dopiero po kliknięciu, dzięki czemu samo otwarcie strony i ponowne efekty React StrictMode nie zużywają kodu.
 - Nie zastępuje automatycznie już zalogowanego konta. Aktywna sesja pokazuje odnośnik do własnej aplikacji i instrukcję wylogowania przed użyciem innego konta.

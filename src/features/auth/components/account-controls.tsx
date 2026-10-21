@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { LogOut } from 'lucide-react'
-import { useNavigate } from 'react-router'
+import { LogOut, UserRound } from 'lucide-react'
+import { Link, useNavigate } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { notify } from '@/lib/notify'
 import { useAuth } from '../hooks/use-auth'
@@ -30,6 +30,11 @@ export function AccountControls() {
       <span className="account-email" title={state.user.email}>
         {state.user.email}
       </span>
+      <Button variant="outline" size="icon" asChild>
+        <Link to="/app/account" aria-label="Moje konto" title="Moje konto">
+          <UserRound size={17} aria-hidden="true" />
+        </Link>
+      </Button>
       <Button
         variant="outline"
         size="icon"

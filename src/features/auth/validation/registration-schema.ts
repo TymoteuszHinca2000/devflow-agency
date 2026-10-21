@@ -1,18 +1,12 @@
 import { z } from 'zod'
 import { emailSchema } from './email-schema'
+import { displayNameSchema, newPasswordSchema } from './account-schema'
 
 export const registrationSchema = z
   .object({
-    displayName: z
-      .string()
-      .trim()
-      .min(1, 'Wpisz imię lub nazwę.')
-      .max(120, 'Użyj maksymalnie 120 znaków.'),
+    displayName: displayNameSchema,
     email: emailSchema,
-    password: z
-      .string()
-      .min(12, 'Użyj co najmniej 12 znaków.')
-      .max(128, 'Użyj maksymalnie 128 znaków.'),
+    password: newPasswordSchema,
     confirmPassword: z.string().min(1, 'Powtórz hasło.'),
   })
   .refine((values) => values.password === values.confirmPassword, {
