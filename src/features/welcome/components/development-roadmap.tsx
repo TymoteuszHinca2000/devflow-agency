@@ -6,6 +6,7 @@ export function DevelopmentRoadmap() {
   return (
     <section
       id="plan-rozwoju"
+      tabIndex={-1}
       className="roadmap-section section-anchor"
       aria-labelledby="roadmap-title"
     >

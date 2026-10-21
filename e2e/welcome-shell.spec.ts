@@ -79,5 +79,13 @@ for (const colorScheme of ['light', 'dark'] as const) {
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze()
     expect(result.violations).toEqual([])
+    if (isMobile) {
+      await page.getByRole('button', { name: 'Zamknij nawigację' }).click()
+      await expect(page.getByRole('dialog')).toBeHidden()
+      const pageResult = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+        .analyze()
+      expect(pageResult.violations).toEqual([])
+    }
   })
 }

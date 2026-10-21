@@ -14,11 +14,12 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Struktura katalogów przygotowana pod moduły biznesowe.
 - Vitest, React Testing Library i konfiguracja Playwright dla desktopu i telefonu.
 - `.env.example`, wykluczenie lokalnej konfiguracji i wersjonowany lockfile.
-- Nagłówek z nawigacją desktopową i rozwijanym menu mobilnym.
+- Nagłówek z nawigacją desktopową i wysuwanym, modalnym panelem mobilnym.
 - Sekcja powitalna z ilustracją koncepcji produktu oraz linkami do kodu i planu rozwoju.
 - Wspólne logo, przyciski w formie linków, lokalne fonty i favicon.
 - Wspólne tokeny kolorów, fontów, odstępów, zaokrągleń i fokusu, dostępne również w Tailwind CSS.
-- Lokalne komponenty shadcn/ui: `Button`, `Card`, `Input` i `Label`, dostosowane do palety DevFlow.
+- Lokalne komponenty shadcn/ui: `Button`, `Card`, `Input`, `Label`, `Dialog` i `Sheet`, dostosowane do palety DevFlow.
+- Dialogi i panele z tytułem, opisem, zamykaniem przez Escape i tło, blokadą przewijania oraz zarządzaniem fokusem.
 - Wspólny przycisk w akcjach strony i wspólna karta w katalogu; stany pól przygotowane do kolejnych formularzy.
 - Wybór motywu jasnego, ciemnego lub systemowego z zapamiętywaniem ustawienia i obsługą ograniczenia ruchu.
 - Reakcja na zmianę motywu systemu i synchronizacja wyboru między kartami przeglądarki.
@@ -30,7 +31,7 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 2.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Następne małe zadanie ETAPU 2 to dostępne dialogi i wysuwany panel. Routing, układ panelu i dalsze komponenty pozostają w planie tego etapu. Nie ma jeszcze wdrożonego demo.
+Następne małe zadanie ETAPU 2 to wspólna tabela. Routing, układ panelu aplikacji i dalsze komponenty pozostają w planie tego etapu. Nie ma jeszcze wdrożonego demo.
 
 ## Podgląd aktualnej sekcji powitalnej
 
@@ -38,7 +39,7 @@ Następne małe zadanie ETAPU 2 to dostępne dialogi i wysuwany panel. Routing, 
 
 [Ciemny motyw](docs/screenshots/welcome-dark.png) · [Widok mobilny](docs/screenshots/welcome-mobile.png) · [Wybór motywu na telefonie](docs/screenshots/theme-selector-mobile.png)
 
-Motyw wybierzesz w nawigacji. Przy szerokości do 1000 px otwórz menu. „Systemowy” śledzi ustawienia systemu na bieżąco; wybór ręczny pozostaje po odświeżeniu. Gdy przeglądarka blokuje zapis, ustawienie działa w bieżącej sesji.
+Motyw wybierzesz w nawigacji. Przy szerokości do 1000 px otwórz wysuwany panel. Fokus pozostaje w nim do zamknięcia; Escape, przycisk zamknięcia i kliknięcie tła przywracają go do przycisku menu. Wybranie sekcji przenosi fokus do jej treści, a poszerzenie okna do 1001 px zamyka panel i aktywuje nawigację desktopową. „Systemowy” śledzi ustawienia systemu na bieżąco; wybór ręczny pozostaje po odświeżeniu. Gdy przeglądarka blokuje zapis, ustawienie działa w bieżącej sesji.
 
 ## Stack
 
@@ -147,8 +148,8 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 **Weryfikacja ekranu powitalnego, katalogu i roadmapy na Node 24.19.0:**
 
 - Lint, formatowanie, TypeScript i build: poprawne.
-- Vitest / Testing Library: 8 zaliczonych testów.
-- Playwright / Chromium: 40 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
+- Vitest / Testing Library: 12 zaliczonych testów.
+- Playwright / Chromium: 50 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
 - Sprawdzono filtrowanie, licznik wyników, nawigację do sekcji, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
 - Roadmapa: domyślnie otwarty bieżący obszar, niezależne rozwijanie pozostałych, obsługa Enter i Spacji oraz zachowanie fokusu.
 - Sprawdzono ręczne nadpisanie motywu systemowego, zapis i odświeżanie, reakcję na zmiany systemu, klawiaturę, synchronizację kart, nieprawidłowy zapis i blokadę pamięci przeglądarki.
@@ -156,6 +157,8 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 - axe-core: brak automatycznie wykrytych naruszeń WCAG A/AA w jasnym i ciemnym widoku na obu urządzeniach, także po otwarciu wszystkich opisów roadmapy i menu mobilnego z wyborem motywu.
 - Przejrzano zrzuty dla szerokości 320, 390, 768 i 1440 px; bez poziomego przepełnienia.
 - W odizolowanym podglądzie komponentów UI sprawdzono oba motywy, fokus pól, opisy błędów, wysokość 44 px i brak przepełnienia; axe nie wykrył naruszeń sprawdzanych reguł WCAG A/AA.
+- Testy panelu obejmują zapętlenie fokusu, zamknięcie przez Escape, przycisk i tło, przywracanie przewijania, przejście do sekcji i zmianę szerokości okna. Sprawdzono też widok 320 × 320 px z ograniczeniem ruchu.
+- W osobnym podglądzie sprawdzono dialog i cztery kierunki panelu w 20 kombinacjach rozmiarów i motywów, z kontrolą klawiatury, granic ekranu, błędów wykonania i axe. Podgląd nie jest dodatkową stroną aplikacji.
 
 Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Kolejne sekcje i moduły otrzymają testy w ramach swoich zadań.
 

@@ -32,17 +32,22 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 - Wspólny przycisk w linkach akcji i wspólną kartę w katalogu modułów.
 - Domyślny typ `button`, stany disabled i błędu pola, etykiety i przekazywanie refa.
 - Dokumentację komponentów, odizolowane podglądy i informację o licencji źródłowego kodu.
-- Aktualne screenshoty oraz testy ekranu: 8 testów React i 40 scenariuszy E2E.
+- Wspólne komponenty `Dialog` i `Sheet` oparte na Radix Dialog, z tytułem, opisem i polskim przyciskiem zamknięcia.
+- Modalną nawigację mobilną: fokus wewnątrz panelu, blokadę przewijania, zamykanie przez Escape, przycisk i tło oraz przekazanie fokusu do wybranej sekcji.
+- Zamykanie panelu po przejściu do szerokości desktopowej i przywracanie fokusu w widocznej nawigacji.
+- Cztery kierunki wysuwania panelu, przewijanie na niskich ekranach i animacje respektujące ograniczenie ruchu.
+- Aktualne screenshoty oraz testy ekranu: 12 testów React i 50 scenariuszy E2E.
 
 ### Naprawiono
 
 - Zamykanie runnera Playwright w sprawdzonym środowisku Windows: fixture zarządza podglądem przez API Vite i zamyka serwer w `finally`.
+- Kolejność ładowania warstw CSS dialogów: style są importowane centralnie po Tailwind CSS, aby reset nie nadpisywał odstępów i typografii.
 
 ### Stan realizacji
 
 - ETAP 1 zakończono i scalono do `main` przez PR #1 (`56029a8`).
 - ETAP 2 rozpoczęto na `feat/app-shell`; pierwsze zadanie obejmuje wspólne tokeny i wybór motywu.
-- Przygotowano pierwszą część komponentów UI; dialogi, wysuwany panel i tabela pozostają osobnymi zadaniami.
+- Przygotowano podstawowe komponenty UI, dialogi i panel nawigacji mobilnej; tabela, routing i układ aplikacji pozostają kolejnymi zadaniami.
 - Logowanie, baza danych i moduły biznesowe nie są zaimplementowane.
-- Kontrole aktualnego ekranu i pełny przebieg 40 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0; axe-core sprawdza również wszystkie otwarte opisy roadmapy i kontrolkę w menu mobilnym.
+- Kontrole aktualnego ekranu i pełny przebieg 50 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0; axe-core sprawdza również wszystkie otwarte opisy roadmapy i nawigację mobilną przed otwarciem oraz po otwarciu panelu. Dialog i cztery kierunki panelu przeszły osobną kontrolę w 20 kombinacjach rozmiarów i motywów.
 - Operacje Git wykonuje użytkownik po sprawdzeniu zmian i otrzymaniu poleceń od agenta.

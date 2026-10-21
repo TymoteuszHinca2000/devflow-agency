@@ -23,6 +23,7 @@ export function ModuleOverview() {
   return (
     <section
       id="mozliwosci"
+      tabIndex={-1}
       className="module-section page-width section-anchor"
       aria-labelledby="modules-title"
     >

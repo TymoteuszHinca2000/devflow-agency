@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { App } from './app'
@@ -30,7 +30,7 @@ describe('DevFlow welcome screen', () => {
     expect(toggle).toHaveAttribute('aria-expanded', 'true')
     await user.keyboard('{Escape}')
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
-    expect(toggle).toHaveFocus()
+    await waitFor(() => expect(toggle).toHaveFocus())
   })
 
   it('lets users select a theme and restores their preference when the app mounts again', async () => {

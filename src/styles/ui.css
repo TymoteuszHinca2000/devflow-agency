@@ -23,6 +23,7 @@
 }
 
 :root {
+  --overlay-scrim: #06120bb3;
   --input-border: light-dark(#7b8a80, #718b79);
   --destructive: light-dark(#b42318, #ffb4ab);
 }

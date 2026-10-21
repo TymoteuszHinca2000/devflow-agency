@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './tokens.css';
 @import './ui.css';
+@import './overlays.css';
 
 @layer base {
   :root {
@@ -59,7 +60,8 @@
     outline: 2px solid var(--focus-ring);
     outline-offset: 5px;
   }
-  main:focus {
+  main:focus,
+  .section-anchor:focus {
     outline: none;
   }
 }
@@ -184,6 +186,31 @@
   border-radius: 8px;
   padding: 9px;
   color: var(--ink);
+}
+
+.mobile-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mobile-navigation > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 12px;
+  border-radius: var(--radius-control);
+  font-size: 14px;
+}
+.mobile-navigation > a:hover {
+  background: var(--accent-soft);
+}
+.mobile-navigation .repository-link {
+  margin-block: 12px;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  padding-top: 20px;
 }
 
 .welcome-hero {
@@ -626,39 +653,12 @@
   }
   .header-nav {
     display: none;
-    position: absolute;
-    top: 74px;
-    left: -32px;
-    right: -32px;
-    margin: 0;
-    padding: 16px 20px 22px;
-    background: var(--canvas);
-    border-bottom: 1px solid var(--line);
-    box-shadow: 0 12px 14px var(--shadow);
-    align-items: stretch;
-    gap: 4px;
-  }
-  .header-nav.is-open {
-    display: flex;
-    flex-direction: column;
-  }
-  .header-nav > a {
-    padding: 12px 8px;
-    min-height: 44px;
-  }
-  .header-nav .repository-link {
-    padding: 12px 8px;
-    border-left: 0;
   }
 }
 
 @media (max-width: 760px) {
   .page-width {
     width: calc(100% - 40px);
-  }
-  .header-nav {
-    left: -20px;
-    right: -20px;
   }
   .welcome-hero {
     grid-template-columns: 1fr;

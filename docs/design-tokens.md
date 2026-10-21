@@ -18,6 +18,7 @@
 | `--radius-control`, `--radius-card`       | Zaokrąglenia kontrolek i kart                 |
 | `--text-control`, `--control-height`      | Rozmiar tekstu i minimalna wysokość kontrolki |
 | `--duration-fast`                         | Czas krótkiej zmiany stanu                    |
+| `--overlay-scrim`                         | Przyciemnione tło modalnego okna lub panelu   |
 
 Tailwind udostępnia między innymi `bg-canvas`, `bg-surface`, `text-ink`, `text-brand`, `border-border`, `rounded-control` i `rounded-card`. Istniejące style CSS używają tych samych zmiennych.
 
@@ -38,8 +39,10 @@ Każda para kolorów jest zapisana przez `light-dark()`, a `color-scheme` wybier
 
 Zmiany systemowe subskrybuje `useSyncExternalStore`; zdarzenie `storage` synchronizuje preferencję między kartami. Subskrypcje są usuwane przy odmontowaniu providera. [Dokumentacja React](https://react.dev/reference/react/useSyncExternalStore).
 
-Kontrolka ma natywny element `select`, powiązaną etykietę „Motyw kolorystyczny”, minimalną wysokość 44 px i widoczny fokus. W nagłówku desktopowym jest częścią nawigacji; do szerokości 1000 px znajduje się w rozwijanym menu.
+Kontrolka ma natywny element `select`, powiązaną etykietę „Motyw kolorystyczny”, minimalną wysokość 44 px i widoczny fokus. W nagłówku desktopowym jest częścią nawigacji; do szerokości 1000 px znajduje się w wysuwanym panelu `Sheet`.
+
+Style modalnych okien i paneli są w `src/styles/overlays.css`, w warstwie `components`. `globals.css` importuje je po Tailwind CSS, tokenach i adapterze `ui.css`. Zachowaj centralną kolejność importów; import warstwy komponentów przed Tailwindem może pozwolić resetowi nadpisać jej odstępy i typografię. Animacje wyłączają się przy `prefers-reduced-motion`.
 
 ## Dalszy zakres etapu 2
 
-Gotowe są pierwsze komponenty shadcn/ui: `Button`, `Card`, `Input` i `Label`. Przykłady oraz opis integracji są w [ui-components.md](ui-components.md). Dialogi, wysuwany panel, tabela, routing i układ aplikacji powstaną w kolejnych małych zadaniach.
+Gotowe są komponenty shadcn/ui: `Button`, `Card`, `Input`, `Label`, `Dialog` i `Sheet`. Przykłady oraz opis integracji są w [ui-components.md](ui-components.md). Wspólna tabela, routing i układ aplikacji powstaną w kolejnych małych zadaniach.
