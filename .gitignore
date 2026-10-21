@@ -147,3 +147,13 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Local editor state and browser test artifacts
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.local
+playwright-report/
+test-results/
+blob-report/
+.supabase/
