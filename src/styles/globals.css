@@ -5,6 +5,7 @@
 @import './routes.css';
 @import './app-shell.css';
 @import './ui-states.css';
+@import './toasts.css';
 
 @layer base {
   :root {

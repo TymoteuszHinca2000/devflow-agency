@@ -7,6 +7,7 @@ describe('DevFlow welcome screen', () => {
   it('presents a single main landmark and labels the product as under development', () => {
     render(<App />)
     expect(screen.getAllByRole('main')).toHaveLength(1)
+    expect(screen.getAllByRole('region', { name: 'Powiadomienia (Alt+T)' })).toHaveLength(1)
     expect(screen.getByRole('heading', { level: 1, name: /Twoja agencja/ })).toBeVisible()
     expect(screen.getByText('W budowie')).toBeVisible()
     expect(screen.getByRole('figure', { name: /Wizja produktu/ })).toBeVisible()

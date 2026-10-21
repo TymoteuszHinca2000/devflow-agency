@@ -4,6 +4,8 @@ Biblioteka obejmuje `Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet`, `Tabl
 
 `src/components/shared/` zawiera również własne komponenty złożone `LoadingState` i `EmptyState`. Opis dostępności, warianty i przykłady: [Stany interfejsu](ui-states.md).
 
+`Toaster` w `src/components/ui/sonner.tsx` adaptuje integrację shadcn/ui z Sonner. Wspólne API, czas wyświetlania, klawiatura i podgląd: [Toasty](toasts.md).
+
 `components.json` opisuje aliasy i integrację z Tailwind CSS 4. `src/lib/utils.ts` udostępnia `cn`, które łączy klasy i rozstrzyga konflikty klas Tailwind. Warianty przycisku są w osobnym pliku, aby plik komponentu był zgodny z regułami React Fast Refresh.
 
 ## Użycie
@@ -134,7 +136,7 @@ Wariant Tailwind `dark:` rozpoznaje `data-theme="dark"`. Pola mają mocniejszy o
 - Pełne E2E sprawdzają istniejący ekran po wykorzystaniu wspólnych przycisków i kart.
 - Scenariusze panelu mobilnego obejmują blokadę i przywracanie przewijania, wszystkie sposoby zamknięcia, przejście do sekcji, zmianę rozmiaru okna oraz widok 320 × 320 px. Audyt axe sprawdza stronę z panelem otwartym i zamkniętym w obu motywach.
 - W odizolowanym podglądzie czterech komponentów sprawdzono motywy, fokus, wysokość 44 px, font 16 px na telefonie, brak przepełnienia oraz automatyczny audyt axe. Podgląd nie jest formularzem biznesowym w aplikacji.
-- Osobny podgląd dialogu oraz panelu z każdej z czterech stron przeszedł kontrolę w 20 kombinacjach rozmiarów i motywów. Sprawdzono klawiaturę, granice ekranu, błędy wykonania i axe. Aktualny pełny zestaw aplikacji, w tym routing i układ: 19 testów React i 76 scenariuszy Playwright. `Sheet` obsługuje również lewe menu aplikacji, opisane w [app-shell.md](app-shell.md).
+- Osobny podgląd dialogu oraz panelu z każdej z czterech stron przeszedł kontrolę w 20 kombinacjach rozmiarów i motywów. Sprawdzono klawiaturę, granice ekranu, błędy wykonania i axe. Aktualny pełny zestaw aplikacji, w tym routing i układ: 22 testy React i 76 scenariuszy Playwright. `Sheet` obsługuje również lewe menu aplikacji, opisane w [app-shell.md](app-shell.md).
 - Tabela przeszła kontrolę przeglądarkową w 6 wariantach szerokości i motywu: 320, 390, 640, 768 i 1440 px. Sprawdzono podpis i nagłówki, Tab i Shift+Tab, widoczny fokus, przewijanie strzałką, przejście do pustego widoku i powrót oraz brak poziomego przepełnienia strony i błędów wykonania. Audyt axe nie wykrył naruszeń sprawdzanych reguł zarówno z danymi, jak i bez danych. Tabela nie jest jeszcze używana na publicznej stronie; jej podgląd jest osobną kontrolą, poza zestawem E2E aplikacji.
 
 ```powershell

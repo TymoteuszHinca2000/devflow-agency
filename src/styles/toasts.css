@@ -1,0 +1,118 @@
+/* Sonner injects unlayered CSS. Keep this scoped adapter unlayered as well. */
+.devflow-toaster[data-sonner-toaster][data-sonner-theme] {
+  --normal-bg: var(--surface);
+  --normal-text: var(--ink);
+  --normal-border: var(--line);
+  --normal-bg-hover: var(--surface-soft);
+  --normal-border-hover: var(--line);
+  font-family: var(--font-sans);
+  z-index: 40;
+}
+
+.devflow-toaster [data-sonner-toast] {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  width: var(--width);
+  min-height: 84px;
+  padding: 20px 60px 20px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  color: var(--ink);
+  background: var(--surface);
+  box-shadow: 0 8px 32px var(--shadow);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.devflow-toaster [data-content] {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.devflow-toaster [data-title] {
+  font-weight: 650;
+}
+
+.devflow-toaster[data-sonner-toaster] [data-sonner-toast] [data-description] {
+  color: var(--muted);
+}
+
+.devflow-toaster [data-icon] {
+  padding-top: 2px;
+  color: var(--accent);
+}
+
+.devflow-toaster [data-type='error'] [data-icon] {
+  color: var(--destructive);
+}
+
+.devflow-toaster [data-type='warning'] [data-icon] {
+  color: var(--amber-ink);
+}
+
+.devflow-toaster [data-type='info'] [data-icon] {
+  color: var(--blue-ink);
+}
+
+.devflow-toaster [data-close-button] {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: var(--control-height);
+  height: var(--control-height);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--muted);
+}
+
+.devflow-toaster [data-button] {
+  grid-column: 2;
+  justify-self: start;
+  min-height: var(--control-height);
+  max-width: 100%;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: start;
+  overflow-wrap: anywhere;
+}
+
+.devflow-toaster [data-close-button]:hover {
+  background: var(--surface-soft);
+  color: var(--ink);
+}
+
+.devflow-toaster [data-visible='false'] {
+  visibility: hidden;
+}
+
+.devflow-toaster [data-sonner-toast][data-expanded='false'][data-front='false'] > * {
+  visibility: hidden;
+}
+
+.devflow-toaster:focus-visible,
+.devflow-toaster [data-sonner-toast]:focus-visible,
+.devflow-toaster button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .devflow-toaster[data-sonner-toaster],
+  .devflow-toaster [data-sonner-toast],
+  .devflow-toaster [data-sonner-toast] > * {
+    transition: none;
+    animation: none;
+  }
+}

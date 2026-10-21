@@ -37,11 +37,15 @@ Etap zakończono raportem i decyzją użytkownika o dalszej pracy. Zmiany scalon
 - [x] React Router, trasy modułów i strona nieznalezionego adresu.
 - [x] Motyw jasny, ciemny i systemowy z zapamiętaniem preferencji.
 - [x] Skeletony i wspólne stany ładowania oraz braku danych.
-- [ ] Toasty.
+- [x] Toasty.
 - [ ] Obsługa błędów.
 - [ ] Weryfikacja klawiatury, kontrastu, dialogów i urządzeń mobilnych.
 
-Bieżąca gałąź: `feat/ui-states`, utworzona z `feat/app-shell` przy `4e080ce`. Przygotowano wspólne tokeny, wybór motywu i komponenty shadcn/ui (`Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet`, `Table`). Akcje strony i katalog korzystają ze wspólnych komponentów, a nawigacja mobilna z modalnego panelu. React Router obsługuje ekran publiczny, `/app`, dziesięć adresów planowanych modułów i stronę 404. Układ aplikacji ma sidebar, topbar ze ścieżką strony i motywem oraz lewe menu mobilne. Bieżące kontrole: lint, formatowanie, typy, build, 19 testów React i 76 scenariuszy E2E, w tym routing, aktywne linki, fokus, przewijanie, zmiana rozmiaru oraz audyty axe z otwartym i zamkniętym menu w obu motywach. Dialog oraz cztery kierunki panelu sprawdzono również w odizolowanym podglądzie w 20 kombinacjach, a tabelę w 6 wariantach szerokości i motywu. Gotowe są również `Skeleton`, `LoadingState` i `EmptyState`; wspólny stan informacyjny jest używany w planowanych modułach. Toasty, obsługa błędów i końcowa weryfikacja pozostają do wykonania.
+Bieżąca gałąź: `feat/toasts`, utworzona z `feat/ui-states` przy `455e832`. Obejmuje zależności od stanów interfejsu i układu aplikacji, które nie zostały jeszcze scalone do `main`.
+
+Gotowe są tokeny, motywy, podstawowe komponenty shadcn/ui, dialogi, panel mobilny, tabela, routing, sidebar i topbar oraz stany ładowania i braku danych. Toasty mają wspólną instancję, typowane API, cztery rodzaje komunikatów, opcjonalną akcję, kontrolowany czas wyświetlania i obsługę klawiatury. Ich użycie w modułach będzie powiązane z rzeczywistymi operacjami. [Szczegóły i podgląd](docs/toasts.md).
+
+Bieżące kontrole: lint, formatowanie, typy, build, 22 testy React i 76 scenariuszy E2E. Osobne podglądy objęły dialogi i panele w 20 kombinacjach, tabelę w 6 wariantach, stany interfejsu w 15 widokach oraz toasty w 5 wariantach rozmiaru i motywu. Testy sprawdzają klawiaturę, fokus, RWD, błędy wykonania oraz reguły axe. Obsługa błędów i końcowa weryfikacja pozostają do wykonania.
 
 ## ETAP 3 — Supabase i relacyjny model danych · TODO
 
@@ -174,7 +178,7 @@ Bieżąca gałąź: `feat/ui-states`, utworzona z `feat/app-shell` przy `4e080ce
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza i zapisuje stany interfejsu: `feat(ui): add loading and empty states`.
-2. Agent czeka na potwierdzenie commita i push, a następnie podaje komendy nowej gałęzi dla toastów. Kodowanie zaczyna dopiero po potwierdzeniu gałęzi.
-3. Obsługa błędów i końcowa weryfikacja powstaną w kolejnych małych zadaniach ETAPU 2.
+1. Użytkownik sprawdza i zapisuje toasty: `feat(ui): add shared toast notifications`.
+2. Agent czeka na potwierdzenie commita i push, a następnie podaje komendy nowej gałęzi dla obsługi błędów. Kodowanie zaczyna dopiero po potwierdzeniu gałęzi.
+3. Obsługa błędów i końcowa weryfikacja pozostają zadaniami ETAPU 2.
 4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia. Kolejny etap wymaga osobnej decyzji użytkownika.
