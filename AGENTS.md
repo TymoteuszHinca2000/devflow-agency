@@ -31,6 +31,7 @@ src/
     client-portal/
     notifications/
     settings/
+    welcome/            # Publiczny ekran powitalny
   hooks/                # Hooki współdzielone przez funkcjonalności
   lib/                  # Konfiguracja bibliotek i infrastruktura
   services/             # Współdzielony dostęp do zewnętrznych usług

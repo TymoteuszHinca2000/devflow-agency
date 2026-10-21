@@ -15,12 +15,17 @@ Statusy: **TODO**, **IN PROGRESS**, **DONE**. Zakończenie etapu oznacza działa
 | `.gitignore` i bezpieczny `.env.example`                        | DONE   |
 | Konfiguracja Vitest, Testing Library i Playwright               | DONE   |
 | AGENTS, README, ROADMAP i CHANGELOG                             | DONE   |
-| Profesjonalny, responsywny ekran startowy                       | TODO   |
+| Nagłówek, menu mobilne, główna sekcja powitalna i stopka        | DONE   |
+| Katalog planowanych modułów z filtrowaniem                      | TODO   |
+| Wizualny, rozwijany plan rozwoju na stronie                     | TODO   |
+| Screenshoty aktualnej sekcji powitalnej                         | DONE   |
 | Końcowa weryfikacja: typy, lint, build, testy, klawiatura i RWD | TODO   |
-| Wyjaśnienie zamykania runnera Playwright w Windows              | TODO   |
+| Naprawa zamykania runnera Playwright w Windows                  | DONE   |
 | Raport i decyzja o ETAPIE 2                                     | TODO   |
 
 Nie implementować logowania ani bazy. Katalogi przyszłych modułów rezerwują miejsce na dalszy rozwój.
+
+Bieżąca sekcja przeszła lint, formatowanie, kontrolę typów, build, 2 testy React i 12 scenariuszy Playwright, w tym kontrole axe-core obu motywów. Następne sekcje otrzymają osobne commity po potwierdzeniu użytkownika.
 
 ## ETAP 2 — Design system i układ aplikacji · TODO
 
@@ -163,7 +168,8 @@ Nie implementować logowania ani bazy. Katalogi przyszłych modułów rezerwują
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza i commituje dokumentację na `feat/project-foundation`.
-2. Po potwierdzeniu agent przygotowuje ekran startowy w ETAPIE 1 i wyjaśnia zamykanie runnera E2E.
-3. Po kontrolach agent przekazuje kolejne polecenia Git i czeka na potwierdzenie.
-4. Po zakończeniu ETAPU 1 agent przedstawia raport i czeka na decyzję o ETAPIE 2.
+1. Użytkownik sprawdza i zapisuje nagłówek oraz główną sekcję: `feat(welcome): add header and hero section`.
+2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje katalog planowanych modułów.
+3. Po commicie katalogu i potwierdzeniu użytkownika agent przygotowuje sekcję roadmapy.
+4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia.
+5. Po zakończeniu ETAPU 1 użytkownik podejmuje osobną decyzję o ETAPIE 2. Nowy branch także tworzy użytkownik po otrzymaniu poleceń.

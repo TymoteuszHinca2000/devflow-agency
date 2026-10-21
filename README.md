@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAP 1 w trakcie realizacji.** Działa fundament React + TypeScript + Vite i podstawowy ekran startowy. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: ETAP 1 w trakcie realizacji.** Działa fundament React + TypeScript + Vite oraz nagłówek, responsywna sekcja powitalna i stopka. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -14,8 +14,19 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Struktura katalogów przygotowana pod moduły biznesowe.
 - Vitest, React Testing Library i konfiguracja Playwright dla desktopu i telefonu.
 - `.env.example`, wykluczenie lokalnej konfiguracji i wersjonowany lockfile.
+- Nagłówek z nawigacją desktopową i rozwijanym menu mobilnym.
+- Sekcja powitalna z ilustracją koncepcji produktu oraz linkami do kodu i planu rozwoju.
+- Wspólne logo, przyciski w formie linków, lokalne fonty i favicon.
+- Kolorystyka zgodna z jasnym lub ciemnym motywem systemu i obsługa ograniczenia ruchu.
+- Skip link, obsługa klawiatury i przywracanie fokusu po zamknięciu menu.
 
-Profesjonalny ekran powitalny i pełna weryfikacja są następnym zadaniem ETAPU 1. Screenshoty zostaną dodane po sprawdzeniu interfejsu. Nie ma jeszcze wdrożonego demo.
+Katalog planowanych modułów z filtrowaniem i rozwijana roadmapa na stronie zostaną dodane w kolejnych małych zadaniach ETAPU 1. Ręczny wybór motywu jest zaplanowany na ETAP 2. Nie ma jeszcze wdrożonego demo.
+
+## Podgląd aktualnej sekcji powitalnej
+
+![DevFlow Agency — nagłówek i sekcja powitalna](docs/screenshots/welcome-desktop.png)
+
+[Ciemny motyw](docs/screenshots/welcome-dark.png) · [Widok mobilny](docs/screenshots/welcome-mobile.png)
 
 ## Stack
 
@@ -109,7 +120,7 @@ Podstawowa kontrola:
 npm run check
 ```
 
-Przy pierwszym użyciu E2E zainstaluj Chromium. Konfiguracja Playwright uruchamia podgląd na porcie 4173; wcześniej wykonaj build:
+Przy pierwszym użyciu E2E zainstaluj Chromium. Przed testami wykonaj build:
 
 ```powershell
 npx playwright install chromium
@@ -117,11 +128,20 @@ npm run build
 npm run test:e2e
 ```
 
-Zatrzymaj inne podglądy na porcie 4173, aby testować właściwy build. Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `test-results/`; oba katalogi są ignorowane przez Git.
+Testy importują `test` i `expect` z `e2e/fixtures.ts`. Każdy test uruchamia podgląd produkcyjnego `dist/` na wolnym porcie przez API Vite i zamyka go w `finally` przez `server.close()`. Nie używa starszego, już uruchomionego podglądu ani systemowego zamykania drzewa procesów.
 
-**Aktualna weryfikacja:** lint, formatowanie, test React i build przeszły na Node 24.19.0. Dwa scenariusze Playwright wykonały asercje poprawnie, ale runner nie zakończył procesu i został przerwany. Pełny przebieg E2E nie jest jeszcze zaliczony. Wyjaśnienie zamykania runnera oraz sprawdzenie docelowego ekranu startowego pozostają zadaniami ETAPU 1.
+Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `test-results/`; oba katalogi są ignorowane przez Git.
 
-Testy automatyczne uzupełnia ręczna kontrola klawiatury, małego ekranu i powiększenia tekstu. Kolejne moduły otrzymają testy zachowania i uprawnień.
+**Weryfikacja nagłówka i sekcji powitalnej na Node 24.19.0:**
+
+- Lint, formatowanie, TypeScript i build: poprawne.
+- Vitest / Testing Library: 2 zaliczone testy.
+- Playwright / Chromium: 12 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
+- Sprawdzono menu mobilne, klawiaturę, przywracanie fokusu, cele linków wewnętrznych i ograniczenie ruchu.
+- axe-core: brak automatycznie wykrytych naruszeń WCAG A/AA w jasnym i ciemnym widoku na obu urządzeniach.
+- Przejrzano zrzuty dla szerokości 320, 390, 768 i 1440 px; bez poziomego przepełnienia.
+
+Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Kolejne sekcje i moduły otrzymają testy w ramach swoich zadań.
 
 ## Architektura
 
@@ -144,6 +164,7 @@ src/
     client-portal/
     notifications/
     settings/
+    welcome/
   hooks/
   lib/
   services/
@@ -193,6 +214,8 @@ Stosuj spójne commity według Conventional Commits. Przed commitem przejrzyj di
 - [Tailwind CSS — integracja z Vite](https://tailwindcss.com/docs/installation/using-vite)
 - [typescript-eslint — wspierane zależności](https://typescript-eslint.io/users/dependency-versions/)
 - [Vite — publiczne zmienne środowiskowe](https://vite.dev/guide/env-and-mode)
+- [Vite — API podglądu](https://vite.dev/guide/api-javascript#preview)
+- [Playwright — kontrola dostępności](https://playwright.dev/docs/accessibility-testing)
 
 ## Licencja
 
