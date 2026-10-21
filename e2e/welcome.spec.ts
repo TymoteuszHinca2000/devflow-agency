@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './fixtures'
 
 test('loads the application without runtime errors or horizontal overflow', async ({ page }) => {
   const errors: string[] = []
