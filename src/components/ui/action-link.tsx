@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react'
+import { Button } from './button'
 
 type ActionLinkProps = ComponentProps<'a'> & { variant?: 'primary' | 'secondary' }
 
@@ -9,8 +10,13 @@ export function ActionLink({
   ...props
 }: ActionLinkProps) {
   return (
-    <a className={`action-link action-link--${variant} ${className}`} {...props}>
-      {children}
-    </a>
+    <Button
+      asChild
+      variant={variant === 'primary' ? 'default' : 'outline'}
+      size="lg"
+      className={`action-link ${className}`}
+    >
+      <a {...props}>{children}</a>
+    </Button>
   )
 }

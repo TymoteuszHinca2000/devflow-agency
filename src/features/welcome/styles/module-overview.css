@@ -74,7 +74,7 @@
   padding: 26px;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: var(--radius-card);
   transition:
     transform 0.2s,
     border-color 0.2s,

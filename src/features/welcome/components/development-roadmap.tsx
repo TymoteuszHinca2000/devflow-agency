@@ -6,6 +6,7 @@ export function DevelopmentRoadmap() {
   return (
     <section
       id="plan-rozwoju"
+      tabIndex={-1}
       className="roadmap-section section-anchor"
       aria-labelledby="roadmap-title"
     >
@@ -24,7 +25,7 @@ export function DevelopmentRoadmap() {
             kierunek dalszego rozwoju.
           </p>
           <a
-            href="https://github.com/TymoteuszHinca2000/devflow-agency/blob/feat/project-foundation/ROADMAP.md"
+            href="https://github.com/TymoteuszHinca2000/devflow-agency/blob/main/ROADMAP.md"
             className="roadmap-document-link"
             target="_blank"
             rel="noreferrer"
@@ -49,7 +50,7 @@ export function DevelopmentRoadmap() {
                     {phase.range}
                     {phase.current && (
                       <span className="phase-status">
-                        <span className="status-dot" /> W realizacji
+                        <span className="status-dot" /> Gotowe do odbioru
                       </span>
                     )}
                   </span>
@@ -61,7 +62,7 @@ export function DevelopmentRoadmap() {
                 <p>{phase.description}</p>
                 {phase.current && (
                   <span className="phase-current-label">
-                    Aktualnie: ETAP 1 — fundament projektu.
+                    ETAP 2 zweryfikowany. Kolejny etap po zatwierdzeniu.
                   </span>
                 )}
               </div>

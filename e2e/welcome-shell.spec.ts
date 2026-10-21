@@ -42,7 +42,7 @@ test('fits compact and tablet screens with working anchors and reduced motion', 
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
-  for (const width of [320, 768, 1280]) {
+  for (const width of [320, 768, 1000, 1001, 1200, 1280]) {
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/')
     await page.evaluate(() => document.fonts.ready)
@@ -66,6 +66,7 @@ test('fits compact and tablet screens with working anchors and reduced motion', 
 for (const colorScheme of ['light', 'dark'] as const) {
   test(`has no automatically detected WCAG A/AA violations in ${colorScheme} mode`, async ({
     page,
+    isMobile,
   }) => {
     await page.emulateMedia({ colorScheme })
     await page.goto('/')
@@ -73,9 +74,18 @@ for (const colorScheme of ['light', 'dark'] as const) {
     for (const phase of await page.locator('details').all()) {
       if ((await phase.getAttribute('open')) === null) await phase.locator('summary').click()
     }
+    if (isMobile) await page.getByRole('button', { name: 'Otwórz nawigację' }).click()
     const result = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze()
     expect(result.violations).toEqual([])
+    if (isMobile) {
+      await page.getByRole('button', { name: 'Zamknij nawigację' }).click()
+      await expect(page.getByRole('dialog')).toBeHidden()
+      const pageResult = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+        .analyze()
+      expect(pageResult.violations).toEqual([])
+    }
   })
 }

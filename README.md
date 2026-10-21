@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAP 1 oczekuje na podsumowanie i decyzję użytkownika.** Działa fundament React + TypeScript + Vite, ekran powitalny, katalog planowanych modułów z filtrowaniem i rozwijana roadmapa. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: zakres ETAPÓW 1 i 2 ukończony i zweryfikowany; ETAP 3 nierozpoczęty.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Design system, routing, układ aplikacji, stany, toasty i błędy przygotowano na gałęziach ETAPU 2. Bieżąca gałąź `chore/stage-2-verification` zawiera ich końcową kontrolę i poprawkę toastów na niskich ekranach. [Raport ETAPU 2](docs/stage-2-report.md). Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -14,35 +14,54 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Struktura katalogów przygotowana pod moduły biznesowe.
 - Vitest, React Testing Library i konfiguracja Playwright dla desktopu i telefonu.
 - `.env.example`, wykluczenie lokalnej konfiguracji i wersjonowany lockfile.
-- Nagłówek z nawigacją desktopową i rozwijanym menu mobilnym.
+- Nagłówek z nawigacją desktopową i wysuwanym, modalnym panelem mobilnym.
 - Sekcja powitalna z ilustracją koncepcji produktu oraz linkami do kodu i planu rozwoju.
 - Wspólne logo, przyciski w formie linków, lokalne fonty i favicon.
-- Kolorystyka zgodna z jasnym lub ciemnym motywem systemu i obsługa ograniczenia ruchu.
+- Wspólne tokeny kolorów, fontów, odstępów, zaokrągleń i fokusu, dostępne również w Tailwind CSS.
+- Lokalne komponenty shadcn/ui: `Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet` i `Table`, dostosowane do palety DevFlow.
+- Dialogi i panele z tytułem, opisem, zamykaniem przez Escape i tło, blokadą przewijania oraz zarządzaniem fokusem.
+- Wspólna tabela z podpisem, nagłówkami kolumn i wierszy, stopką oraz obszarem przewijania dostępnym klawiaturą. Komponent jest przygotowany do użycia w kolejnych modułach.
+- `Skeleton`, `LoadingState` w układzie kart lub listy oraz `EmptyState` z opisem i akcjami. Ozdobne szkielety są ukryte przed czytnikami ekranu, a animacja respektuje ograniczenie ruchu.
+- Wspólny stan informacyjny w planowanych modułach; komponent ładowania jest przygotowany do przyszłych widoków pobierających dane.
+- Globalny `Toaster` i typowane API `notify`: informacje, potwierdzenia, ostrzeżenia i błędy, opcjonalna akcja, aktualizacja komunikatu oraz obsługa klawiatury. Przygotowane do rzeczywistych operacji w kolejnych modułach.
+- Wspólny `ErrorState` oraz granice błędów renderowania całej aplikacji i pojedynczej strony. Ponowienie, zachowanie nawigacji przy awarii strony oraz odzyskanie tytułu i fokusu.
+- React Router: publiczny ekran `/`, lista obszarów `/app` i osobne adresy dziesięciu planowanych modułów.
+- Link „Zobacz moduły aplikacji” na stronie głównej oraz strona 404 z działającymi linkami powrotu.
+- Zmiana tytułu dokumentu i fokusu po przejściu między stronami, historia przeglądarki i powrót do sekcji planu rozwoju.
+- Stały sidebar aplikacji na komputerze i topbar ze ścieżką bieżącej strony oraz wyborem motywu.
+- Aktywne linki modułów z `aria-current`, wspólna nawigacja i wysuwane z lewej menu do szerokości 1000 px.
+- Zamykanie menu po wyborze modułu, zmianie ścieżki i przejściu na desktop; obsługa Escape, tła oraz przekazywania fokusu.
+- Wspólny przycisk w akcjach strony i wspólna karta w katalogu; stany pól przygotowane do kolejnych formularzy.
+- Wybór motywu jasnego, ciemnego lub systemowego z zapamiętywaniem ustawienia i obsługą ograniczenia ruchu.
+- Reakcja na zmianę motywu systemu i synchronizacja wyboru między kartami przeglądarki.
+- Odczyt zapisanego motywu przed uruchomieniem Reacta oraz obsługa blokady zapisu ustawień.
 - Skip link, obsługa klawiatury i przywracanie fokusu po zamknięciu menu.
 - Katalog sześciu planowanych modułów z filtrami „Wszystkie”, „Praca zespołu” i „Relacje z klientami”.
 - Licznik wyników dostępny dla czytników ekranu oraz obsługa filtrów klawiaturą.
 - Przejście do katalogu przez przycisk „Poznaj możliwości” i link w nagłówku.
-- Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 1.
+- Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 2.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Zakres kodu ETAPU 1 jest przygotowany i sprawdzony. Po zatwierdzeniu ostatniej sekcji pozostają podsumowanie etapu i osobna decyzja o dalszej pracy. Ręczny wybór motywu jest zaplanowany na ETAP 2. Nie ma jeszcze wdrożonego demo.
+ETAP 2 jest gotowy do odbioru i zapisania wyników weryfikacji. Kolejny etap wymaga osobnej decyzji oraz konfiguracji Supabase. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych. [Stany interfejsu](docs/ui-states.md) · [Toasty](docs/toasts.md) · [Obsługa błędów](docs/error-handling.md).
 
 ## Podgląd aktualnej sekcji powitalnej
 
 ![DevFlow Agency — ekran powitalny, katalog modułów i plan rozwoju](docs/screenshots/welcome-desktop.png)
 
-[Ciemny motyw](docs/screenshots/welcome-dark.png) · [Widok mobilny](docs/screenshots/welcome-mobile.png)
+[Ciemny motyw](docs/screenshots/welcome-dark.png) · [Widok mobilny](docs/screenshots/welcome-mobile.png) · [Wybór motywu na telefonie](docs/screenshots/theme-selector-mobile.png)
+
+Motyw wybierzesz w nawigacji. Przy szerokości do 1000 px otwórz wysuwany panel. Fokus pozostaje w nim do zamknięcia; Escape, przycisk zamknięcia i kliknięcie tła przywracają go do przycisku menu. Wybranie sekcji przenosi fokus do jej treści, a poszerzenie okna do 1001 px zamyka panel i aktywuje nawigację desktopową. „Systemowy” śledzi ustawienia systemu na bieżąco; wybór ręczny pozostaje po odświeżeniu. Gdy przeglądarka blokuje zapis, ustawienie działa w bieżącej sesji.
 
 ## Stack
 
-| Obszar                  | Zainstalowane w ETAPIE 1                                               | Planowane                                                 |
-| ----------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------- |
-| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4                             | React Router, TanStack Query                              |
-| Interfejs               | Tailwind CSS 4.3.3, Lucide React, lokalne fonty Manrope i DM Sans      | shadcn/ui, Recharts, dnd-kit                              |
-| Formularze i stan       | Stan lokalny React                                                     | React Hook Form, Zod; Zustand przy rzeczywistej potrzebie |
-| Backend                 | Brak integracji w ETAPIE 1                                             | Supabase, PostgreSQL, Auth, Storage, RLS, Edge Functions  |
-| Jakość                  | ESLint 10, Prettier 3, Vitest 5, Testing Library, Playwright, axe-core | Testy modułów i izolacji organizacji                      |
-| Automatyzacja i hosting | Lokalne skrypty kontroli jakości                                       | GitHub Actions, Vercel                                    |
+| Obszar                  | Zainstalowane                                                                              | Planowane                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
+| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4, React Router 8.4.0                             | TanStack Query                                            |
+| Interfejs               | Tailwind CSS 4.3.3, shadcn/ui (Radix), Sonner 2.0.8, Lucide React, fonty Manrope i DM Sans | Recharts, dnd-kit                                         |
+| Formularze i stan       | Stan lokalny React                                                                         | React Hook Form, Zod; Zustand przy rzeczywistej potrzebie |
+| Backend                 | Brak integracji w ETAPIE 1                                                                 | Supabase, PostgreSQL, Auth, Storage, RLS, Edge Functions  |
+| Jakość                  | ESLint 10, Prettier 3, Vitest 5, Testing Library, Playwright, axe-core                     | Testy modułów i izolacji organizacji                      |
+| Automatyzacja i hosting | Lokalne skrypty kontroli jakości                                                           | GitHub Actions, Vercel                                    |
 
 Dokładne wersje są w `package.json` i `package-lock.json`. TypeScript 6.0.3 wybrano dla zgodności: zainstalowane `typescript-eslint` wspiera TypeScript `<6.1.0`. Nie wymuszamy nieobsługiwanych zależności przez `--force` ani `--legacy-peer-deps`.
 
@@ -70,7 +89,7 @@ Dla nowej kopii repozytorium:
 ```powershell
 git clone https://github.com/TymoteuszHinca2000/devflow-agency.git
 cd devflow-agency
-git switch feat/project-foundation
+git switch chore/stage-2-verification
 npm ci
 npm run dev
 ```
@@ -86,9 +105,11 @@ npm run dev
 
 Vite wypisze lokalny adres, zwykle `http://127.0.0.1:5173`. Jeśli port jest zajęty, użyj adresu wyświetlonego przez serwer. Zatrzymanie: `Ctrl+C`.
 
+Kliknij „Zobacz moduły aplikacji” albo dopisz `/app` do lokalnego adresu. Sprawdź też bezpośrednie wejście na `/app/projects`, odświeżenie i nieznany adres, np. `/brak-strony`. Mapa adresów: [Routing aplikacji](docs/routing.md). Układ, obsługa menu i zrzuty: [Sidebar i topbar](docs/app-shell.md).
+
 ## Środowisko
 
-**ETAP 1 działa bez `.env`, konta Supabase i kluczy.** `.env.example` dokumentuje wyłącznie przyszłe publiczne wartości:
+**ETAPY 1 i 2 działają bez `.env`, konta Supabase i kluczy.** `.env.example` dokumentuje wyłącznie przyszłe publiczne wartości:
 
 ```dotenv
 VITE_SUPABASE_URL=
@@ -140,14 +161,25 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 **Weryfikacja ekranu powitalnego, katalogu i roadmapy na Node 24.19.0:**
 
 - Lint, formatowanie, TypeScript i build: poprawne.
-- Vitest / Testing Library: 4 zaliczone testy.
-- Playwright / Chromium: 24 zaliczone scenariusze na desktopie i telefonie; proces zakończył się kodem `0`.
+- Vitest / Testing Library: 27 zaliczonych testów.
+- Playwright / Chromium: 80 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
 - Sprawdzono filtrowanie, licznik wyników, nawigację do sekcji, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
 - Roadmapa: domyślnie otwarty bieżący obszar, niezależne rozwijanie pozostałych, obsługa Enter i Spacji oraz zachowanie fokusu.
-- axe-core: brak automatycznie wykrytych naruszeń WCAG A/AA w jasnym i ciemnym widoku na obu urządzeniach, także po otwarciu wszystkich opisów roadmapy.
+- Sprawdzono ręczne nadpisanie motywu systemowego, zapis i odświeżanie, reakcję na zmiany systemu, klawiaturę, synchronizację kart, nieprawidłowy zapis i blokadę pamięci przeglądarki.
+- Osobne scenariusze potwierdzają odczyt zapisanego motywu także przed załadowaniem modułu React.
+- axe-core: brak automatycznie wykrytych naruszeń WCAG A/AA w jasnym i ciemnym widoku na obu urządzeniach, także po otwarciu wszystkich opisów roadmapy i menu mobilnego z wyborem motywu.
 - Przejrzano zrzuty dla szerokości 320, 390, 768 i 1440 px; bez poziomego przepełnienia.
+- W odizolowanym podglądzie komponentów UI sprawdzono oba motywy, fokus pól, opisy błędów, wysokość 44 px i brak przepełnienia; axe nie wykrył naruszeń sprawdzanych reguł WCAG A/AA.
+- Testy panelu obejmują zapętlenie fokusu, zamknięcie przez Escape, przycisk i tło, przywracanie przewijania, przejście do sekcji i zmianę szerokości okna. Sprawdzono też widok 320 × 320 px z ograniczeniem ruchu.
+- W osobnym podglądzie sprawdzono dialog i cztery kierunki panelu w 20 kombinacjach rozmiarów i motywów, z kontrolą klawiatury, granic ekranu, błędów wykonania i axe. Podgląd nie jest dodatkową stroną aplikacji.
+- W odizolowanym podglądzie tabeli sprawdzono 6 wariantów szerokości i motywu oraz widok z danymi i pusty. Przewijanie strzałkami, przechodzenie fokusu, semantyka nagłówków i podpisu, brak przepełnienia strony oraz audyty axe zakończyły się poprawnie. Szczegóły i zrzuty: [Wspólne komponenty UI](docs/ui-components.md).
+- Routing: przejścia bez przeładowania dokumentu, wszystkie adresy modułów, odświeżenie bezpośredniego adresu, Wstecz/Dalej, zachowanie motywu, tytuły, fokus, kotwice i odzyskanie nawigacji ze strony 404.
+- Strony `/app`, podgląd modułu i 404 przeszły audyty axe w obu motywach na desktopie i telefonie. Sprawdzono również szerokość 320 px, skip link oraz nieprawidłowy fragment URL.
+- Sidebar i topbar: aktywny link, ścieżka strony, historia, zachowanie przy przewijaniu i dostępność dolnych linków na niskim ekranie. Menu aplikacji: fokus, blokada tła, Escape, zamknięcie przyciskiem i tłem, wybór bieżącego lub innego modułu oraz powiększenie do desktopu. Audyty axe przeszły także dla otwartego menu w obu motywach.
 
 Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Kolejne sekcje i moduły otrzymają testy w ramach swoich zadań.
+
+Wspólne toasty przeszły również osobną kontrolę w 5 wariantach rozmiaru i motywu: czas wyświetlania, wstrzymanie i wznowienie odliczania, trwałe komunikaty, aktualizacja, akcja, klawiatura, motywy oraz axe. [Opis API i screenshoty](docs/toasts.md).
 
 ## Architektura
 
@@ -187,7 +219,15 @@ Komponenty, hooki, serwisy, walidacja i typy modułu pozostają w jego katalogu 
 
 Katalog na stronie startowej ma dane opisowe w `src/features/welcome/data/planned-modules.ts` oraz osobne style w `src/features/welcome/styles/module-overview.css`. Filtry działają lokalnie w React. Opisy przedstawiają plan produktu i nie zastępują danych z przyszłego backendu.
 
-Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz style w `src/features/welcome/styles/development-roadmap.css`. Natywne elementy HTML `details` i `summary` obsługują rozwijanie i klawiaturę. Pierwszy obszar obejmuje etapy 1–2, ale etykieta wskazuje, że obecnie realizowany jest wyłącznie etap 1.
+Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz style w `src/features/welcome/styles/development-roadmap.css`. Natywne elementy HTML `details` i `summary` obsługują rozwijanie i klawiaturę. Pierwszy obszar obejmuje etapy 1–2; etykieta wskazuje zakończenie weryfikacji i oczekiwanie na odbiór przed kolejnym etapem.
+
+Wspólne tokeny znajdują się w `src/styles/tokens.css`, a provider motywu w `src/lib/theme/`. `public/theme-init.js` odczytuje preferencję przed uruchomieniem aplikacji. Szczegóły użycia i architektury: [Wspólne style i motyw](docs/design-tokens.md).
+
+Komponenty UI są w `src/components/ui/`, a adapter ich semantycznych tokenów w `src/styles/ui.css`. `components.json` opisuje konfigurację shadcn/ui. Przykłady i podgląd: [Wspólne komponenty UI](docs/ui-components.md).
+
+`src/app/app-routes.tsx` określa trasy, `app-modules.ts` opisy obszarów, a `route-effects.tsx` tytuły i przekazywanie fokusu. Widoki planowanych modułów są w `src/app/pages/`; ich funkcje biznesowe powstaną w katalogach `features/` we właściwych etapach. [Szczegóły routingu](docs/routing.md).
+
+Trasy `/app` korzystają z `AppLayout` i wspólnej nawigacji w `src/components/layout/`. Sidebar, topbar i menu mobilne są osobnymi komponentami; ich style znajdują się w `src/styles/app-shell.css`. Nieznane adresy wewnątrz `/app` zachowują układ aplikacji. [Opis układu](docs/app-shell.md).
 
 Docelowo PostgreSQL i RLS zapewnią izolację organizacji, Storage będzie prywatny, a operacje wymagające zaufanej logiki obsłużą Edge Functions. W ETAPIE 1 nie ma migracji, seeda ani połączenia z bazą. Szczegóły: [ROADMAP.md](ROADMAP.md) i [AGENTS.md](AGENTS.md).
 
@@ -201,13 +241,15 @@ Docelowo PostgreSQL i RLS zapewnią izolację organizacji, Storage będzie prywa
 - Timer, ręczne wpisy czasu, stawki, raporty i eksport.
 - Wyceny, pozycje kosztorysu, historia i PDF.
 - Portal klienta: projekty, komentarze, pliki i akceptacja wycen.
-- Ustawienia, powiadomienia i motyw jasny/ciemny.
+- Ustawienia konta i preferencje powiadomień.
 
 To zakres docelowy, a nie obecnie dostępne funkcje.
 
 ## Git workflow
 
-Branch roboczy: `feat/project-foundation`. Agent przygotowuje zmiany, a użytkownik wykonuje operacje Git po otrzymaniu instrukcji. Agent wstrzymuje edycję do potwierdzenia wykonania poleceń.
+Każda nowa funkcjonalność ma osobną gałąź, także w ramach tego samego etapu. Agent podaje polecenia jej utworzenia i publikacji oraz czeka na potwierdzenie przed kodowaniem. Użytkownik wykonuje także staging, commity i push. Po każdym logicznym zadaniu agent zatrzymuje edycję do potwierdzenia wykonania poleceń.
+
+Bieżący branch: `chore/stage-2-verification`, utworzony z `feat/error-handling` przy `a98b4e3`. Zawiera cały zakres ETAPU 2. Gałąź `feat/error-handling` powstała z `feat/toasts` przy `12174ff`, `feat/toasts` z `feat/ui-states` przy `455e832`, a `feat/ui-states` z `feat/app-shell` przy `4e080ce`. Gałąź ETAPU 2, `feat/app-shell`, powstała z `main` po scaleniu ETAPU 1 przez PR #1 (`56029a8`). Scalenie zakresu ETAPU 2 pozostaje osobną czynnością użytkownika.
 
 Przed pracą sprawdzaj:
 
@@ -230,3 +272,5 @@ Stosuj spójne commity według Conventional Commits. Przed commitem przejrzyj di
 ## Licencja
 
 [MIT](LICENSE) — © 2026 Tymoteusz Hinca.
+
+Adaptowane komponenty shadcn/ui zachowują informację o autorze i licencji: [Third-party notices](docs/third-party-notices.md).

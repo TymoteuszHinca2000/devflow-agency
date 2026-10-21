@@ -1,0 +1,42 @@
+.theme-selector {
+  position: relative;
+  flex-shrink: 0;
+  color: var(--ink);
+}
+.theme-selector > svg {
+  position: absolute;
+  top: 50%;
+  left: var(--space-3);
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+.theme-selector select {
+  display: block;
+  width: 100%;
+  min-height: var(--control-height);
+  padding: var(--space-2) var(--space-2) var(--space-2) 2.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--text-control);
+  cursor: pointer;
+  transition: border-color var(--duration-fast);
+}
+.theme-selector select:hover {
+  border-color: var(--accent);
+}
+
+@media (max-width: 1000px) {
+  .header-nav .theme-selector {
+    margin-top: var(--space-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-selector select {
+    transition: none;
+  }
+}
