@@ -1,0 +1,28 @@
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme inline {
+  --color-background: var(--canvas);
+  --color-foreground: var(--ink);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--ink);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--on-primary);
+  --color-secondary: var(--surface-soft);
+  --color-secondary-foreground: var(--ink);
+  --color-muted: var(--surface-soft);
+  --color-muted-foreground: var(--muted);
+  --color-accent: var(--accent-soft);
+  --color-accent-foreground: var(--ink);
+  --color-input: var(--input-border);
+  --color-ring: var(--focus-ring);
+  --color-destructive: var(--destructive);
+  --radius-sm: calc(var(--radius-control) - 0.25rem);
+  --radius-md: calc(var(--radius-control) - 0.125rem);
+  --radius-lg: var(--radius-control);
+  --radius-xl: var(--radius-card);
+}
+
+:root {
+  --input-border: light-dark(#7b8a80, #718b79);
+  --destructive: light-dark(#b42318, #ffb4ab);
+}

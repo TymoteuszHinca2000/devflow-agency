@@ -1,4 +1,5 @@
 import { useId, useState } from 'react'
+import { Card } from '@/components/ui/card'
 import { moduleFilters, plannedModules } from '../data/planned-modules'
 import type { ModuleCategory } from '../data/planned-modules'
 import '../styles/module-overview.css'
@@ -58,16 +59,18 @@ export function ModuleOverview() {
       </div>
       <ul id={listId} className="module-grid" aria-label="Planowane moduły">
         {modules.map(({ id, title, stage, icon: Icon, description, capabilities }) => (
-          <li key={id} className="module-card">
-            <div className="module-card-top">
-              <span className="module-icon">
-                <Icon size={23} strokeWidth={1.6} aria-hidden="true" />
-              </span>
-              <span className="module-stage">ETAP {stage.toString().padStart(2, '0')}</span>
-            </div>
-            <h3>{title}</h3>
-            <p>{description}</p>
-            <span className="module-capabilities">{capabilities.join(' · ')}</span>
+          <li key={id}>
+            <Card className="module-card h-full gap-0 py-0">
+              <div className="module-card-top">
+                <span className="module-icon">
+                  <Icon size={23} strokeWidth={1.6} aria-hidden="true" />
+                </span>
+                <span className="module-stage">ETAP {stage.toString().padStart(2, '0')}</span>
+              </div>
+              <h3>{title}</h3>
+              <p>{description}</p>
+              <span className="module-capabilities">{capabilities.join(' · ')}</span>
+            </Card>
           </li>
         ))}
       </ul>

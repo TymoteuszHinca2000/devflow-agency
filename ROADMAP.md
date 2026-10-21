@@ -30,14 +30,16 @@ Etap zakończono raportem i decyzją użytkownika o dalszej pracy. Zmiany scalon
 ## ETAP 2 — Design system i układ aplikacji · IN PROGRESS
 
 - [x] Tokeny kolorów, typografii, odstępów i stanów interakcji.
-- [ ] shadcn/ui oraz wspólne przyciski, pola, karty, dialogi i tabele.
+- [x] Konfiguracja shadcn/ui oraz wspólne przyciski, pola, etykiety i karty.
+- [ ] Dostępne dialogi i wysuwany panel mobilny.
+- [ ] Wspólna tabela.
 - [ ] Sidebar, responsywny topbar i nawigacja mobilna.
 - [ ] React Router, trasy modułów i strona nieznalezionego adresu.
 - [x] Motyw jasny, ciemny i systemowy z zapamiętaniem preferencji.
 - [ ] Skeletony, empty states, toasty i obsługa błędów.
 - [ ] Weryfikacja klawiatury, kontrastu, dialogów i urządzeń mobilnych.
 
-Gałąź: `feat/app-shell`. W pierwszym zadaniu przygotowano wspólne tokeny i wybór motywu, w tym odczyt przed uruchomieniem Reacta, reakcję na zmianę systemu, synchronizację kart i obsługę niedostępnego zapisu. Bieżące kontrole: lint, formatowanie, typy, build, 5 testów React i 40 scenariuszy E2E; menu z wyborem motywu sprawdzono także narzędziem axe. Pozostałe elementy etapu otrzymają osobne zadania i weryfikację.
+Gałąź: `feat/app-shell`. Przygotowano wspólne tokeny, wybór motywu i pierwsze komponenty shadcn/ui (`Button`, `Card`, `Input`, `Label`). Akcje strony i katalog korzystają już ze wspólnych komponentów. Bieżące kontrole: lint, formatowanie, typy, build, 8 testów React i 40 scenariuszy E2E. Odizolowany podgląd formularzy i wariantów sprawdzono również w obu motywach i narzędziem axe. Pozostałe elementy etapu otrzymają osobne zadania i weryfikację.
 
 ## ETAP 3 — Supabase i relacyjny model danych · TODO
 
@@ -170,7 +172,7 @@ Gałąź: `feat/app-shell`. W pierwszym zadaniu przygotowano wspólne tokeny i w
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza i zapisuje pierwszą część ETAPU 2: `feat(theme): add persistent theme selection and shared tokens`.
-2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje wspólne komponenty UI.
+1. Użytkownik sprawdza i zapisuje komponenty: `feat(ui): add shared shadcn primitives`.
+2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje dialogi i wysuwany panel.
 3. Routing i responsywny układ panelu powstaną w kolejnych małych zadaniach ETAPU 2.
 4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia. Kolejny etap wymaga osobnej decyzji użytkownika.

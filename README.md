@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAP 1 zakończony, ETAP 2 w realizacji.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Na gałęzi `feat/app-shell` powstaje design system i układ aplikacji; pierwszą częścią są wspólne tokeny oraz zapamiętywany wybór motywu. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: ETAP 1 zakończony, ETAP 2 w realizacji.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Na gałęzi `feat/app-shell` powstaje design system i układ aplikacji; gotowe są wspólne tokeny, zapamiętywany wybór motywu i pierwsze komponenty shadcn/ui. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -18,6 +18,8 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Sekcja powitalna z ilustracją koncepcji produktu oraz linkami do kodu i planu rozwoju.
 - Wspólne logo, przyciski w formie linków, lokalne fonty i favicon.
 - Wspólne tokeny kolorów, fontów, odstępów, zaokrągleń i fokusu, dostępne również w Tailwind CSS.
+- Lokalne komponenty shadcn/ui: `Button`, `Card`, `Input` i `Label`, dostosowane do palety DevFlow.
+- Wspólny przycisk w akcjach strony i wspólna karta w katalogu; stany pól przygotowane do kolejnych formularzy.
 - Wybór motywu jasnego, ciemnego lub systemowego z zapamiętywaniem ustawienia i obsługą ograniczenia ruchu.
 - Reakcja na zmianę motywu systemu i synchronizacja wyboru między kartami przeglądarki.
 - Odczyt zapisanego motywu przed uruchomieniem Reacta oraz obsługa blokady zapisu ustawień.
@@ -25,10 +27,10 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Katalog sześciu planowanych modułów z filtrami „Wszystkie”, „Praca zespołu” i „Relacje z klientami”.
 - Licznik wyników dostępny dla czytników ekranu oraz obsługa filtrów klawiaturą.
 - Przejście do katalogu przez przycisk „Poznaj możliwości” i link w nagłówku.
-- Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 1.
+- Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 2.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Następne małe zadanie ETAPU 2 to wspólne komponenty UI. Routing i układ panelu pozostają w planie tego etapu. Nie ma jeszcze wdrożonego demo.
+Następne małe zadanie ETAPU 2 to dostępne dialogi i wysuwany panel. Routing, układ panelu i dalsze komponenty pozostają w planie tego etapu. Nie ma jeszcze wdrożonego demo.
 
 ## Podgląd aktualnej sekcji powitalnej
 
@@ -40,14 +42,14 @@ Motyw wybierzesz w nawigacji. Przy szerokości do 1000 px otwórz menu. „Syste
 
 ## Stack
 
-| Obszar                  | Zainstalowane w ETAPIE 1                                               | Planowane                                                 |
-| ----------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------- |
-| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4                             | React Router, TanStack Query                              |
-| Interfejs               | Tailwind CSS 4.3.3, Lucide React, lokalne fonty Manrope i DM Sans      | shadcn/ui, Recharts, dnd-kit                              |
-| Formularze i stan       | Stan lokalny React                                                     | React Hook Form, Zod; Zustand przy rzeczywistej potrzebie |
-| Backend                 | Brak integracji w ETAPIE 1                                             | Supabase, PostgreSQL, Auth, Storage, RLS, Edge Functions  |
-| Jakość                  | ESLint 10, Prettier 3, Vitest 5, Testing Library, Playwright, axe-core | Testy modułów i izolacji organizacji                      |
-| Automatyzacja i hosting | Lokalne skrypty kontroli jakości                                       | GitHub Actions, Vercel                                    |
+| Obszar                  | Zainstalowane                                                                | Planowane                                                 |
+| ----------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4                                   | React Router, TanStack Query                              |
+| Interfejs               | Tailwind CSS 4.3.3, shadcn/ui (Radix), Lucide React, fonty Manrope i DM Sans | Recharts, dnd-kit                                         |
+| Formularze i stan       | Stan lokalny React                                                           | React Hook Form, Zod; Zustand przy rzeczywistej potrzebie |
+| Backend                 | Brak integracji w ETAPIE 1                                                   | Supabase, PostgreSQL, Auth, Storage, RLS, Edge Functions  |
+| Jakość                  | ESLint 10, Prettier 3, Vitest 5, Testing Library, Playwright, axe-core       | Testy modułów i izolacji organizacji                      |
+| Automatyzacja i hosting | Lokalne skrypty kontroli jakości                                             | GitHub Actions, Vercel                                    |
 
 Dokładne wersje są w `package.json` i `package-lock.json`. TypeScript 6.0.3 wybrano dla zgodności: zainstalowane `typescript-eslint` wspiera TypeScript `<6.1.0`. Nie wymuszamy nieobsługiwanych zależności przez `--force` ani `--legacy-peer-deps`.
 
@@ -145,7 +147,7 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 **Weryfikacja ekranu powitalnego, katalogu i roadmapy na Node 24.19.0:**
 
 - Lint, formatowanie, TypeScript i build: poprawne.
-- Vitest / Testing Library: 5 zaliczonych testów.
+- Vitest / Testing Library: 8 zaliczonych testów.
 - Playwright / Chromium: 40 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
 - Sprawdzono filtrowanie, licznik wyników, nawigację do sekcji, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
 - Roadmapa: domyślnie otwarty bieżący obszar, niezależne rozwijanie pozostałych, obsługa Enter i Spacji oraz zachowanie fokusu.
@@ -153,6 +155,7 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 - Osobne scenariusze potwierdzają odczyt zapisanego motywu także przed załadowaniem modułu React.
 - axe-core: brak automatycznie wykrytych naruszeń WCAG A/AA w jasnym i ciemnym widoku na obu urządzeniach, także po otwarciu wszystkich opisów roadmapy i menu mobilnego z wyborem motywu.
 - Przejrzano zrzuty dla szerokości 320, 390, 768 i 1440 px; bez poziomego przepełnienia.
+- W odizolowanym podglądzie komponentów UI sprawdzono oba motywy, fokus pól, opisy błędów, wysokość 44 px i brak przepełnienia; axe nie wykrył naruszeń sprawdzanych reguł WCAG A/AA.
 
 Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Kolejne sekcje i moduły otrzymają testy w ramach swoich zadań.
 
@@ -198,6 +201,8 @@ Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz
 
 Wspólne tokeny znajdują się w `src/styles/tokens.css`, a provider motywu w `src/lib/theme/`. `public/theme-init.js` odczytuje preferencję przed uruchomieniem aplikacji. Szczegóły użycia i architektury: [Wspólne style i motyw](docs/design-tokens.md).
 
+Komponenty UI są w `src/components/ui/`, a adapter ich semantycznych tokenów w `src/styles/ui.css`. `components.json` opisuje konfigurację shadcn/ui. Przykłady i podgląd: [Wspólne komponenty UI](docs/ui-components.md).
+
 Docelowo PostgreSQL i RLS zapewnią izolację organizacji, Storage będzie prywatny, a operacje wymagające zaufanej logiki obsłużą Edge Functions. W ETAPIE 1 nie ma migracji, seeda ani połączenia z bazą. Szczegóły: [ROADMAP.md](ROADMAP.md) i [AGENTS.md](AGENTS.md).
 
 ## Planowane funkcjonalności
@@ -239,3 +244,5 @@ Stosuj spójne commity według Conventional Commits. Przed commitem przejrzyj di
 ## Licencja
 
 [MIT](LICENSE) — © 2026 Tymoteusz Hinca.
+
+Adaptowane komponenty shadcn/ui zachowują informację o autorze i licencji: [Third-party notices](docs/third-party-notices.md).

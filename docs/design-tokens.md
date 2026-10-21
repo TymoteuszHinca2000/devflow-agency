@@ -2,7 +2,7 @@
 
 ## Tokeny
 
-`src/styles/tokens.css` jest wspólnym źródłem palety, fontów, odstępów, zaokrągleń i fokusu. Importuje go `src/styles/globals.css` po Tailwind CSS. Nowe komponenty powinny korzystać z tokenów zamiast powtarzać wartości kolorów.
+`src/styles/tokens.css` jest wspólnym źródłem palety, fontów, odstępów, zaokrągleń i fokusu. Importuje go `src/styles/globals.css` po Tailwind CSS. `src/styles/ui.css` mapuje tę paletę na semantyczne klasy komponentów shadcn/ui i dodaje token obrysu pola oraz błędu. Nowe komponenty powinny korzystać z tokenów zamiast powtarzać wartości kolorów.
 
 | Tokeny                                    | Przeznaczenie                                 |
 | ----------------------------------------- | --------------------------------------------- |
@@ -42,4 +42,4 @@ Kontrolka ma natywny element `select`, powiązaną etykietę „Motyw kolorystyc
 
 ## Dalszy zakres etapu 2
 
-Wspólne komponenty shadcn/ui, routing i układ panelu będą wprowadzane w kolejnych małych zadaniach. Ta część zapewnia podstawę stylów i działający wybór motywu, bez dodatkowych zależności.
+Gotowe są pierwsze komponenty shadcn/ui: `Button`, `Card`, `Input` i `Label`. Przykłady oraz opis integracji są w [ui-components.md](ui-components.md). Dialogi, wysuwany panel, tabela, routing i układ aplikacji powstaną w kolejnych małych zadaniach.
