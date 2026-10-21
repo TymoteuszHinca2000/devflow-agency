@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from './fixtures'
+test.use({ authState: 'signed-in' })
 
 test('marks only the current sidebar link, updates breadcrumbs and keeps navigation visible while scrolling', async ({
   page,

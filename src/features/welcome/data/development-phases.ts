@@ -24,7 +24,7 @@ export const developmentPhases: readonly DevelopmentPhase[] = [
     range: 'Etapy 3–5',
     current: true,
     description:
-      'Baza danych i uprawnienia są gotowe. Kolejne kroki to logowanie i organizacje, które połączą zespół w jednej przestrzeni.',
+      'Baza danych i uprawnienia są gotowe. Rozwijamy logowanie i obsługę konta. Następnie połączymy zespół w organizacjach.',
   },
   {
     id: 'workflow',

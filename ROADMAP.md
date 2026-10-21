@@ -62,18 +62,31 @@ Bieżące kontrole ETAPU 2: lint, formatowanie, typy, build, 27 testów React i 
 - [x] Testy SQL migracji, izolacji organizacji i dostępu anonimowego.
 - [x] Zastosowanie migracji do projektu developerskiego i testy rzeczywistych usług Supabase.
 
-Uzgodniony podział: dwie gałęzie i około trzy commity. `feat/supabase-foundation` powstała z `main` przy `dc8d1ad`; wypchnięto `0503a24` z modelem i `c59cd28` z politykami oraz Storage. `feat/supabase-integration` zawiera przygotowany trzeci zakres: klient, walidacja, generowane typy i testy usług. Dwie migracje zastosowano do developerskiego `devflow-agency-dev` na PostgreSQL 17.11, uzgadniając historię z plikami repozytorium. Zdalny i lokalny schemat są zgodne. Przeszły 50 testów aplikacji, 100 testów SQL, kontrola generatora, build oraz 16 odczytowych i 20 zapisujących kontroli HTTP. Dane testowe pozostawiono na decyzję użytkownika; fizyczne pliki usunięto. Trzeci commit i push wykonuje użytkownik. [Raport i ograniczenia](docs/stage-3-report.md) · [Instrukcja integracji](docs/supabase-integration.md).
+Etap scalono do `main` przez PR #3 (`11c4c21`). Uzgodnione dwie gałęzie i trzy commity to `0503a24` z modelem, `c59cd28` z politykami/Storage oraz `0484599` z klientem i integracją. Dwie migracje zastosowano do developerskiego `devflow-agency-dev` na PostgreSQL 17.11, uzgadniając historię z plikami repozytorium. Zdalny i lokalny schemat są zgodne. Przeszły 50 testów aplikacji, 100 testów SQL, kontrola generatora, build oraz 16 odczytowych i 20 zapisujących kontroli HTTP. Dane testowe pozostawiono na decyzję użytkownika; fizyczne pliki usunięto. [Raport i ograniczenia](docs/stage-3-report.md) · [Instrukcja integracji](docs/supabase-integration.md).
 
-## ETAP 4 — Uwierzytelnianie i sesje · TODO
+## ETAP 4 — Uwierzytelnianie i sesje · IN PROGRESS
 
-- [ ] Rejestracja i logowanie e-mailem oraz hasłem.
-- [ ] React Hook Form, Zod i czytelne błędy walidacji.
-- [ ] Potwierdzenie e-maila, ponowna wysyłka i callbacki.
-- [ ] Google OAuth po konfiguracji dostawcy i przekierowań.
-- [ ] Reset i zmiana hasła, wygasłe i nieprawidłowe linki.
-- [ ] Sesje, wylogowanie, chronione trasy i obsługa wygaśnięcia sesji.
-- [ ] Edycja profilu i bezpieczne przesyłanie awatara.
-- [ ] Testy formularzy, sesji, callbacków i dostępu do tras.
+- [x] Logowanie e-mailem oraz hasłem i bezpieczne komunikaty błędów.
+- [x] React Hook Form, Zod i dostępna walidacja formularza logowania.
+- [x] Formularz rejestracji konta i walidacja nowych haseł.
+- [x] Potwierdzenie e-maila, ponowna wysyłka i callback PKCE z obsługą nieprawidłowych linków.
+- [x] Rzeczywista rejestracja, otrzymanie wiadomości, potwierdzenie adresu i logowanie hasłem potwierdzone przez użytkownika.
+- [ ] Ponowny test otwarcia sesji bezpośrednio z nowej rzeczywistej wiadomości po poprawce callbacku.
+- [x] Reset i zmiana hasła, wygasłe i nieprawidłowe linki — kod i testy izolowane.
+- [x] Weryfikowane sesje, wylogowanie z bieżącej przeglądarki, chronione trasy i obsługa wygaśnięcia sesji.
+- [x] Edycja profilu i bezpieczne przesyłanie awatara — kod i testy izolowane.
+- [x] Testy logowania, sesji, bezpiecznych przekierowań i dostępu do tras.
+- [x] Izolowane testy rejestracji, ponownej wysyłki, callbacków i ponownego użycia linku.
+- [x] Testy izolowane odzyskiwania konta i profilu, pełna regresja i raport.
+- [x] Rzeczywisty zapis nazwy, upload/podgląd i usunięcie awatara potwierdzone przez użytkownika.
+- [x] Wznowienie rzeczywistego resetu po odświeżeniu, zapis nowego hasła i logowanie nim potwierdzone przez użytkownika.
+- [ ] Trzeci commit, publikacja zmian i decyzja o zamknięciu etapu.
+
+**Google OAuth odłożono decyzją użytkownika.** Obecny zakres uwierzytelniania to e-mail i hasło; odłożony dostawca nie blokuje zamknięcia tego zakresu etapu.
+
+Uzgodniony podział: dwie gałęzie i około trzy commity. Użytkownik utworzył `feat/authentication` z `main` przy `11c4c21` i wypchnął `a42bb25` (logowanie/sesje) oraz `1d2942e` (rejestracja/potwierdzenie). Następnie utworzył i opublikował `feat/account-management` z `1d2942e`. Trzeci zakres obejmuje odzyskiwanie konta, profil i końcową weryfikację; czeka na commit użytkownika. Po przekazaniu komend agent zatrzymuje edycję do potwierdzenia.
+
+Obecny zakres: 143 testy aplikacji, 100 testów SQL i 144 scenariusze Playwright. E2E używa osobnego buildu i izolowanych odpowiedzi HTTP; nie tworzy kont w Supabase. Użytkownik potwierdził rzeczywistą rejestrację, pocztę, akceptację adresu, logowanie hasłem, profil z awatarem oraz wznowienie resetu po odświeżeniu, zmianę hasła i logowanie nowym hasłem. Zapisał adresy powrotu potwierdzania i recovery. Powtórna próba sesji bezpośrednio z nowej wiadomości signup pozostaje niepotwierdzona. [Raport ETAPU 4](docs/stage-4-report.md) · [Profil i recovery](docs/account-management.md).
 
 ## ETAP 5 — Organizacje i uprawnienia · TODO
 
@@ -182,7 +195,7 @@ Uzgodniony podział: dwie gałęzie i około trzy commity. `feat/supabase-founda
 
 ## Najbliższy krok
 
-1. Użytkownik zapisuje i publikuje trzeci commit ETAPU 3 na istniejącej `feat/supabase-integration`.
-2. Po potwierdzeniu można przygotować jeden PR tej gałęzi do `main`, obejmujący wszystkie trzy commity etapu. Nie trzeba osobno scalać gałęzi fundamentu.
-3. ETAP 4 — formularze logowania, callbacki i sesje — rozpocznie się po osobnej decyzji użytkownika i potwierdzeniu właściwej nowej gałęzi.
+1. Zapisano potwierdzenie użytkownika dla profilu, awatara, wznowienia resetu i logowania nowym hasłem; pozostałe granice kontroli opisuje raport ETAPU 4.
+2. Użytkownik zapisuje i publikuje trzeci commit na `feat/account-management`.
+3. Po potwierdzeniu można przygotować jeden PR tej gałęzi do `main`, obejmujący cały ETAP 4. ETAP 5 wymaga osobnej decyzji użytkownika.
 4. Agent zatrzymuje edycję po przekazaniu poleceń commita i push, do potwierdzenia użytkownika.

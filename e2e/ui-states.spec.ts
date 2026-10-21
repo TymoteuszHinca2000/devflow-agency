@@ -1,4 +1,5 @@
 import { expect, test } from './fixtures'
+test.use({ authState: 'signed-in' })
 
 test('explains planned content through the shared state and keeps its recovery links keyboard accessible', async ({
   page,

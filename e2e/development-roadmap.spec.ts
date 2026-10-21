@@ -21,7 +21,7 @@ test('opens the roadmap through the hero and header without leaving the page', a
   if (isMobile) await expect(nav).toBeHidden()
 })
 
-test('marks stage three as verified and lets planned areas expand independently', async ({
+test('marks stage four as in progress and lets planned areas expand independently', async ({
   page,
 }) => {
   await page.goto('/#plan-rozwoju')
@@ -29,9 +29,9 @@ test('marks stage three as verified and lets planned areas expand independently'
   const phases = roadmap.locator('details')
   await expect(phases).toHaveCount(4)
   await expect(roadmap.locator('details[open]')).toHaveCount(1)
-  await expect(roadmap.getByText('ETAP 3 gotowy', { exact: true })).toBeVisible()
+  await expect(roadmap.getByText('ETAP 4 w trakcie', { exact: true })).toBeVisible()
   await expect(
-    roadmap.getByText('ETAP 3 zweryfikowany. Kolejny etap po zatwierdzeniu.'),
+    roadmap.getByText('Logowanie i sesje. Kolejne kroki: rejestracja i profil.'),
   ).toBeVisible()
   for (const range of ['Etapy 1–2', 'Etapy 3–5', 'Etapy 6–13', 'Etapy 14–15']) {
     await expect(roadmap.getByText(range)).toBeVisible()

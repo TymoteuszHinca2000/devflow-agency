@@ -35,7 +35,10 @@ test('closes through its button and backdrop without leaving scroll locked', asy
   await expect(trigger).toBeFocused()
   await trigger.click()
   await expect(page.getByRole('dialog')).toBeVisible()
-  await page.mouse.click(4, 200)
+  await page.getByRole('dialog').evaluate(async (dialog) => {
+    await Promise.all(dialog.getAnimations().map((animation) => animation.finished))
+  })
+  await page.locator('[data-slot="dialog-overlay"]').click({ position: { x: 4, y: 200 } })
   await expect(page.getByRole('dialog')).toBeHidden()
   await expect(trigger).toBeFocused()
   await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden')

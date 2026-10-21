@@ -86,6 +86,7 @@ supabase/
 
 ## Git workflow
 
+- Uzgodniony ETAP 4 obejmuje dwie gałęzie i około trzy spójne commity: logowanie/sesje oraz rejestrację/potwierdzenie e-maila na `feat/authentication`, następnie odzyskiwanie konta i profil na drugiej gałęzi. Ten uzgodniony podział ma pierwszeństwo przed ogólną zasadą gałęzi dla każdej funkcjonalności. Google OAuth odłożono decyzją użytkownika; zakres etapu obejmuje e-mail i hasło. Po każdym commicie zatrzymaj edycję do potwierdzenia użytkownika.
 - Uzgodniony ETAP 3 obejmuje dwie gałęzie i około trzy spójne commity: model danych oraz polityki/Storage na `feat/supabase-foundation`, następnie integrację klienta na `feat/supabase-integration`. Po każdym commicie czekaj na potwierdzenie użytkownika przed kolejnymi edycjami.
 - Funkcjonalności: `feat/nazwa-funkcji`; poprawki: `fix/nazwa-poprawki`.
 - Każda nowa, odrębna funkcjonalność dostaje własny branch, także w ramach tego samego etapu. Drobne poprawki bieżącej funkcjonalności pozostają na jej gałęzi.
@@ -108,3 +109,4 @@ supabase/
 - Dla zmian wyłącznie dokumentacyjnych sprawdź formatowanie, opisane komendy i diff. Nie deklaruj testów, których nie uruchomiono.
 - Sprawdź kod zakończenia testów. Częściowy log lub zawieszony runner nie oznacza zaliczonego przebiegu.
 - Dokumentuj ograniczenia środowiska i brakujące kontrole. Nie commituj niewyjaśnionych błędów.
+- Przed ręczną próbą Auth przez użytkownika zakończ edycję i formatowanie kodu aplikacji. Podczas tej próby nie zmieniaj plików źródłowych: przeładowanie Vite może przerwać callback. Odczytowe kontrole i dokumentację można kończyć niezależnie.

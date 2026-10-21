@@ -13,9 +13,9 @@ npm run dev
 
 `readSupabaseConfiguration` w `src/lib/supabase/config.ts` przyjmuje dane jako `unknown`. Wymaga HTTPS, dopuszcza HTTP tylko dla loopback, odrzuca dane logowania w URL, ścieżkę, parametry i fragment. Akceptuje klucz `sb_publishable_`; nie akceptuje starych JWT ani kluczy sekretnego dostępu. Komunikaty błędów wskazują nazwę zmiennej bez wypisywania wartości. Kontrola formatu nie zastępuje sprawdzenia projektu przez jego API.
 
-`getSupabase()` w `src/lib/supabase/client.ts` tworzy jedną instancję `SupabaseClient<Database>` dopiero przy pierwszym użyciu. Import modułu bez konfiguracji nie zatrzymuje strony powitalnej. Po nieudanej walidacji można ponowić inicjalizację. Komponenty UI nie powinny wykonywać zapytań; przyszłe moduły będą korzystać z klienta w swoich serwisach.
+`getSupabase()` w `src/lib/supabase/client.ts` tworzy jedną instancję `SupabaseClient<Database>` dopiero przy pierwszym użyciu. Import modułu bez konfiguracji nie zatrzymuje strony powitalnej. Po nieudanej walidacji można ponowić inicjalizację. Komponenty UI nie powinny wykonywać zapytań; serwisy modułu Auth korzystają już z klienta, a przyszłe moduły dodadzą własne operacje.
 
-Klient używa PKCE. Automatyczne przechwytywanie sesji z URL jest wyłączone do czasu jawnej implementacji callbacków w ETAPIE 4. Pozostałe ustawienia sesji zachowują domyślne zachowanie SDK. ETAP 3 nie dodaje formularzy logowania, providera sesji, chronionych tras ani produkcyjnych operacji biznesowych. Testowe logowanie HTTP potwierdza działanie infrastruktury.
+Klient używa PKCE. Automatyczne przechwytywanie sesji z URL pozostaje wyłączone: `/auth/confirm` i `/auth/recovery` jawnie wymieniają kod po kliknięciu użytkownika, a tożsamość jest potwierdzana przez `getUser`. Callbacki usuwają kod i szczegóły błędów z adresu, obsługują brak weryfikatora oraz odmawiają cichego zastąpienia już zalogowanego konta. Pozostałe ustawienia sesji zachowują domyślne zachowanie SDK. Google OAuth odłożono; potwierdzanie e-maila pozostaje wymagane. [Sesje](authentication.md) · [Rejestracja, adresy powrotu i poczta](registration.md) · [Profil i reset hasła](account-management.md).
 
 Wszystkie `VITE_*` są publiczne. Nigdy nie wpisuj do nich hasła PostgreSQL, tokenu konta Supabase, `service_role` ani `sb_secret_`. RLS i granty egzekwują rzeczywisty dostęp użytkownika.
 
