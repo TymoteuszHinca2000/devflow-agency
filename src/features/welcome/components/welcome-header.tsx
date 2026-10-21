@@ -45,6 +45,9 @@ export function WelcomeHeader() {
           <a href="#main-content" onClick={closeMenu}>
             Start
           </a>
+          <a href="#mozliwosci" onClick={closeMenu}>
+            Możliwości
+          </a>
           <a
             href="https://github.com/TymoteuszHinca2000/devflow-agency/blob/feat/project-foundation/ROADMAP.md"
             target="_blank"

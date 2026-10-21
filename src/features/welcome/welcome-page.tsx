@@ -1,4 +1,5 @@
 import { WelcomeFooter } from './components/welcome-footer'
+import { ModuleOverview } from './components/module-overview'
 import { WelcomeHeader } from './components/welcome-header'
 import { WelcomeHero } from './components/welcome-hero'
 
@@ -11,6 +12,7 @@ export function WelcomePage() {
       <WelcomeHeader />
       <main id="main-content" tabIndex={-1}>
         <WelcomeHero />
+        <ModuleOverview />
       </main>
       <WelcomeFooter />
     </div>

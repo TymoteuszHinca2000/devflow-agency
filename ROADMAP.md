@@ -16,7 +16,7 @@ Statusy: **TODO**, **IN PROGRESS**, **DONE**. Zakończenie etapu oznacza działa
 | Konfiguracja Vitest, Testing Library i Playwright               | DONE   |
 | AGENTS, README, ROADMAP i CHANGELOG                             | DONE   |
 | Nagłówek, menu mobilne, główna sekcja powitalna i stopka        | DONE   |
-| Katalog planowanych modułów z filtrowaniem                      | TODO   |
+| Katalog planowanych modułów z filtrowaniem                      | DONE   |
 | Wizualny, rozwijany plan rozwoju na stronie                     | TODO   |
 | Screenshoty aktualnej sekcji powitalnej                         | DONE   |
 | Końcowa weryfikacja: typy, lint, build, testy, klawiatura i RWD | TODO   |
@@ -25,7 +25,7 @@ Statusy: **TODO**, **IN PROGRESS**, **DONE**. Zakończenie etapu oznacza działa
 
 Nie implementować logowania ani bazy. Katalogi przyszłych modułów rezerwują miejsce na dalszy rozwój.
 
-Bieżąca sekcja przeszła lint, formatowanie, kontrolę typów, build, 2 testy React i 12 scenariuszy Playwright, w tym kontrole axe-core obu motywów. Następne sekcje otrzymają osobne commity po potwierdzeniu użytkownika.
+Bieżący ekran z katalogiem przeszedł lint, formatowanie, kontrolę typów, build, 4 testy React i 18 scenariuszy Playwright, w tym filtrowanie klawiaturą i kontrole axe-core obu motywów. Następna sekcja otrzyma osobny commit po potwierdzeniu użytkownika.
 
 ## ETAP 2 — Design system i układ aplikacji · TODO
 
@@ -168,8 +168,7 @@ Bieżąca sekcja przeszła lint, formatowanie, kontrolę typów, build, 2 testy 
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza i zapisuje nagłówek oraz główną sekcję: `feat(welcome): add header and hero section`.
-2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje katalog planowanych modułów.
-3. Po commicie katalogu i potwierdzeniu użytkownika agent przygotowuje sekcję roadmapy.
-4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia.
-5. Po zakończeniu ETAPU 1 użytkownik podejmuje osobną decyzję o ETAPIE 2. Nowy branch także tworzy użytkownik po otrzymaniu poleceń.
+1. Użytkownik sprawdza i zapisuje katalog: `feat(welcome): add filterable module catalog`.
+2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje sekcję roadmapy.
+3. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia.
+4. Po zakończeniu ETAPU 1 użytkownik podejmuje osobną decyzję o ETAPIE 2. Nowy branch także tworzy użytkownik po otrzymaniu poleceń.

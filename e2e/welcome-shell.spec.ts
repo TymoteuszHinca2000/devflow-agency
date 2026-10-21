@@ -8,7 +8,9 @@ test('supports keyboard access through the skip link and main action', async ({ 
   await page.keyboard.press('Enter')
   await expect(page.getByRole('main')).toBeFocused()
   await page.keyboard.press('Tab')
-  await expect(page.getByRole('link', { name: /Zobacz projekt/ })).toBeFocused()
+  await expect(page.getByRole('link', { name: 'Poznaj możliwości' })).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page).toHaveURL(/#mozliwosci$/)
 })
 
 test('adapts navigation to the device and restores focus after Escape', async ({

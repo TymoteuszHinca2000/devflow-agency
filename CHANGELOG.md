@@ -17,7 +17,10 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 - Nagłówek z menu mobilnym, główną sekcję powitalną z ilustracją i stopkę.
 - Wspólne logo, linki akcji, lokalne fonty i favicon.
 - Systemową kolorystykę jasną/ciemną, obsługę klawiatury, skip link i ograniczenie ruchu.
-- Screenshoty oraz testy sekcji powitalnej: 2 testy React i 12 scenariuszy E2E.
+- Katalog planowanych modułów z podziałem na pracę zespołu i relacje z klientami.
+- Filtry obsługiwane klawiaturą, licznik wyników dla czytników ekranu i nawigację do katalogu.
+- Osobne dane opisowe i style katalogu, bez połączenia z backendem.
+- Aktualne screenshoty oraz testy ekranu: 4 testy React i 18 scenariuszy E2E.
 
 ### Naprawiono
 
@@ -25,7 +28,7 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 ### Stan realizacji
 
-- ETAP 1 trwa: gotowe są nagłówek i sekcja powitalna; katalog modułów oraz wizualna roadmapa pozostają kolejnymi zadaniami.
+- ETAP 1 trwa: gotowe są ekran powitalny i katalog planowanych modułów; wizualna roadmapa pozostaje następnym zadaniem.
 - Logowanie, baza danych i moduły biznesowe nie są zaimplementowane.
-- Kontrole aktualnej sekcji i pełny przebieg 12 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0.
+- Kontrole aktualnego ekranu i pełny przebieg 18 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0.
 - Operacje Git wykonuje użytkownik po sprawdzeniu zmian i otrzymaniu poleceń od agenta.

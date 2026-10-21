@@ -10,9 +10,9 @@ describe('DevFlow welcome screen', () => {
     expect(screen.getByRole('heading', { level: 1, name: /Twoja agencja/ })).toBeVisible()
     expect(screen.getByText('W budowie')).toBeVisible()
     expect(screen.getByRole('figure', { name: /Wizja produktu/ })).toBeVisible()
-    expect(screen.getByRole('link', { name: /Zobacz projekt/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Poznaj możliwości' })).toHaveAttribute(
       'href',
-      'https://github.com/TymoteuszHinca2000/devflow-agency',
+      '#mozliwosci',
     )
   })
 
