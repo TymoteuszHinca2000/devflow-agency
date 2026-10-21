@@ -7,7 +7,14 @@ import prettier from 'eslint-config-prettier/flat'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'coverage', 'playwright-report', 'test-results']),
+  // Official generated code is verified by TypeScript and db:types:check.
+  globalIgnores([
+    'dist',
+    'coverage',
+    'playwright-report',
+    'test-results',
+    'src/types/database.types.ts',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

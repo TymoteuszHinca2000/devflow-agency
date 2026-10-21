@@ -21,7 +21,7 @@ test('opens the roadmap through the hero and header without leaving the page', a
   if (isMobile) await expect(nav).toBeHidden()
 })
 
-test('marks the verified foundation as ready for review and lets planned areas expand independently', async ({
+test('marks stage three as verified and lets planned areas expand independently', async ({
   page,
 }) => {
   await page.goto('/#plan-rozwoju')
@@ -29,15 +29,15 @@ test('marks the verified foundation as ready for review and lets planned areas e
   const phases = roadmap.locator('details')
   await expect(phases).toHaveCount(4)
   await expect(roadmap.locator('details[open]')).toHaveCount(1)
-  await expect(roadmap.getByText('Gotowe do odbioru', { exact: true })).toBeVisible()
+  await expect(roadmap.getByText('ETAP 3 gotowy', { exact: true })).toBeVisible()
   await expect(
-    roadmap.getByText('ETAP 2 zweryfikowany. Kolejny etap po zatwierdzeniu.'),
+    roadmap.getByText('ETAP 3 zweryfikowany. Kolejny etap po zatwierdzeniu.'),
   ).toBeVisible()
   for (const range of ['Etapy 1–2', 'Etapy 3–5', 'Etapy 6–13', 'Etapy 14–15']) {
     await expect(roadmap.getByText(range)).toBeVisible()
   }
 
-  const workspace = phases.filter({ hasText: 'Twoja przestrzeń pracy' })
+  const workspace = phases.filter({ hasText: 'Codzienna praca w jednym flow' })
   const production = phases.filter({ hasText: 'Gotowe na kolejny krok' })
   await expect(workspace.locator('p')).toBeHidden()
   await workspace.locator('summary').click()
@@ -55,7 +55,7 @@ test('expands and collapses roadmap areas with Enter and Space while retaining f
 }) => {
   await page.goto('/#plan-rozwoju')
   const roadmap = page.getByRole('region', { name: /Dobry flow/ })
-  const current = roadmap.locator('details').filter({ hasText: 'Solidne fundamenty' })
+  const current = roadmap.locator('details').filter({ hasText: 'Twoja przestrzeń pracy' })
   const currentToggle = current.locator('summary')
   await currentToggle.focus()
   await page.keyboard.press('Enter')
@@ -65,7 +65,7 @@ test('expands and collapses roadmap areas with Enter and Space while retaining f
   await expect(current.locator('p')).toBeVisible()
 
   await page.keyboard.press('Tab')
-  const next = roadmap.locator('details').filter({ hasText: 'Twoja przestrzeń pracy' })
+  const next = roadmap.locator('details').filter({ hasText: 'Codzienna praca w jednym flow' })
   const nextToggle = next.locator('summary')
   await expect(nextToggle).toBeFocused()
   await page.keyboard.press('Space')

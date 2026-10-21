@@ -19,7 +19,7 @@ export const tables = [
   'activity_logs',
 ]
 
-export async function createTestDatabase({ through } = {}) {
+export async function createTestDatabase({ through, includeFixtures = true } = {}) {
   const db = await PGlite.create()
   try {
     await db.exec(await readFile(new URL('../fixtures/bootstrap.sql', import.meta.url), 'utf8'))
@@ -33,7 +33,9 @@ export async function createTestDatabase({ through } = {}) {
       await db.exec(await readFile(new URL(migration, directory), 'utf8'))
       if (migration === through) break
     }
-    await db.exec(await readFile(new URL('../fixtures/agency.sql', import.meta.url), 'utf8'))
+    if (includeFixtures) {
+      await db.exec(await readFile(new URL('../fixtures/agency.sql', import.meta.url), 'utf8'))
+    }
     return db
   } catch (error) {
     await db.close()

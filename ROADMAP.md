@@ -47,10 +47,10 @@ Gotowe są tokeny, motywy, podstawowe komponenty shadcn/ui, dialogi, panel mobil
 
 Bieżące kontrole ETAPU 2: lint, formatowanie, typy, build, 27 testów React i 80 scenariuszy E2E. Ponownie sprawdzono kontrolki, dialogi, panele, tabelę, stany, toasty i błędy. Końcowa kontrola objęła 35 widoków, 26 par kontrastu i ekrany do 320 × 256 px. Poprawiono kolejkę toastów na niskim ekranie i dostęp do akcji w długiej treści. Gotowe są `ErrorState` oraz granice błędów aplikacji i pojedynczej strony. [Zakres obsługi błędów](docs/error-handling.md).
 
-## ETAP 3 — Supabase i relacyjny model danych · IN PROGRESS
+## ETAP 3 — Supabase i relacyjny model danych · DONE
 
 - [x] Uzyskanie konfiguracji Supabase od użytkownika i ustalenie środowisk.
-- [ ] Klient Supabase, walidacja publicznej konfiguracji i generowane typy bazy.
+- [x] Klient Supabase, walidacja publicznej konfiguracji i generowane typy bazy.
 - [x] Migracje: `profiles`, `organizations`, `organization_members`, `organization_invitations`.
 - [x] Migracje: `clients`, `projects`, `project_members`, `tasks`, `task_comments`, `time_entries`.
 - [x] Migracje: `quotes`, `quote_items`, `attachments`, `notifications`, `activity_logs`.
@@ -60,9 +60,9 @@ Bieżące kontrole ETAPU 2: lint, formatowanie, typy, build, 27 testów React i 
 - [x] Prywatny Storage i polityki dostępu do plików.
 - [x] Jawny, opcjonalny `supabase/seed.sql` tylko dla środowiska developerskiego.
 - [x] Testy SQL migracji, izolacji organizacji i dostępu anonimowego.
-- [ ] Zastosowanie migracji do projektu developerskiego i testy rzeczywistych usług Supabase.
+- [x] Zastosowanie migracji do projektu developerskiego i testy rzeczywistych usług Supabase.
 
-Uzgodniony podział: dwie gałęzie i około trzy commity. `feat/supabase-foundation` powstała z `main` przy `dc8d1ad`. Pierwszy commit `0503a24` z modelem i testami został wypchnięty. Drugi zakres dodaje polityki ról, granty kolumn, zawieszanie dostępu do projektu, prywatne pliki i awatary. Testy SQL obejmują 100 scenariuszy: 38 bazowych oraz 62 dla pełnego łańcucha uprawnień, Storage i seed. Druga gałąź `feat/supabase-integration` powstanie po potwierdzeniu poleceń użytkownika i obejmie klienta React, generowane typy oraz końcową weryfikację. Projekt zdalny jest developerski; konfiguracja pozostaje w ignorowanym `.env.local`. Migracji nie wdrożono jeszcze do tego projektu. Testy korzystają z izolowanego PostgreSQL PGlite i minimalnego kontraktu Auth/Storage. [Model i ograniczenia testów](docs/database.md) · [Macierz uprawnień](docs/database-security.md).
+Uzgodniony podział: dwie gałęzie i około trzy commity. `feat/supabase-foundation` powstała z `main` przy `dc8d1ad`; wypchnięto `0503a24` z modelem i `c59cd28` z politykami oraz Storage. `feat/supabase-integration` zawiera przygotowany trzeci zakres: klient, walidacja, generowane typy i testy usług. Dwie migracje zastosowano do developerskiego `devflow-agency-dev` na PostgreSQL 17.11, uzgadniając historię z plikami repozytorium. Zdalny i lokalny schemat są zgodne. Przeszły 50 testów aplikacji, 100 testów SQL, kontrola generatora, build oraz 16 odczytowych i 20 zapisujących kontroli HTTP. Dane testowe pozostawiono na decyzję użytkownika; fizyczne pliki usunięto. Trzeci commit i push wykonuje użytkownik. [Raport i ograniczenia](docs/stage-3-report.md) · [Instrukcja integracji](docs/supabase-integration.md).
 
 ## ETAP 4 — Uwierzytelnianie i sesje · TODO
 
@@ -182,7 +182,7 @@ Uzgodniony podział: dwie gałęzie i około trzy commity. `feat/supabase-founda
 
 ## Najbliższy krok
 
-1. Użytkownik zapisuje i publikuje drugi commit ETAPU 3 na `feat/supabase-foundation`: polityki ról, prywatny Storage i testy bezpieczeństwa.
-2. Po potwierdzeniu agent poda komendy utworzenia `feat/supabase-integration` z obecnej gałęzi zawierającej oba commity; kodowanie integracji poczeka na potwierdzenie nowej gałęzi.
-3. Na drugiej gałęzi zostaną przygotowane klient Supabase, typy bazy, zastosowanie migracji do środowiska developerskiego i końcowa weryfikacja usług. Logowanie pozostaje zakresem ETAPU 4.
-4. Po każdym uzgodnionym commicie agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia. Kolejny etap wymaga osobnej decyzji użytkownika.
+1. Użytkownik zapisuje i publikuje trzeci commit ETAPU 3 na istniejącej `feat/supabase-integration`.
+2. Po potwierdzeniu można przygotować jeden PR tej gałęzi do `main`, obejmujący wszystkie trzy commity etapu. Nie trzeba osobno scalać gałęzi fundamentu.
+3. ETAP 4 — formularze logowania, callbacki i sesje — rozpocznie się po osobnej decyzji użytkownika i potwierdzeniu właściwej nowej gałęzi.
+4. Agent zatrzymuje edycję po przekazaniu poleceń commita i push, do potwierdzenia użytkownika.

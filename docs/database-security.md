@@ -1,6 +1,6 @@
 # RLS i prywatny Storage — ETAP 3
 
-Migracja `20261021000200_add_access_policies_and_storage.sql` rozszerza schemat z pierwszego commita `0503a24`. Nadaje wybrane uprawnienia tabel i kolumn, wprowadza polityki ról oraz dwa prywatne zasobniki. Jest przygotowana i sprawdzana lokalnie; wdrożenie do projektu developerskiego i testy rzeczywistych usług Supabase są kolejnym krokiem integracji.
+Migracja `20261021000200_add_access_policies_and_storage.sql` rozszerza schemat z pierwszego commita `0503a24`. Nadaje wybrane uprawnienia tabel i kolumn, wprowadza polityki ról oraz dwa prywatne zasobniki. Wdrożono ją do projektu developerskiego i sprawdzono lokalnymi testami SQL oraz rzeczywistymi usługami Auth, Data API i Storage. [Raport integracji](stage-3-report.md).
 
 ## Macierz dostępu
 
@@ -76,7 +76,7 @@ npm run check
 
 Testy obejmują `INSERT ... RETURNING`, ponieważ nowo tworzony wiersz musi przejść politykę odczytu jeszcze przed widocznością dla osobnego zapytania funkcji pomocniczej. Polityki projektów i załączników oceniają wtedy bezpośrednio dozwolony zakres nowego wiersza.
 
-PGlite uruchamia rzeczywisty PostgreSQL 18.6. Auth i Storage mają minimalne fixture kontraktu SQL; testy ustawiają kontekst użytkownika i nie weryfikują kryptograficznie JWT. Nie ma fizycznych plików, usług HTTP, podpisanych URL, współbieżnych sesji ani wdrożenia na docelowym PostgreSQL. Te kontrole nie oznaczają pełnego audytu bezpieczeństwa. Rzeczywista integracja i generowane typy są następną częścią ETAPU 3, a transakcje poszczególnych modułów powstaną w ich etapach.
+PGlite uruchamia rzeczywisty PostgreSQL 18.6. Auth i Storage mają minimalne fixture kontraktu SQL; testy offline ustawiają kontekst użytkownika i nie weryfikują kryptograficznie JWT. Integracja na zdalnym PostgreSQL 17.11 dodatkowo potwierdziła logowanie i walidację sesji, izolację dwóch organizacji, granty chronionych pól oraz upload/download/delete fizycznych plików i awatarów. [Pełny zakres i zachowane fixture](stage-3-report.md). Nie sprawdzono jeszcze współbieżnych sesji drzewa zadań ani przyszłych serwerowych workflow modułów; te kontrole nie oznaczają pełnego audytu bezpieczeństwa.
 
 ## Źródła
 

@@ -1,6 +1,6 @@
 # Baza danych — fundament ETAPU 3
 
-Dwie migracje ETAPU 3 definiują pełny relacyjny model oraz szczegółowe uprawnienia ról i prywatny Storage. Pierwsza tworzy 15 tabel, ograniczenia, indeksy, znaczniki czasu i domyślną odmowę dostępu. Druga nadaje ograniczone uprawnienia, polityki RLS oraz zasobniki plików i awatarów. Nie zostały jeszcze zastosowane do zdalnego projektu. Klient React i końcowa weryfikacja na Supabase należą do trzeciego commita, na drugiej gałęzi. [Macierz dostępu i polityki plików](database-security.md).
+Dwie migracje ETAPU 3 definiują pełny relacyjny model oraz szczegółowe uprawnienia ról i prywatny Storage. Pierwsza tworzy 15 tabel, ograniczenia, indeksy, znaczniki czasu i domyślną odmowę dostępu. Druga nadaje ograniczone uprawnienia, polityki RLS oraz zasobniki plików i awatarów. Obie zastosowano do developerskiego `devflow-agency-dev` na PostgreSQL 17.11. Integracja klienta, generowane typy i rzeczywiste testy usług są gotowe na drugiej gałęzi; trzeci commit czeka na użytkownika. [Macierz dostępu](database-security.md) · [Raport integracji](stage-3-report.md).
 
 ## Tabele i odpowiedzialności
 
@@ -70,7 +70,7 @@ Kwoty i ilości korzystają z `numeric`, a nie z liczb zmiennoprzecinkowych. Poz
 
 Zaproszenie zapisuje wyłącznie 32-bajtowy skrót SHA-256 tokenu. Surowy token zostanie wygenerowany i wysłany przez przyszłą logikę serwerową. Kolejne zaproszenie pod ten sam adres wymaga unieważnienia poprzedniego niewykorzystanego zaproszenia, także wygasłego.
 
-Załącznik ma rozmiar do 20 MiB i generowaną ścieżkę `organization_id/attachment_id` w prywatnym buckecie `agency-files`. Nazwa wyświetlana nie staje się ścieżką obiektu. Sam zapis metadanych nie oznacza przesłania pliku. Druga migracja dodaje polityki Storage i prywatny bucket `avatars` do 2 MiB; faktyczny upload HTTP zostanie zweryfikowany przy integracji. [Szczegóły](database-security.md).
+Załącznik ma rozmiar do 20 MiB i generowaną ścieżkę `organization_id/attachment_id` w prywatnym buckecie `agency-files`. Nazwa wyświetlana nie staje się ścieżką obiektu. Sam zapis metadanych nie oznacza przesłania pliku. Druga migracja dodaje polityki Storage i prywatny bucket `avatars` do 2 MiB; faktyczny upload, odczyt bajtów, odmowy, limity i usuwanie HTTP sprawdzono podczas integracji. [Szczegóły](database-security.md).
 
 ## Odtwarzalne testy
 
@@ -82,11 +82,11 @@ npm run check
 
 `test:db` używa Node test runner i PGlite 0.5.10 (PostgreSQL 18.6 w WebAssembly). Uruchamia rzeczywiste, nieprzepisywane migracje SQL na izolowanej bazie w pamięci, tworzy dane testowe i zamyka bazę po przebiegu. Nie używa `.env.local`, sieci ani projektu użytkownika. PGlite jest tylko zależnością developerską; nie trafia do aplikacji ani nie zastępuje Supabase.
 
-Fixture `supabase/tests/fixtures/bootstrap.sql` definiuje minimalny kontrakt testowy `auth.users`, `auth.uid()`, ról i tabel Storage. Nie jest migracją i nie wolno wykonywać go na Supabase. Testy ustawiają kontekst użytkownika na potrzeby SQL; nie walidują podpisu JWT ani usług HTTP. Sprawdzają klucze obce, triggery, granty i RLS, ale nie fizyczne pliki, Auth HTTP, Storage HTTP ani współbieżne połączenia. Konfiguracja lokalnego Supabase używa PostgreSQL 17; ostateczna weryfikacja na docelowym Supabase nastąpi przy integracji.
+Fixture `supabase/tests/fixtures/bootstrap.sql` definiuje minimalny kontrakt testowy `auth.users`, `auth.uid()`, ról i tabel Storage. Nie jest migracją i nie wolno wykonywać go na Supabase. Testy offline ustawiają kontekst użytkownika na potrzeby SQL; nie walidują podpisu JWT ani usług HTTP. Sprawdzają klucze obce, triggery, granty i RLS. Osobne kontrole integracyjne na zdalnym PostgreSQL 17.11 sprawdziły rzeczywiste Auth/JWT i fizyczny Storage HTTP. Nie wykonano testów współbieżnych połączeń drzewa zadań. [Pełny zakres i ograniczenia](stage-3-report.md).
 
 Łącznie 100 testów obejmuje 38 testów schematu i opcjonalnego seed oraz 62 testy kompletnej migracji uprawnień, Storage i zgodności seed z całym łańcuchem. Pierwszy zestaw odtwarza stan po pierwszej migracji; drugi uruchamia cały łańcuch. Sprawdzają poprawne operacje i odmowy, osiem kontekstów ról, brak tożsamości, obce organizacje i projekty, zawieszenie i zmianę ról, pola chronione oraz pliki. `npm run check` obejmuje także testy bazy. Zmiany nie dodają jeszcze interfejsu modułów ani logowania.
 
-Pełne lokalne Supabase na Windows wymaga Supabase CLI i zgodnego środowiska kontenerów, np. Docker Desktop. Nie jest wymagane do uruchomienia obecnych testów PGlite. CLI i zastosowanie migracji do projektu developerskiego zostaną przygotowane po sprawdzeniu kolejnej migracji bezpieczeństwa.
+Pełne lokalne Supabase na Windows wymaga zgodnego środowiska kontenerów, np. Docker Desktop. Nie jest ono wymagane do uruchomienia obecnych testów PGlite i generowania typów. CLI jest przypięte jako zależność developerska; instrukcje i historia zastosowanych migracji są w [dokumentacji integracji](supabase-integration.md).
 
 ## Opcjonalne dane developerskie
 
