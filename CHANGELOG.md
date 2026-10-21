@@ -39,7 +39,11 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 - Wspólną tabelę `Table` z natywnymi częściami nagłówka, treści, stopki, wierszy, komórek i podpisu.
 - Domyślne nagłówki kolumn z możliwością użycia nagłówków wierszy oraz podpis i przewijanie poziome dostępne klawiaturą.
 - Podglądy tabeli w obu motywach oraz kontrolę 6 wariantów szerokości i motywu, w tym pustego widoku i audytu axe.
-- Aktualne screenshoty oraz testy ekranu: 12 testów React i 50 scenariuszy E2E.
+- React Router 8.4.0, publiczną stronę `/`, listę obszarów `/app` i dziesięć adresów planowanych modułów.
+- Link do modułów ze strony powitalnej oraz stronę 404 dla nieznanych adresów, również zagnieżdżonych.
+- Tytuły dokumentu, przekazywanie fokusu po zmianie strony i powrót do sekcji planu rozwoju; zachowanie motywu w nawigacji SPA.
+- Testy bezpośrednich adresów, odświeżania, historii przeglądarki, nieprawidłowego fragmentu URL i dostępności nowych stron.
+- Aktualne screenshoty oraz testy ekranu: 15 testów React i 62 scenariusze E2E.
 
 ### Naprawiono
 
@@ -50,7 +54,7 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 - ETAP 1 zakończono i scalono do `main` przez PR #1 (`56029a8`).
 - ETAP 2 rozpoczęto na `feat/app-shell`; pierwsze zadanie obejmuje wspólne tokeny i wybór motywu.
-- Przygotowano podstawowe komponenty UI, dialogi, panel nawigacji mobilnej i wspólną tabelę; routing oraz układ aplikacji pozostają kolejnymi zadaniami.
+- Przygotowano podstawowe komponenty UI, dialogi, panel nawigacji mobilnej, wspólną tabelę i routing; sidebar, topbar oraz pozostałe stany interfejsu pozostają kolejnymi zadaniami.
 - Logowanie, baza danych i moduły biznesowe nie są zaimplementowane.
-- Kontrole aktualnego ekranu i pełny przebieg 50 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0; axe-core sprawdza również wszystkie otwarte opisy roadmapy i nawigację mobilną przed otwarciem oraz po otwarciu panelu. Dialog i cztery kierunki panelu przeszły osobną kontrolę w 20 kombinacjach rozmiarów i motywów.
+- Kontrole aktualnego ekranu i pełny przebieg 62 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0; axe-core sprawdza ekran powitalny, roadmapę, nawigację mobilną oraz listę modułów, podgląd modułu i 404 w obu motywach. Dialog i cztery kierunki panelu przeszły osobną kontrolę w 20 kombinacjach rozmiarów i motywów.
 - Operacje Git wykonuje użytkownik po sprawdzeniu zmian i otrzymaniu poleceń od agenta.

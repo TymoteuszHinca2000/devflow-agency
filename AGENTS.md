@@ -14,7 +14,7 @@
 
 ```text
 src/
-  app/                  # Punkt wejścia; w przyszłości router i providery
+  app/                  # Punkt wejścia, routing i providery
   components/
     ui/                 # Wspólne prymitywy interfejsu
     layout/             # Układ aplikacji

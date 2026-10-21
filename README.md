@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAP 1 zakończony, ETAP 2 w realizacji.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Na gałęzi `feat/app-shell` powstaje design system i układ aplikacji; gotowe są wspólne tokeny, zapamiętywany wybór motywu i pierwsze komponenty shadcn/ui. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: ETAP 1 zakończony, ETAP 2 w realizacji.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Na gałęzi `feat/app-shell` powstaje design system i układ aplikacji; gotowe są wspólne tokeny, zapamiętywany wybór motywu, podstawowe komponenty shadcn/ui i routing. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -21,6 +21,9 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Lokalne komponenty shadcn/ui: `Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet` i `Table`, dostosowane do palety DevFlow.
 - Dialogi i panele z tytułem, opisem, zamykaniem przez Escape i tło, blokadą przewijania oraz zarządzaniem fokusem.
 - Wspólna tabela z podpisem, nagłówkami kolumn i wierszy, stopką oraz obszarem przewijania dostępnym klawiaturą. Komponent jest przygotowany do użycia w kolejnych modułach.
+- React Router: publiczny ekran `/`, lista obszarów `/app` i osobne adresy dziesięciu planowanych modułów.
+- Link „Zobacz moduły aplikacji” na stronie głównej oraz strona 404 z działającymi linkami powrotu.
+- Zmiana tytułu dokumentu i fokusu po przejściu między stronami, historia przeglądarki i powrót do sekcji planu rozwoju.
 - Wspólny przycisk w akcjach strony i wspólna karta w katalogu; stany pól przygotowane do kolejnych formularzy.
 - Wybór motywu jasnego, ciemnego lub systemowego z zapamiętywaniem ustawienia i obsługą ograniczenia ruchu.
 - Reakcja na zmianę motywu systemu i synchronizacja wyboru między kartami przeglądarki.
@@ -32,7 +35,7 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 2.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Następne małe zadanie ETAPU 2 to React Router i podstawowe trasy aplikacji. Układ panelu oraz dalsze komponenty pozostają w planie tego etapu. Nie ma jeszcze wdrożonego demo.
+Następne małe zadanie ETAPU 2 to sidebar i responsywny topbar aplikacji. Dalsze komponenty i stany interfejsu pozostają w planie tego etapu. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych.
 
 ## Podgląd aktualnej sekcji powitalnej
 
@@ -46,7 +49,7 @@ Motyw wybierzesz w nawigacji. Przy szerokości do 1000 px otwórz wysuwany panel
 
 | Obszar                  | Zainstalowane                                                                | Planowane                                                 |
 | ----------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------- |
-| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4                                   | React Router, TanStack Query                              |
+| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4, React Router 8.4.0               | TanStack Query                                            |
 | Interfejs               | Tailwind CSS 4.3.3, shadcn/ui (Radix), Lucide React, fonty Manrope i DM Sans | Recharts, dnd-kit                                         |
 | Formularze i stan       | Stan lokalny React                                                           | React Hook Form, Zod; Zustand przy rzeczywistej potrzebie |
 | Backend                 | Brak integracji w ETAPIE 1                                                   | Supabase, PostgreSQL, Auth, Storage, RLS, Edge Functions  |
@@ -94,6 +97,8 @@ npm run dev
 ```
 
 Vite wypisze lokalny adres, zwykle `http://127.0.0.1:5173`. Jeśli port jest zajęty, użyj adresu wyświetlonego przez serwer. Zatrzymanie: `Ctrl+C`.
+
+Kliknij „Zobacz moduły aplikacji” albo dopisz `/app` do lokalnego adresu. Sprawdź też bezpośrednie wejście na `/app/projects`, odświeżenie i nieznany adres, np. `/brak-strony`. Mapa adresów, architektura i zrzuty: [Routing aplikacji](docs/routing.md).
 
 ## Środowisko
 
@@ -149,8 +154,8 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 **Weryfikacja ekranu powitalnego, katalogu i roadmapy na Node 24.19.0:**
 
 - Lint, formatowanie, TypeScript i build: poprawne.
-- Vitest / Testing Library: 12 zaliczonych testów.
-- Playwright / Chromium: 50 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
+- Vitest / Testing Library: 15 zaliczonych testów.
+- Playwright / Chromium: 62 zaliczone scenariusze na desktopie i telefonie; proces zakończył się kodem `0`.
 - Sprawdzono filtrowanie, licznik wyników, nawigację do sekcji, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
 - Roadmapa: domyślnie otwarty bieżący obszar, niezależne rozwijanie pozostałych, obsługa Enter i Spacji oraz zachowanie fokusu.
 - Sprawdzono ręczne nadpisanie motywu systemowego, zapis i odświeżanie, reakcję na zmiany systemu, klawiaturę, synchronizację kart, nieprawidłowy zapis i blokadę pamięci przeglądarki.
@@ -161,6 +166,8 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 - Testy panelu obejmują zapętlenie fokusu, zamknięcie przez Escape, przycisk i tło, przywracanie przewijania, przejście do sekcji i zmianę szerokości okna. Sprawdzono też widok 320 × 320 px z ograniczeniem ruchu.
 - W osobnym podglądzie sprawdzono dialog i cztery kierunki panelu w 20 kombinacjach rozmiarów i motywów, z kontrolą klawiatury, granic ekranu, błędów wykonania i axe. Podgląd nie jest dodatkową stroną aplikacji.
 - W odizolowanym podglądzie tabeli sprawdzono 6 wariantów szerokości i motywu oraz widok z danymi i pusty. Przewijanie strzałkami, przechodzenie fokusu, semantyka nagłówków i podpisu, brak przepełnienia strony oraz audyty axe zakończyły się poprawnie. Szczegóły i zrzuty: [Wspólne komponenty UI](docs/ui-components.md).
+- Routing: przejścia bez przeładowania dokumentu, wszystkie adresy modułów, odświeżenie bezpośredniego adresu, Wstecz/Dalej, zachowanie motywu, tytuły, fokus, kotwice i odzyskanie nawigacji ze strony 404.
+- Strony `/app`, podgląd modułu i 404 przeszły audyty axe w obu motywach na desktopie i telefonie. Sprawdzono również szerokość 320 px, skip link oraz nieprawidłowy fragment URL.
 
 Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Kolejne sekcje i moduły otrzymają testy w ramach swoich zadań.
 
@@ -207,6 +214,8 @@ Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz
 Wspólne tokeny znajdują się w `src/styles/tokens.css`, a provider motywu w `src/lib/theme/`. `public/theme-init.js` odczytuje preferencję przed uruchomieniem aplikacji. Szczegóły użycia i architektury: [Wspólne style i motyw](docs/design-tokens.md).
 
 Komponenty UI są w `src/components/ui/`, a adapter ich semantycznych tokenów w `src/styles/ui.css`. `components.json` opisuje konfigurację shadcn/ui. Przykłady i podgląd: [Wspólne komponenty UI](docs/ui-components.md).
+
+`src/app/app-routes.tsx` określa trasy, `app-modules.ts` opisy obszarów, a `route-effects.tsx` tytuły i przekazywanie fokusu. Widoki planowanych modułów są w `src/app/pages/`; ich funkcje biznesowe powstaną w katalogach `features/` we właściwych etapach. [Szczegóły routingu](docs/routing.md).
 
 Docelowo PostgreSQL i RLS zapewnią izolację organizacji, Storage będzie prywatny, a operacje wymagające zaufanej logiki obsłużą Edge Functions. W ETAPIE 1 nie ma migracji, seeda ani połączenia z bazą. Szczegóły: [ROADMAP.md](ROADMAP.md) i [AGENTS.md](AGENTS.md).
 

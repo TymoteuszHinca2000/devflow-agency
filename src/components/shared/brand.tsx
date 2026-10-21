@@ -1,3 +1,5 @@
+import { Link } from 'react-router'
+
 export function BrandMark({ className = '' }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 32 32" fill="none" aria-hidden="true">
@@ -8,15 +10,24 @@ export function BrandMark({ className = '' }: { className?: string }) {
   )
 }
 
-export function Brand() {
-  return (
-    <a href="#top" className="brand" aria-label="DevFlow Agency — początek strony">
+export function Brand({ to }: { to?: string }) {
+  const wordmark = (
+    <>
       <span className="brand-symbol">
         <BrandMark />
       </span>
       <span className="brand-wordmark">
         devflow <span className="brand-agency">agency</span>
       </span>
+    </>
+  )
+  return to ? (
+    <Link to={to} className="brand" aria-label="DevFlow Agency — strona główna">
+      {wordmark}
+    </Link>
+  ) : (
+    <a href="#top" className="brand" aria-label="DevFlow Agency — początek strony">
+      {wordmark}
     </a>
   )
 }

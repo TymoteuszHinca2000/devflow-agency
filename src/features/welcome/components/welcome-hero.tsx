@@ -1,4 +1,5 @@
 import { ArrowRight, Check } from 'lucide-react'
+import { Link } from 'react-router'
 import { ActionLink } from '@/components/ui/action-link'
 import { WorkspaceIllustration } from './workspace-illustration'
 
@@ -34,6 +35,9 @@ export function WelcomeHero() {
         <p className="hero-note">
           <Check size={14} aria-hidden="true" /> Rozwijane otwarcie. Krok po kroku.
         </p>
+        <Link to="/app" className="app-preview-link">
+          Zobacz moduły aplikacji <ArrowRight size={16} aria-hidden="true" />
+        </Link>
       </div>
       <WorkspaceIllustration />
     </section>

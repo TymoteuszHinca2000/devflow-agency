@@ -34,12 +34,12 @@ Etap zakończono raportem i decyzją użytkownika o dalszej pracy. Zmiany scalon
 - [x] Dostępne dialogi i wysuwany panel mobilny.
 - [x] Wspólna tabela.
 - [ ] Sidebar, responsywny topbar i nawigacja mobilna.
-- [ ] React Router, trasy modułów i strona nieznalezionego adresu.
+- [x] React Router, trasy modułów i strona nieznalezionego adresu.
 - [x] Motyw jasny, ciemny i systemowy z zapamiętaniem preferencji.
 - [ ] Skeletony, empty states, toasty i obsługa błędów.
 - [ ] Weryfikacja klawiatury, kontrastu, dialogów i urządzeń mobilnych.
 
-Gałąź: `feat/app-shell`. Przygotowano wspólne tokeny, wybór motywu i komponenty shadcn/ui (`Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet`, `Table`). Akcje strony i katalog korzystają ze wspólnych komponentów, a nawigacja mobilna z modalnego panelu. Bieżące kontrole: lint, formatowanie, typy, build, 12 testów React i 50 scenariuszy E2E. Testy obejmują fokus, zamykanie, blokadę przewijania i przełączanie na nawigację desktopową. Dialog oraz cztery kierunki panelu sprawdzono w odizolowanym podglądzie w 20 kombinacjach, także narzędziem axe. Tabela przeszła osobną kontrolę klawiatury, przewijania, pustego widoku i axe w 6 wariantach szerokości i motywu. Sidebar, topbar i routing aplikacji pozostają do wykonania. Pozostałe elementy etapu otrzymają osobne zadania i weryfikację.
+Gałąź: `feat/app-shell`. Przygotowano wspólne tokeny, wybór motywu i komponenty shadcn/ui (`Button`, `Card`, `Input`, `Label`, `Dialog`, `Sheet`, `Table`). Akcje strony i katalog korzystają ze wspólnych komponentów, a nawigacja mobilna z modalnego panelu. React Router obsługuje ekran publiczny, `/app`, dziesięć adresów planowanych modułów i stronę 404. Bieżące kontrole: lint, formatowanie, typy, build, 15 testów React i 62 scenariusze E2E, w tym przejścia bez przeładowania, historia, tytuły, fokus, odświeżanie bezpośredniego adresu i audyty axe nowych stron. Dialog oraz cztery kierunki panelu sprawdzono również w odizolowanym podglądzie w 20 kombinacjach, a tabelę w 6 wariantach szerokości i motywu. Sidebar, topbar i pozostałe elementy etapu otrzymają osobne zadania i weryfikację.
 
 ## ETAP 3 — Supabase i relacyjny model danych · TODO
 
@@ -172,7 +172,7 @@ Gałąź: `feat/app-shell`. Przygotowano wspólne tokeny, wybór motywu i kompon
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza i zapisuje tabelę: `feat(ui): add accessible shared table primitives`.
-2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje React Router i podstawowe trasy aplikacji.
-3. Responsywny układ panelu powstanie w kolejnych małych zadaniach ETAPU 2.
+1. Użytkownik sprawdza i zapisuje routing: `feat(router): add module routes and not-found page`.
+2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje sidebar i responsywny topbar aplikacji.
+3. Stany interfejsu i pozostałe elementy powstaną w kolejnych małych zadaniach ETAPU 2.
 4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia. Kolejny etap wymaga osobnej decyzji użytkownika.
