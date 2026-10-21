@@ -24,7 +24,7 @@ export function DevelopmentRoadmap() {
             kierunek dalszego rozwoju.
           </p>
           <a
-            href="https://github.com/TymoteuszHinca2000/devflow-agency/blob/feat/project-foundation/ROADMAP.md"
+            href="https://github.com/TymoteuszHinca2000/devflow-agency/blob/main/ROADMAP.md"
             className="roadmap-document-link"
             target="_blank"
             rel="noreferrer"
@@ -61,7 +61,7 @@ export function DevelopmentRoadmap() {
                 <p>{phase.description}</p>
                 {phase.current && (
                   <span className="phase-current-label">
-                    Aktualnie: ETAP 1 — fundament projektu.
+                    Aktualnie: ETAP 2 — design system i układ aplikacji.
                   </span>
                 )}
               </div>

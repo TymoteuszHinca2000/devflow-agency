@@ -32,4 +32,18 @@ describe('DevFlow welcome screen', () => {
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
     expect(toggle).toHaveFocus()
   })
+
+  it('lets users select a theme and restores their preference when the app mounts again', async () => {
+    const user = userEvent.setup()
+    const app = render(<App />)
+    const selector = screen.getByRole('combobox', { name: 'Motyw kolorystyczny' })
+    expect(selector).toHaveValue('system')
+
+    await user.selectOptions(selector, 'dark')
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark')
+    app.unmount()
+    render(<App />)
+    expect(screen.getByRole('combobox', { name: 'Motyw kolorystyczny' })).toHaveValue('dark')
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark')
+  })
 })

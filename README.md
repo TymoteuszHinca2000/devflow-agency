@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAP 1 oczekuje na podsumowanie i decyzję użytkownika.** Działa fundament React + TypeScript + Vite, ekran powitalny, katalog planowanych modułów z filtrowaniem i rozwijana roadmapa. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: ETAP 1 zakończony, ETAP 2 w realizacji.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Na gałęzi `feat/app-shell` powstaje design system i układ aplikacji; pierwszą częścią są wspólne tokeny oraz zapamiętywany wybór motywu. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -17,7 +17,10 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Nagłówek z nawigacją desktopową i rozwijanym menu mobilnym.
 - Sekcja powitalna z ilustracją koncepcji produktu oraz linkami do kodu i planu rozwoju.
 - Wspólne logo, przyciski w formie linków, lokalne fonty i favicon.
-- Kolorystyka zgodna z jasnym lub ciemnym motywem systemu i obsługa ograniczenia ruchu.
+- Wspólne tokeny kolorów, fontów, odstępów, zaokrągleń i fokusu, dostępne również w Tailwind CSS.
+- Wybór motywu jasnego, ciemnego lub systemowego z zapamiętywaniem ustawienia i obsługą ograniczenia ruchu.
+- Reakcja na zmianę motywu systemu i synchronizacja wyboru między kartami przeglądarki.
+- Odczyt zapisanego motywu przed uruchomieniem Reacta oraz obsługa blokady zapisu ustawień.
 - Skip link, obsługa klawiatury i przywracanie fokusu po zamknięciu menu.
 - Katalog sześciu planowanych modułów z filtrami „Wszystkie”, „Praca zespołu” i „Relacje z klientami”.
 - Licznik wyników dostępny dla czytników ekranu oraz obsługa filtrów klawiaturą.
@@ -25,13 +28,15 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 1.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Zakres kodu ETAPU 1 jest przygotowany i sprawdzony. Po zatwierdzeniu ostatniej sekcji pozostają podsumowanie etapu i osobna decyzja o dalszej pracy. Ręczny wybór motywu jest zaplanowany na ETAP 2. Nie ma jeszcze wdrożonego demo.
+Następne małe zadanie ETAPU 2 to wspólne komponenty UI. Routing i układ panelu pozostają w planie tego etapu. Nie ma jeszcze wdrożonego demo.
 
 ## Podgląd aktualnej sekcji powitalnej
 
 ![DevFlow Agency — ekran powitalny, katalog modułów i plan rozwoju](docs/screenshots/welcome-desktop.png)
 
-[Ciemny motyw](docs/screenshots/welcome-dark.png) · [Widok mobilny](docs/screenshots/welcome-mobile.png)
+[Ciemny motyw](docs/screenshots/welcome-dark.png) · [Widok mobilny](docs/screenshots/welcome-mobile.png) · [Wybór motywu na telefonie](docs/screenshots/theme-selector-mobile.png)
+
+Motyw wybierzesz w nawigacji. Przy szerokości do 1000 px otwórz menu. „Systemowy” śledzi ustawienia systemu na bieżąco; wybór ręczny pozostaje po odświeżeniu. Gdy przeglądarka blokuje zapis, ustawienie działa w bieżącej sesji.
 
 ## Stack
 
@@ -70,7 +75,7 @@ Dla nowej kopii repozytorium:
 ```powershell
 git clone https://github.com/TymoteuszHinca2000/devflow-agency.git
 cd devflow-agency
-git switch feat/project-foundation
+git switch feat/app-shell
 npm ci
 npm run dev
 ```
@@ -88,7 +93,7 @@ Vite wypisze lokalny adres, zwykle `http://127.0.0.1:5173`. Jeśli port jest zaj
 
 ## Środowisko
 
-**ETAP 1 działa bez `.env`, konta Supabase i kluczy.** `.env.example` dokumentuje wyłącznie przyszłe publiczne wartości:
+**ETAPY 1 i 2 działają bez `.env`, konta Supabase i kluczy.** `.env.example` dokumentuje wyłącznie przyszłe publiczne wartości:
 
 ```dotenv
 VITE_SUPABASE_URL=
@@ -140,11 +145,13 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 **Weryfikacja ekranu powitalnego, katalogu i roadmapy na Node 24.19.0:**
 
 - Lint, formatowanie, TypeScript i build: poprawne.
-- Vitest / Testing Library: 4 zaliczone testy.
-- Playwright / Chromium: 24 zaliczone scenariusze na desktopie i telefonie; proces zakończył się kodem `0`.
+- Vitest / Testing Library: 5 zaliczonych testów.
+- Playwright / Chromium: 40 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
 - Sprawdzono filtrowanie, licznik wyników, nawigację do sekcji, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
 - Roadmapa: domyślnie otwarty bieżący obszar, niezależne rozwijanie pozostałych, obsługa Enter i Spacji oraz zachowanie fokusu.
-- axe-core: brak automatycznie wykrytych naruszeń WCAG A/AA w jasnym i ciemnym widoku na obu urządzeniach, także po otwarciu wszystkich opisów roadmapy.
+- Sprawdzono ręczne nadpisanie motywu systemowego, zapis i odświeżanie, reakcję na zmiany systemu, klawiaturę, synchronizację kart, nieprawidłowy zapis i blokadę pamięci przeglądarki.
+- Osobne scenariusze potwierdzają odczyt zapisanego motywu także przed załadowaniem modułu React.
+- axe-core: brak automatycznie wykrytych naruszeń WCAG A/AA w jasnym i ciemnym widoku na obu urządzeniach, także po otwarciu wszystkich opisów roadmapy i menu mobilnego z wyborem motywu.
 - Przejrzano zrzuty dla szerokości 320, 390, 768 i 1440 px; bez poziomego przepełnienia.
 
 Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Kolejne sekcje i moduły otrzymają testy w ramach swoich zadań.
@@ -187,7 +194,9 @@ Komponenty, hooki, serwisy, walidacja i typy modułu pozostają w jego katalogu 
 
 Katalog na stronie startowej ma dane opisowe w `src/features/welcome/data/planned-modules.ts` oraz osobne style w `src/features/welcome/styles/module-overview.css`. Filtry działają lokalnie w React. Opisy przedstawiają plan produktu i nie zastępują danych z przyszłego backendu.
 
-Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz style w `src/features/welcome/styles/development-roadmap.css`. Natywne elementy HTML `details` i `summary` obsługują rozwijanie i klawiaturę. Pierwszy obszar obejmuje etapy 1–2, ale etykieta wskazuje, że obecnie realizowany jest wyłącznie etap 1.
+Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz style w `src/features/welcome/styles/development-roadmap.css`. Natywne elementy HTML `details` i `summary` obsługują rozwijanie i klawiaturę. Pierwszy obszar obejmuje etapy 1–2, a etykieta wskazuje obecnie realizowany etap 2.
+
+Wspólne tokeny znajdują się w `src/styles/tokens.css`, a provider motywu w `src/lib/theme/`. `public/theme-init.js` odczytuje preferencję przed uruchomieniem aplikacji. Szczegóły użycia i architektury: [Wspólne style i motyw](docs/design-tokens.md).
 
 Docelowo PostgreSQL i RLS zapewnią izolację organizacji, Storage będzie prywatny, a operacje wymagające zaufanej logiki obsłużą Edge Functions. W ETAPIE 1 nie ma migracji, seeda ani połączenia z bazą. Szczegóły: [ROADMAP.md](ROADMAP.md) i [AGENTS.md](AGENTS.md).
 
@@ -201,13 +210,13 @@ Docelowo PostgreSQL i RLS zapewnią izolację organizacji, Storage będzie prywa
 - Timer, ręczne wpisy czasu, stawki, raporty i eksport.
 - Wyceny, pozycje kosztorysu, historia i PDF.
 - Portal klienta: projekty, komentarze, pliki i akceptacja wycen.
-- Ustawienia, powiadomienia i motyw jasny/ciemny.
+- Ustawienia konta i preferencje powiadomień.
 
 To zakres docelowy, a nie obecnie dostępne funkcje.
 
 ## Git workflow
 
-Branch roboczy: `feat/project-foundation`. Agent przygotowuje zmiany, a użytkownik wykonuje operacje Git po otrzymaniu instrukcji. Agent wstrzymuje edycję do potwierdzenia wykonania poleceń.
+Branch roboczy ETAPU 2: `feat/app-shell`, utworzony z `main` po scaleniu ETAPU 1 przez PR #1 (`56029a8`). Agent przygotowuje zmiany, a użytkownik wykonuje operacje Git po otrzymaniu instrukcji. Agent wstrzymuje edycję do potwierdzenia wykonania poleceń.
 
 Przed pracą sprawdzaj:
 

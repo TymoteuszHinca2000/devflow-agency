@@ -1,0 +1,54 @@
+@theme {
+  --font-sans: 'DM Sans Variable', sans-serif;
+  --font-heading: 'Manrope Variable', sans-serif;
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --text-control: 0.8125rem;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-brand: var(--accent);
+  --color-brand-soft: var(--accent-soft);
+  --color-border: var(--line);
+}
+
+:root {
+  color-scheme: light dark;
+  --canvas: light-dark(#f6f8f6, #111b15);
+  --surface: light-dark(#fff, #18261d);
+  --surface-soft: light-dark(#edf2ee, #15231a);
+  --ink: light-dark(#1b2b22, #e9f0e9);
+  --muted: light-dark(#627068, #a3b5a8);
+  --line: light-dark(#dce4dd, #2c3c30);
+  --accent: light-dark(#276b4b, #b2e7c0);
+  --accent-soft: light-dark(#e3efe6, #263e2e);
+  --primary: light-dark(#213e2b, #b9edc6);
+  --on-primary: light-dark(#f6fff8, #183021);
+  --diagram: light-dark(#edf3ed, #15261a);
+  --diagram-line: light-dark(#b6cdbb, #36533e);
+  --shadow: light-dark(#183b2610, #030b0640);
+  --violet-soft: light-dark(#eeebfa, #322b43);
+  --violet-ink: light-dark(#7160ad, #c1b0e5);
+  --blue-soft: light-dark(#e8effa, #233348);
+  --blue-ink: light-dark(#5073ad, #a7c6ee);
+  --amber-soft: light-dark(#f8efda, #3e3421);
+  --amber-ink: light-dark(#94702f, #e3c37d);
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --control-height: 2.75rem;
+  --duration-fast: 150ms;
+  --focus-ring: var(--accent);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}

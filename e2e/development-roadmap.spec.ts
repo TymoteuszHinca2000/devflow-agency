@@ -28,7 +28,9 @@ test('shows the current stage and lets planned areas expand independently', asyn
   await expect(phases).toHaveCount(4)
   await expect(roadmap.locator('details[open]')).toHaveCount(1)
   await expect(roadmap.getByText('W realizacji', { exact: true })).toBeVisible()
-  await expect(roadmap.getByText('Aktualnie: ETAP 1 — fundament projektu.')).toBeVisible()
+  await expect(
+    roadmap.getByText('Aktualnie: ETAP 2 — design system i układ aplikacji.'),
+  ).toBeVisible()
   for (const range of ['Etapy 1–2', 'Etapy 3–5', 'Etapy 6–13', 'Etapy 14–15']) {
     await expect(roadmap.getByText(range)).toBeVisible()
   }

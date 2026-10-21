@@ -1,31 +1,13 @@
 @import 'tailwindcss';
-
-@theme {
-  --font-sans: 'DM Sans Variable', sans-serif;
-  --font-heading: 'Manrope Variable', sans-serif;
-}
+@import './tokens.css';
 
 :root {
   font-family: var(--font-sans);
-  color-scheme: light;
   color: var(--ink);
   background: var(--canvas);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  --canvas: #f6f8f6;
-  --surface: #fff;
-  --surface-soft: #edf2ee;
-  --ink: #1b2b22;
-  --muted: #627068;
-  --line: #dce4dd;
-  --accent: #276b4b;
-  --accent-soft: #e3efe6;
-  --primary: #213e2b;
-  --on-primary: #f6fff8;
-  --diagram: #edf3ed;
-  --diagram-line: #b6cdbb;
-  --shadow: #183b2610;
 }
 
 * {
@@ -72,7 +54,7 @@ h3 {
   color: var(--ink);
 }
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 5px;
 }
 main:focus {
@@ -258,7 +240,7 @@ main:focus {
   justify-content: center;
   gap: 14px;
   min-height: 48px;
-  border-radius: 7px;
+  border-radius: var(--radius-control);
   padding: 12px 18px;
   font-size: 13px;
   font-weight: 500;
@@ -407,16 +389,16 @@ main:focus {
   flex-shrink: 0;
 }
 .node-icon--violet {
-  background: #eeebfa;
-  color: #7160ad;
+  background: var(--violet-soft);
+  color: var(--violet-ink);
 }
 .node-icon--blue {
-  background: #e8effa;
-  color: #5073ad;
+  background: var(--blue-soft);
+  color: var(--blue-ink);
 }
 .node-icon--amber {
-  background: #f8efda;
-  color: #94702f;
+  background: var(--amber-soft);
+  color: var(--amber-ink);
 }
 .flow-node strong {
   display: block;
@@ -519,34 +501,9 @@ main:focus {
   color: var(--ink);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --canvas: #111b15;
-    --surface: #18261d;
-    --surface-soft: #15231a;
-    --ink: #e9f0e9;
-    --muted: #a3b5a8;
-    --line: #2c3c30;
-    --accent: #b2e7c0;
-    --accent-soft: #263e2e;
-    --primary: #b9edc6;
-    --on-primary: #183021;
-    --diagram: #15261a;
-    --diagram-line: #36533e;
-    --shadow: #030b0640;
-  }
-  .node-icon--violet {
-    background: #322b43;
-    color: #c1b0e5;
-  }
-  .node-icon--blue {
-    background: #233348;
-    color: #a7c6ee;
-  }
-  .node-icon--amber {
-    background: #3e3421;
-    color: #e3c37d;
+@media (max-width: 1200px) {
+  .development-badge {
+    display: none;
   }
 }
 
@@ -594,9 +551,6 @@ main:focus {
 }
 
 @media (max-width: 900px) {
-  .development-badge {
-    display: none;
-  }
   .hero-copy h1 {
     font-size: 57px;
   }
@@ -669,10 +623,7 @@ main:focus {
   }
 }
 
-@media (max-width: 760px) {
-  .page-width {
-    width: calc(100% - 40px);
-  }
+@media (max-width: 1000px) {
   .site-header-inner {
     height: 74px;
     gap: 12px;
@@ -695,8 +646,8 @@ main:focus {
     display: none;
     position: absolute;
     top: 74px;
-    left: -20px;
-    right: -20px;
+    left: -32px;
+    right: -32px;
     margin: 0;
     padding: 16px 20px 22px;
     background: var(--canvas);
@@ -716,6 +667,16 @@ main:focus {
   .header-nav .repository-link {
     padding: 12px 8px;
     border-left: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .page-width {
+    width: calc(100% - 40px);
+  }
+  .header-nav {
+    left: -20px;
+    right: -20px;
   }
   .welcome-hero {
     grid-template-columns: 1fr;

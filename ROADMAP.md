@@ -2,7 +2,7 @@
 
 Statusy: **TODO**, **IN PROGRESS**, **DONE**. Zakończenie etapu oznacza działający zakres, weryfikację i raport. Rozpoczęcie kolejnego etapu wymaga decyzji użytkownika.
 
-## ETAP 1 — Fundament projektu · IN PROGRESS
+## ETAP 1 — Fundament projektu · DONE
 
 | Zadanie                                                         | Status |
 | --------------------------------------------------------------- | ------ |
@@ -21,21 +21,23 @@ Statusy: **TODO**, **IN PROGRESS**, **DONE**. Zakończenie etapu oznacza działa
 | Screenshoty aktualnej sekcji powitalnej                         | DONE   |
 | Końcowa weryfikacja: typy, lint, build, testy, klawiatura i RWD | DONE   |
 | Naprawa zamykania runnera Playwright w Windows                  | DONE   |
-| Raport i decyzja o ETAPIE 2                                     | TODO   |
+| Raport i decyzja o ETAPIE 2                                     | DONE   |
 
 Nie implementować logowania ani bazy. Katalogi przyszłych modułów rezerwują miejsce na dalszy rozwój.
 
-Bieżący ekran z katalogiem i roadmapą przeszedł lint, formatowanie, kontrolę typów, build, 4 testy React i 24 scenariusze Playwright. Sprawdzono filtrowanie, rozwijanie opisów Enterem i Spacją, fokus, linki do obu sekcji i kontrole axe-core obu motywów ze wszystkimi opisami roadmapy otwartymi. Etap oczekuje na zatwierdzenie ostatniej sekcji, raport końcowy i decyzję użytkownika.
+Etap zakończono raportem i decyzją użytkownika o dalszej pracy. Zmiany scalono do `main` przez PR #1 (`56029a8`). Weryfikacja zamykająca etap: lint, formatowanie, typy, build, 4 testy React i 24 scenariusze Playwright, w tym filtrowanie, rozwijanie opisów klawiaturą, fokus, RWD i kontrole axe-core obu motywów.
 
-## ETAP 2 — Design system i układ aplikacji · TODO
+## ETAP 2 — Design system i układ aplikacji · IN PROGRESS
 
-- [ ] Tokeny kolorów, typografii, odstępów i stanów interakcji.
+- [x] Tokeny kolorów, typografii, odstępów i stanów interakcji.
 - [ ] shadcn/ui oraz wspólne przyciski, pola, karty, dialogi i tabele.
 - [ ] Sidebar, responsywny topbar i nawigacja mobilna.
 - [ ] React Router, trasy modułów i strona nieznalezionego adresu.
-- [ ] Motyw jasny, ciemny i systemowy z zapamiętaniem preferencji.
+- [x] Motyw jasny, ciemny i systemowy z zapamiętaniem preferencji.
 - [ ] Skeletony, empty states, toasty i obsługa błędów.
 - [ ] Weryfikacja klawiatury, kontrastu, dialogów i urządzeń mobilnych.
+
+Gałąź: `feat/app-shell`. W pierwszym zadaniu przygotowano wspólne tokeny i wybór motywu, w tym odczyt przed uruchomieniem Reacta, reakcję na zmianę systemu, synchronizację kart i obsługę niedostępnego zapisu. Bieżące kontrole: lint, formatowanie, typy, build, 5 testów React i 40 scenariuszy E2E; menu z wyborem motywu sprawdzono także narzędziem axe. Pozostałe elementy etapu otrzymają osobne zadania i weryfikację.
 
 ## ETAP 3 — Supabase i relacyjny model danych · TODO
 
@@ -168,7 +170,7 @@ Bieżący ekran z katalogiem i roadmapą przeszedł lint, formatowanie, kontrol�
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza i zapisuje roadmapę: `feat(welcome): add expandable development roadmap`.
-2. Agent czeka na potwierdzenie commita i push, a następnie podsumowuje ETAP 1.
-3. Użytkownik podejmuje osobną decyzję o rozpoczęciu ETAPU 2. Nowy branch także tworzy użytkownik po otrzymaniu poleceń.
-4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia.
+1. Użytkownik sprawdza i zapisuje pierwszą część ETAPU 2: `feat(theme): add persistent theme selection and shared tokens`.
+2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje wspólne komponenty UI.
+3. Routing i responsywny układ panelu powstaną w kolejnych małych zadaniach ETAPU 2.
+4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia. Kolejny etap wymaga osobnej decyzji użytkownika.

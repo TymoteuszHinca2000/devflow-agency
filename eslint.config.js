@@ -27,6 +27,10 @@ export default defineConfig([
     extends: [js.configs.recommended],
     languageOptions: { globals: globals.node },
   },
+  {
+    files: ['public/**/*.js'],
+    languageOptions: { globals: globals.browser },
+  },
   // Playwright requires object destructuring for fixture dependency discovery.
   {
     files: ['e2e/fixtures.ts'],

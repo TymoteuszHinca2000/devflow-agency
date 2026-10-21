@@ -1,6 +1,7 @@
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { useId, useRef, useState } from 'react'
 import { Brand } from '@/components/shared/brand'
+import { ThemeSelector } from '@/components/shared/theme-selector'
 
 export function WelcomeHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -60,6 +61,7 @@ export function WelcomeHeader() {
           >
             Kod na GitHubie <ArrowUpRight size={16} aria-hidden="true" />
           </a>
+          <ThemeSelector />
         </nav>
       </div>
     </header>
