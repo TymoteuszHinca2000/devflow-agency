@@ -8,6 +8,9 @@ Aplikacja korzysta z `react-router` 8.4.0 w trybie deklaratywnym: `BrowserRouter
 | -------------------- | ------------------------------------------------------ | ---------------------- |
 | `/`                  | Publiczny ekran powitalny, katalog i plan rozwoju      | Ekran dostępny         |
 | `/login`             | Publiczny formularz logowania e-mailem i hasłem        | 4, dostępny            |
+| `/register`          | Publiczny formularz rejestracji                        | 4, dostępny            |
+| `/check-email`       | Instrukcja potwierdzenia i ponowna wysyłka             | 4, dostępny            |
+| `/auth/confirm`      | Jawna obsługa kodu PKCE i błędów linku                 | 4, dostępny            |
 | `/app`               | Lista obszarów aplikacji                               | Lista dostępna         |
 | `/app/dashboard`     | Dashboard                                              | 6                      |
 | `/app/organizations` | Organizacje                                            | 5                      |
@@ -65,7 +68,7 @@ npm test -- src/app/app-routes.test.tsx
 npm run test:e2e -- e2e/routing.spec.ts
 ```
 
-Aktualny pełny zestaw obejmuje 83 testy aplikacji, 100 testów SQL i 98 scenariuszy E2E. Testy routingu wybierają izolowany stan zalogowany; osobne testy uwierzytelniania sprawdzają odmowę dostępu, bezpieczny powrót i wylogowanie. Regresja nadal obejmuje dziesięć adresów modułów, odświeżanie, historię, nawigację bez przeładowania, motyw, tytuły, fokus, kotwice, nieznane adresy i nieprawidłowy fragment URL. Audyty axe na liście obszarów, podglądzie modułu, stronie 404 i otwartym menu aplikacji przeszły w obu motywach na desktopie i telefonie. Sprawdzono też skip link, aktywne linki, krótkie ekrany i szerokość 320 px.
+Aktualny pełny zestaw obejmuje 116 testów aplikacji, 100 testów SQL i 120 scenariuszy E2E. Testy routingu wybierają izolowany stan zalogowany; osobne testy uwierzytelniania sprawdzają odmowę dostępu, bezpieczny powrót i wylogowanie. Regresja nadal obejmuje dziesięć adresów modułów, odświeżanie, historię, nawigację bez przeładowania, motyw, tytuły, fokus, kotwice, nieznane adresy i nieprawidłowy fragment URL. Audyty axe na liście obszarów, podglądzie modułu, stronie 404 i otwartym menu aplikacji przeszły w obu motywach na desktopie i telefonie. Sprawdzono też skip link, aktywne linki, krótkie ekrany i szerokość 320 px.
 
 Bezpośrednie adresy i odświeżanie sprawdzono na lokalnym podglądzie Vite. Obecne E2E automatycznie buduje `dist-e2e` z izolowaną konfiguracją i odpowiedziami Auth, bez używania rzeczywistego projektu. W ETAPIE 15 zweryfikujemy konfigurację hostingu Vercel i odpowiedzi HTTP. Obecne 404 jest widokiem routera w aplikacji SPA, nie serwerowym statusem HTTP 404. Automatyczne testy dostępności nie zastępują pełnego audytu.
 

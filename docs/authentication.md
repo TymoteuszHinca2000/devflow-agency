@@ -1,12 +1,12 @@
-# Logowanie i weryfikowane sesje — ETAP 4, część 1
+# Logowanie i weryfikowane sesje — ETAP 4
 
-Gotowe są logowanie e-mailem/hasłem, utrzymanie sesji, ochrona `/app` oraz wylogowanie z bieżącej przeglądarki. To pierwszy z trzech uzgodnionych commitów na dwóch gałęziach. Rejestracja i potwierdzenie e-maila powstaną w drugim commicie; odzyskiwanie konta i profil w trzecim. Google OAuth odłożono decyzją użytkownika. ETAP 4 pozostaje w trakcie.
+Gotowe są logowanie e-mailem/hasłem, utrzymanie sesji, ochrona `/app` oraz wylogowanie z bieżącej przeglądarki. Użytkownik wypchnął ten zakres jako `a42bb25`. Druga część dodaje rejestrację, potwierdzenie e-maila i callback PKCE; [instrukcja oraz ograniczenia poczty](registration.md). Odzyskiwanie konta i profil pozostają do trzeciego commita na drugiej gałęzi. Google OAuth odłożono. ETAP 4 pozostaje w trakcie.
 
 ## Uruchomienie
 
 1. Użyj wspieranej wersji Node z `.node-version`, wykonaj `npm ci` i uzupełnij publiczną konfigurację `.env.local` zgodnie z [instrukcją Supabase](supabase-integration.md). Nie nadpisuj istniejącego pliku.
 2. Uruchom `npm run dev` i otwórz adres Vite z dopiskiem `/login`.
-3. Zaloguj się istniejącym, potwierdzonym kontem Auth w tym projekcie. **Hasło użytkownika Auth jest odrębne od hasła bazy PostgreSQL.** Formularza zakładania konta jeszcze nie ma.
+3. Zaloguj się potwierdzonym kontem Auth w tym projekcie albo przejdź do „Utwórz konto”. **Hasło użytkownika Auth jest odrębne od hasła bazy PostgreSQL.** Rejestracja wymaga poprawnych adresów powrotu i poczty — zobacz [instrukcję](registration.md).
 4. Wejdź na `/app/projects?view=list#route-title`, odśwież stronę i sprawdź zachowanie motywu oraz sesji. Moduły nadal pokazują opisy planowanego zakresu.
 5. Wyloguj się przyciskiem w topbarze. Wstecz lub bezpośredni adres `/app` powinien ponownie wymagać logowania.
 
@@ -40,7 +40,7 @@ Wszystkie `VITE_*` są publiczne. Hasła trafiają wyłącznie do Auth; kod nie 
 
 ## Formularz i dostępność
 
-React Hook Form 7.90.0 z resolverem 5.9.2 używa Zod 4.6.7. Adres e-mail jest przycinany i normalizowany do małych liter. Hasło pozostaje bez zmian, także ze spacjami. Logowanie wymaga niepustego hasła; reguły nowych haseł zostaną określone przy rejestracji, aby nie blokować istniejących kont.
+React Hook Form 7.90.0 z resolverem 5.9.2 używa Zod 4.6.7. Adres e-mail jest przycinany i normalizowany do małych liter. Hasło pozostaje bez zmian, także ze spacjami. Logowanie wymaga niepustego hasła, aby nie blokować starszych kont. Rejestracja wymaga 12–128 znaków i zgodnego powtórzenia; dodatkowe reguły serwera nadal obowiązują.
 
 Pola mają etykiety, odpowiednie `autocomplete`, `aria-invalid` i powiązane opisy. Po błędzie walidacji fokus trafia do pierwszego pola; błąd usługi ma `role="alert"` i otrzymuje fokus. Komunikaty pochodzą z jawnej mapy kodów Auth, nigdy z surowego tekstu odpowiedzi. Obsługujemy m.in. nieprawidłowe dane, niepotwierdzony e-mail, limit prób i awarię sieci. Przycisk podglądu hasła ma zmienną dostępną nazwę. Pola i przyciski są blokowane podczas wysyłania.
 

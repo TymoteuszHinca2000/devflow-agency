@@ -145,6 +145,40 @@
     font-size: 11px;
     line-height: 1.8;
   }
+  .auth-centered {
+    max-width: 480px;
+    margin-inline: auto;
+  }
+  .auth-field-hint {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .auth-cooldown {
+    margin-top: 14px;
+  }
+  .auth-secondary-link {
+    margin-top: 22px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .auth-secondary-link a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    padding-block: 8px;
+  }
+  .auth-success {
+    margin-bottom: 24px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 13px;
+    line-height: 1.7;
+  }
   .auth-session-note {
     margin-bottom: 24px;
     padding: 14px;

@@ -6,6 +6,11 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 ### Dodano
 
+- Drugą część ETAPU 4: rejestrację z imieniem/nazwą i powtórzeniem hasła, neutralny ekran sprawdzania poczty oraz ponowną wysyłkę potwierdzenia z odliczaniem 60 sekund zachowanym po odświeżeniu.
+- Jawny callback PKCE wymagający kliknięcia przed wymianą kodu, zachowanie niewykorzystanego kodu przy odświeżeniu i usuwanie go z adresu po próbie, `no-referrer`, obsługę wygasłego linku i brakującego weryfikatora oraz ochronę przed zastąpieniem aktywnego konta linkiem innego użytkownika.
+- Wymóg 12–128 znaków dla nowych haseł, zachowanie hasła bez przycinania, neutralne odpowiedzi dla istniejących kont i przesyłanie wyłącznie `display_name` jako metadanych profilu.
+- 33 testy rejestracji i callbacków oraz 22 scenariusze E2E z weryfikacją wyzwania PKCE i jednokrotnego użycia; łącznie 116 testów aplikacji i 120 scenariuszy E2E. Test rzeczywistej poczty jest opisany oddzielnie od izolowanych testów.
+- Dokumentację konfiguracji adresów powrotu i ograniczeń poczty oraz screenshoty rejestracji i potwierdzenia. Lokalny Supabase CLI ma jawnie włączone potwierdzanie e-maila; konfiguracja TOML nie zmienia automatycznie projektu zdalnego.
 - Pierwszą część ETAPU 4: `/login`, formularz e-mail/hasło oparty na React Hook Form i Zod, dostępne błędy, podgląd hasła oraz blokadę ponownego wysłania podczas żądania.
 - Provider sesji weryfikujący użytkownika przez Supabase Auth przed otwarciem `/app`, obsługę wygasłych i odrzuconych sesji, ponowienie po błędzie sieci oraz wylogowanie z bieżącej przeglądarki.
 - Powrót po logowaniu wyłącznie do lokalnych tras aplikacji, ochronę przed spóźnionymi odpowiedziami weryfikacji oraz zachowanie widoku i fokusu podczas odświeżania tego samego konta.

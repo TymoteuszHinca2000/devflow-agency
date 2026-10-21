@@ -1,9 +1,10 @@
-import { ArrowUpRight, Fingerprint, ShieldCheck } from 'lucide-react'
+import { Fingerprint } from 'lucide-react'
 import { Link, Navigate, useSearchParams } from 'react-router'
 import { useAuth } from '../hooks/use-auth'
 import { getSafeReturnTo } from '../lib/return-to'
 import { lazy, Suspense } from 'react'
 import { SessionStatus } from '../components/session-status'
+import { AuthPageShell } from '../components/auth-page-shell'
 
 const LoginForm = lazy(async () => ({
   default: (await import('../components/login-form')).LoginForm,
@@ -12,35 +13,12 @@ const LoginForm = lazy(async () => ({
 export function LoginPage() {
   const { state } = useAuth()
   const [search] = useSearchParams()
-  if (state.status === 'signed-in')
-    return <Navigate to={getSafeReturnTo(search.get('returnTo'))} replace />
+  const returnTo = getSafeReturnTo(search.get('returnTo'))
+  if (state.status === 'signed-in') return <Navigate to={returnTo} replace />
   if (state.status === 'loading' || state.status === 'error') return <SessionStatus />
 
   return (
-    <div className="auth-layout">
-      <aside className="auth-intro" aria-label="Twoja przestrzeń DevFlow">
-        <p className="eyebrow">TWÓJ ZESPÓŁ. TWÓJ FLOW.</p>
-        <h2>
-          Dobre rzeczy
-          <br />
-          zaczynają się
-          <br />
-          <span>od połączenia.</span>
-        </h2>
-        <p className="auth-intro-description">
-          Wróć do swojej przestrzeni i zrób miejsce na to, co ważne.
-        </p>
-        <div className="auth-assurance">
-          <ShieldCheck size={22} aria-hidden="true" />
-          <p>
-            <strong>Twój dostęp, Twoje uprawnienia.</strong>
-            <span>Dane pozostają w przestrzeni właściwego zespołu.</span>
-          </p>
-        </div>
-        <Link to="/#plan-rozwoju" className="auth-plan-link">
-          Zobacz, dokąd zmierzamy <ArrowUpRight size={16} aria-hidden="true" />
-        </Link>
-      </aside>
+    <AuthPageShell>
       <section className="auth-card" aria-labelledby="route-title">
         <div className="auth-card-icon">
           <Fingerprint size={25} aria-hidden="true" />
@@ -53,10 +31,24 @@ export function LoginPage() {
             Sesja wygasła. Zaloguj się ponownie.
           </p>
         )}
+        {search.get('notice') === 'confirmation-complete' && (
+          <p className="auth-session-note" role="status">
+            Dokończ logowanie, aby wejść do swojej przestrzeni.
+          </p>
+        )}
         <Suspense fallback={<p role="status">Ładowanie formularza…</p>}>
           <LoginForm />
         </Suspense>
+        <p className="auth-secondary-link">
+          Nie masz konta?{' '}
+          <Link to={`/register?${new URLSearchParams({ returnTo })}`}>Utwórz konto</Link>
+        </p>
+        <p className="auth-secondary-link">
+          <Link to={`/check-email?${new URLSearchParams({ returnTo })}`}>
+            Potwierdź adres e-mail
+          </Link>
+        </p>
       </section>
-    </div>
+    </AuthPageShell>
   )
 }

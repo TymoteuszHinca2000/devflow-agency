@@ -23,9 +23,14 @@ port = 54323
 [auth]
 enabled = true
 site_url = "http://127.0.0.1:5173"
-additional_redirect_urls = []
+additional_redirect_urls = ["http://127.0.0.1:5173/auth/confirm**", "http://localhost:5173/auth/confirm**"]
 jwt_expiry = 3600
 enable_signup = true
+
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+max_frequency = "1m"
 
 [storage]
 enabled = true

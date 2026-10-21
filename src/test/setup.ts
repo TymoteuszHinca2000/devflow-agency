@@ -18,5 +18,6 @@ afterEach(() => {
   cleanup()
   vi.unstubAllGlobals()
   window.localStorage.clear()
+  window.sessionStorage.clear()
   document.documentElement.removeAttribute('data-theme')
 })

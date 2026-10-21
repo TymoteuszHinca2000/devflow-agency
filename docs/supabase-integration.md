@@ -15,7 +15,7 @@ npm run dev
 
 `getSupabase()` w `src/lib/supabase/client.ts` tworzy jedną instancję `SupabaseClient<Database>` dopiero przy pierwszym użyciu. Import modułu bez konfiguracji nie zatrzymuje strony powitalnej. Po nieudanej walidacji można ponowić inicjalizację. Komponenty UI nie powinny wykonywać zapytań; serwisy modułu Auth korzystają już z klienta, a przyszłe moduły dodadzą własne operacje.
 
-Klient używa PKCE. Automatyczne przechwytywanie sesji z URL jest wyłączone do czasu jawnej implementacji callbacków w drugim commicie ETAPU 4. Pozostałe ustawienia sesji zachowują domyślne zachowanie SDK. Pierwsza część ETAPU 4 dodaje formularz logowania, provider weryfikujący użytkownika przez `getUser`, ochronę `/app` i lokalne wylogowanie. Google OAuth odłożono; potwierdzanie e-maila w projekcie pozostaje włączone. [Zakres, architektura i testy](authentication.md).
+Klient używa PKCE. Automatyczne przechwytywanie sesji z URL pozostaje wyłączone: `/auth/confirm` jawnie wymienia kod po kliknięciu użytkownika, a provider potwierdza tożsamość przez `getUser`. Callback usuwa kod i szczegóły błędów z adresu, obsługuje brak weryfikatora oraz odmawia cichego zastąpienia już zalogowanego konta. Pozostałe ustawienia sesji zachowują domyślne zachowanie SDK. Google OAuth odłożono; potwierdzanie e-maila pozostaje wymagane. [Sesje](authentication.md) · [Rejestracja, adresy powrotu i poczta](registration.md).
 
 Wszystkie `VITE_*` są publiczne. Nigdy nie wpisuj do nich hasła PostgreSQL, tokenu konta Supabase, `service_role` ani `sb_secret_`. RLS i granty egzekwują rzeczywisty dostęp użytkownika.
 

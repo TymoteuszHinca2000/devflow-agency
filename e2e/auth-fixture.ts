@@ -1,7 +1,15 @@
 import type { BrowserContext } from '@playwright/test'
-import { authTestEmail, authTestPassword, authTestStorageKey, authTestUrl } from './auth-config'
+import { createHash } from 'node:crypto'
+import {
+  authTestConfirmationCode,
+  authTestEmail,
+  authTestPassword,
+  authTestStorageKey,
+  authTestUrl,
+} from './auth-config'
 
-export type AuthScenario = 'signed-out' | 'signed-in' | 'rejected' | 'expired' | 'offline'
+export type AuthScenario =
+  'signed-out' | 'signed-in' | 'rejected' | 'expired' | 'offline' | 'signup-limited' | 'unconfirmed'
 export const authTestUser = {
   id: '10000000-0000-4000-8000-000000000099',
   aud: 'authenticated',
@@ -40,6 +48,12 @@ export function createAuthTestSession(expired = false) {
 }
 
 export async function installAuthFixture(context: BrowserContext, scenario: AuthScenario) {
+  let challenge: string | undefined
+  let consumed = false
+  const apiHeaders = {
+    'x-supabase-api-version': '2024-01-01',
+    'access-control-expose-headers': 'X-Supabase-Api-Version',
+  }
   await context.addInitScript(
     ({ key, session, seed }) => {
       try {
@@ -53,7 +67,7 @@ export async function installAuthFixture(context: BrowserContext, scenario: Auth
     {
       key: authTestStorageKey,
       session: createAuthTestSession(scenario === 'expired'),
-      seed: scenario !== 'signed-out',
+      seed: ['signed-in', 'rejected', 'expired', 'offline'].includes(scenario),
     },
   )
 
@@ -78,8 +92,64 @@ export async function installAuthFixture(context: BrowserContext, scenario: Auth
       })
       return
     }
+    if (url.pathname === '/auth/v1/signup' || url.pathname === '/auth/v1/resend') {
+      if (scenario === 'signup-limited') {
+        await route.fulfill({
+          status: 429,
+          headers: apiHeaders,
+          json: {
+            code: 'over_email_send_rate_limit',
+            message: 'Test-only private rate limit detail',
+          },
+        })
+        return
+      }
+      const body: unknown = request.postDataJSON()
+      if (
+        typeof body === 'object' &&
+        body !== null &&
+        'code_challenge' in body &&
+        typeof body.code_challenge === 'string'
+      )
+        challenge = body.code_challenge
+      consumed = false
+      await route.fulfill({
+        status: 200,
+        json: url.pathname.endsWith('/signup') ? { ...authTestUser, email_confirmed_at: null } : {},
+      })
+      return
+    }
     if (url.pathname === '/auth/v1/token') {
       const body: unknown = request.postDataJSON()
+      if (url.searchParams.get('grant_type') === 'pkce') {
+        const valid =
+          typeof body === 'object' &&
+          body !== null &&
+          'auth_code' in body &&
+          body.auth_code === authTestConfirmationCode &&
+          'code_verifier' in body &&
+          typeof body.code_verifier === 'string' &&
+          createHash('sha256').update(body.code_verifier).digest('base64url') === challenge &&
+          !consumed
+        if (valid) {
+          consumed = true
+          await route.fulfill({ status: 200, json: createAuthTestSession() })
+        } else
+          await route.fulfill({
+            status: 400,
+            headers: apiHeaders,
+            json: { code: 'flow_state_expired', message: 'Test-only expired code detail' },
+          })
+        return
+      }
+      if (scenario === 'unconfirmed') {
+        await route.fulfill({
+          status: 400,
+          headers: apiHeaders,
+          json: { code: 'email_not_confirmed', message: 'Test-only unconfirmed email detail' },
+        })
+        return
+      }
       const credentials =
         typeof body === 'object' &&
         body !== null &&

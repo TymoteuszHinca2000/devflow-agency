@@ -68,19 +68,22 @@ Etap scalono do `main` przez PR #3 (`11c4c21`). Uzgodnione dwie gałęzie i trzy
 
 - [x] Logowanie e-mailem oraz hasłem i bezpieczne komunikaty błędów.
 - [x] React Hook Form, Zod i dostępna walidacja formularza logowania.
-- [ ] Rejestracja konta.
-- [ ] Potwierdzenie e-maila, ponowna wysyłka i callbacki.
+- [x] Formularz rejestracji konta i walidacja nowych haseł.
+- [x] Potwierdzenie e-maila, ponowna wysyłka i callback PKCE z obsługą nieprawidłowych linków.
+- [x] Rzeczywista rejestracja, otrzymanie wiadomości, potwierdzenie adresu i logowanie hasłem potwierdzone przez użytkownika.
+- [ ] Ponowny test otwarcia sesji bezpośrednio z nowej rzeczywistej wiadomości po poprawce callbacku.
 - [ ] Reset i zmiana hasła, wygasłe i nieprawidłowe linki.
 - [x] Weryfikowane sesje, wylogowanie z bieżącej przeglądarki, chronione trasy i obsługa wygaśnięcia sesji.
 - [ ] Edycja profilu i bezpieczne przesyłanie awatara.
 - [x] Testy logowania, sesji, bezpiecznych przekierowań i dostępu do tras.
-- [ ] Testy rejestracji, callbacków, odzyskiwania konta i profilu oraz końcowa weryfikacja etapu.
+- [x] Izolowane testy rejestracji, ponownej wysyłki, callbacków i ponownego użycia linku.
+- [ ] Testy odzyskiwania konta i profilu oraz końcowa weryfikacja etapu.
 
 **Google OAuth odłożono decyzją użytkownika.** Obecny zakres uwierzytelniania to e-mail i hasło; odłożony dostawca nie blokuje zamknięcia tego zakresu etapu.
 
-Uzgodniony podział: dwie gałęzie i około trzy commity. Użytkownik utworzył i opublikował `feat/authentication` z `main` przy `11c4c21`. Pierwszy zakres obejmuje logowanie i sesje; drugi na tej samej gałęzi doda rejestrację oraz potwierdzenie e-maila. Trzeci, na nowej gałęzi utworzonej przez użytkownika, obejmie odzyskiwanie konta, profil i końcową weryfikację. Po każdym zestawie poleceń commit/push agent czeka na potwierdzenie przed dalszą edycją.
+Uzgodniony podział: dwie gałęzie i około trzy commity. Użytkownik utworzył i opublikował `feat/authentication` z `main` przy `11c4c21`. Pierwszy commit logowania i sesji, `a42bb25`, jest wypchnięty. Drugi zakres na tej samej gałęzi dodaje rejestrację i potwierdzenie e-maila. Trzeci, na nowej gałęzi utworzonej przez użytkownika, obejmie odzyskiwanie konta, profil i końcową weryfikację. Po każdym zestawie poleceń commit/push agent czeka na potwierdzenie przed dalszą edycją.
 
-Pierwszy zakres: 83 testy aplikacji, 100 testów SQL i 98 scenariuszy Playwright. E2E korzysta z osobnego buildu i izolowanych odpowiedzi Auth; nie tworzy kont w Supabase. Rzeczywisty Auth potwierdził obsługę błędnych danych logowania. Pełny przepływ rejestracji i poczty pozostaje do weryfikacji w dalszej części etapu. [Architektura, uruchomienie i ograniczenia](docs/authentication.md).
+Obecny zakres: 116 testów aplikacji, 100 testów SQL i 120 scenariuszy Playwright. E2E korzysta z osobnego buildu i izolowanych odpowiedzi Auth; nie tworzy kont w Supabase. Zdalny odczyt kontrolny przeszedł 16 kontroli Auth i anonimowej odmowy danych. Użytkownik potwierdził zapisanie adresów powrotu w panelu developerskiego projektu. Użytkownik potwierdził rzeczywistą pocztę, akceptację adresu i logowanie hasłem; ponowny test sesji z nowego linku po poprawce pozostaje do końcowej weryfikacji. [Sesje](docs/authentication.md) · [Rejestracja i konfiguracja](docs/registration.md).
 
 ## ETAP 5 — Organizacje i uprawnienia · TODO
 

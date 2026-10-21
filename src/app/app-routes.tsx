@@ -11,6 +11,9 @@ import { RequireAuth } from '@/features/auth/components/require-auth'
 import { LoginPage } from '@/features/auth/pages/login-page'
 import { AccountControls } from '@/features/auth/components/account-controls'
 import { useAuth } from '@/features/auth/hooks/use-auth'
+import { RegisterPage } from '@/features/auth/pages/register-page'
+import { CheckEmailPage } from '@/features/auth/pages/check-email-page'
+import { ConfirmEmailPage } from '@/features/auth/pages/confirm-email-page'
 
 export function AppRoutes() {
   const { state } = useAuth()
@@ -33,6 +36,9 @@ export function AppRoutes() {
         </Route>
         <Route element={<RouteLayout />}>
           <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="check-email" element={<CheckEmailPage />} />
+          <Route path="auth/confirm" element={<ConfirmEmailPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
