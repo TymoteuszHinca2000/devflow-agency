@@ -41,24 +41,28 @@ Etap zakończono raportem i decyzją użytkownika o dalszej pracy. Zmiany scalon
 - [x] Obsługa błędów.
 - [x] Weryfikacja klawiatury, kontrastu, dialogów i urządzeń mobilnych.
 
-Bieżąca gałąź: `chore/stage-2-verification`, utworzona z `feat/error-handling` przy `a98b4e3`. Zawiera wcześniejsze zmiany ETAPU 2. Zakres techniczny został ukończony i sprawdzony; zapis Git, odbiór raportu i decyzja o kolejnym etapie pozostają po stronie użytkownika. [Raport weryfikacji](docs/stage-2-report.md).
+Etap scalono do `main` przez PR #2 (`dc8d1ad`). Użytkownik zatwierdził rozpoczęcie ETAPU 3. [Raport weryfikacji](docs/stage-2-report.md).
 
 Gotowe są tokeny, motywy, podstawowe komponenty shadcn/ui, dialogi, panel mobilny, tabela, routing, sidebar i topbar oraz stany ładowania i braku danych. Toasty mają wspólną instancję, typowane API, cztery rodzaje komunikatów, opcjonalną akcję, kontrolowany czas wyświetlania i obsługę klawiatury. Ich użycie w modułach będzie powiązane z rzeczywistymi operacjami. [Szczegóły i podgląd](docs/toasts.md).
 
-Bieżące kontrole: lint, formatowanie, typy, build, 27 testów React i 80 scenariuszy E2E. Ponownie sprawdzono kontrolki, dialogi, panele, tabelę, stany, toasty i błędy. Końcowa kontrola objęła 35 widoków, 26 par kontrastu i ekrany do 320 × 256 px. Poprawiono kolejkę toastów na niskim ekranie i dostęp do akcji w długiej treści. Gotowe są `ErrorState` oraz granice błędów aplikacji i pojedynczej strony. [Zakres obsługi błędów](docs/error-handling.md). ETAP 3 pozostaje nierozpoczęty.
+Bieżące kontrole ETAPU 2: lint, formatowanie, typy, build, 27 testów React i 80 scenariuszy E2E. Ponownie sprawdzono kontrolki, dialogi, panele, tabelę, stany, toasty i błędy. Końcowa kontrola objęła 35 widoków, 26 par kontrastu i ekrany do 320 × 256 px. Poprawiono kolejkę toastów na niskim ekranie i dostęp do akcji w długiej treści. Gotowe są `ErrorState` oraz granice błędów aplikacji i pojedynczej strony. [Zakres obsługi błędów](docs/error-handling.md).
 
-## ETAP 3 — Supabase i relacyjny model danych · TODO
+## ETAP 3 — Supabase i relacyjny model danych · DONE
 
-- [ ] Uzyskanie konfiguracji Supabase od użytkownika i ustalenie środowisk.
-- [ ] Klient Supabase, walidacja publicznej konfiguracji i generowane typy bazy.
-- [ ] Migracje: `profiles`, `organizations`, `organization_members`, `organization_invitations`.
-- [ ] Migracje: `clients`, `projects`, `project_members`, `tasks`, `task_comments`, `time_entries`.
-- [ ] Migracje: `quotes`, `quote_items`, `attachments`, `notifications`, `activity_logs`.
-- [ ] UUID, klucze obce, indeksy, ograniczenia, `created_at` i `updated_at`.
-- [ ] Integralność powiązań organizacji i RLS z domyślną odmową dostępu.
-- [ ] Prywatny Storage i polityki dostępu do plików.
-- [ ] Jawny, opcjonalny `supabase/seed.sql` tylko dla środowiska developerskiego.
-- [ ] Testy migracji, izolacji organizacji i dostępu anonimowego.
+- [x] Uzyskanie konfiguracji Supabase od użytkownika i ustalenie środowisk.
+- [x] Klient Supabase, walidacja publicznej konfiguracji i generowane typy bazy.
+- [x] Migracje: `profiles`, `organizations`, `organization_members`, `organization_invitations`.
+- [x] Migracje: `clients`, `projects`, `project_members`, `tasks`, `task_comments`, `time_entries`.
+- [x] Migracje: `quotes`, `quote_items`, `attachments`, `notifications`, `activity_logs`.
+- [x] UUID, klucze obce, indeksy, ograniczenia, `created_at` i `updated_at`.
+- [x] Integralność powiązań organizacji i RLS z domyślną odmową dostępu.
+- [x] Szczegółowe polityki odczytu i zapisu dla ról, z testami izolacji.
+- [x] Prywatny Storage i polityki dostępu do plików.
+- [x] Jawny, opcjonalny `supabase/seed.sql` tylko dla środowiska developerskiego.
+- [x] Testy SQL migracji, izolacji organizacji i dostępu anonimowego.
+- [x] Zastosowanie migracji do projektu developerskiego i testy rzeczywistych usług Supabase.
+
+Uzgodniony podział: dwie gałęzie i około trzy commity. `feat/supabase-foundation` powstała z `main` przy `dc8d1ad`; wypchnięto `0503a24` z modelem i `c59cd28` z politykami oraz Storage. `feat/supabase-integration` zawiera przygotowany trzeci zakres: klient, walidacja, generowane typy i testy usług. Dwie migracje zastosowano do developerskiego `devflow-agency-dev` na PostgreSQL 17.11, uzgadniając historię z plikami repozytorium. Zdalny i lokalny schemat są zgodne. Przeszły 50 testów aplikacji, 100 testów SQL, kontrola generatora, build oraz 16 odczytowych i 20 zapisujących kontroli HTTP. Dane testowe pozostawiono na decyzję użytkownika; fizyczne pliki usunięto. Trzeci commit i push wykonuje użytkownik. [Raport i ograniczenia](docs/stage-3-report.md) · [Instrukcja integracji](docs/supabase-integration.md).
 
 ## ETAP 4 — Uwierzytelnianie i sesje · TODO
 
@@ -178,7 +182,7 @@ Bieżące kontrole: lint, formatowanie, typy, build, 27 testów React i 80 scena
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza raport i zapisuje weryfikację: `chore: complete stage two verification`.
-2. Agent czeka na potwierdzenie commita i push. Następnie można przygotować scalenie zakresu ETAPU 2 do `main`.
-3. ETAP 3 wymaga osobnej decyzji i konfiguracji Supabase; baza i logowanie nie są jeszcze zaimplementowane.
-4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia. Kolejny etap wymaga osobnej decyzji użytkownika.
+1. Użytkownik zapisuje i publikuje trzeci commit ETAPU 3 na istniejącej `feat/supabase-integration`.
+2. Po potwierdzeniu można przygotować jeden PR tej gałęzi do `main`, obejmujący wszystkie trzy commity etapu. Nie trzeba osobno scalać gałęzi fundamentu.
+3. ETAP 4 — formularze logowania, callbacki i sesje — rozpocznie się po osobnej decyzji użytkownika i potwierdzeniu właściwej nowej gałęzi.
+4. Agent zatrzymuje edycję po przekazaniu poleceń commita i push, do potwierdzenia użytkownika.

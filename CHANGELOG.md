@@ -6,6 +6,21 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 ### Dodano
 
+- Integrację ETAPU 3: leniwy, typowany klient Supabase 2.118.0, walidację publicznej konfiguracji bez ujawniania wartości i 23 nowe testy klienta oraz błędów konfiguracji.
+- Generowanie typów oficjalnym `@supabase/typegen` 0.2.2 z lokalnych migracji, sprawdzanie zgodności w `npm run check` oraz Supabase CLI 2.121.0.
+- Zastosowanie dwóch istniejących migracji do developerskiego Supabase, zgodną historię migracji oraz weryfikację struktury zdalnej i lokalnej.
+- Kontrole Auth i anonimowej odmowy 15 tabel oraz 20 rzeczywistych testów Auth/JWT, Data API, uprawnień i fizycznych plików Storage. Raport opisuje pozostawione na decyzję użytkownika fixture oraz usunięte pliki.
+- Raport ETAPU 3, instrukcję integracji i aktualny status planu rozwoju na ekranie powitalnym.
+- Drugą migrację ETAPU 3: polityki dla ról agencji, dostęp pracowników do przypisanych projektów i granty konkretnych kolumn.
+- Prywatne zasobniki `agency-files` (20 MiB) i `avatars` (2 MiB), polityki odczytu/uploadu/usuwania i restrykcyjną ochronę przed nadpisaniem, przenoszeniem oraz upublicznieniem bucketów.
+- Zawieszanie dostępu do projektu bez kasowania historii, sprawdzanie aktywności przy przypisaniu zadania i serwerowe ograniczenie zmian ról, zaproszeń, audytu, stawek i cyklu wycen.
+- 62 testy pełnego łańcucha migracji uprawnień, Storage i seed, łącznie 100 testów SQL, oraz dokumentację macierzy dostępu i ograniczeń integracji.
+- Pierwszą część ETAPU 3: wersjonowaną migrację 15 tabel PostgreSQL ze złożonymi kluczami obcymi, indeksami, UUID i znacznikami czasu.
+- Domyślną odmowę dostępu RLS i jawne cofnięcie uprawnień przeglądarkowych w pierwszej migracji, rozszerzone o szczegółowe polityki w drugiej.
+- Profile powiązane z Supabase Auth, ochronę tożsamości i organizacji wiersza, cykli podzadań, pojedynczego timera oraz dokładne kwoty pozycji wyceny.
+- Izolowane testy migracji i integralności na PGlite 0.5.10, polecenie `npm run test:db` włączone do `npm run check` oraz dokumentację modelu bazy.
+- Opcjonalny seed oznaczony `[DEMO]`, wyłączony domyślnie i wymagający istniejącego konta Auth oraz jawnego wyboru środowiska developerskiego.
+- Lokalną konfigurację Supabase CLI i wykluczenie jego katalogów roboczych. Migracje zastosowano do zdalnego projektu developerskiego podczas integracji ETAPU 3.
 - Raport zakończenia weryfikacji ETAPU 2: odtworzenie zależności w osobnym katalogu, kontrolę 35 widoków, 26 par kontrastu i ponowną kontrolę komponentów UI.
 - Cztery przebiegi regresji toastów na desktopie i telefonie, obejmujące kolejkę, zmianę wysokości okna, fokus oraz akcję w długim komunikacie.
 

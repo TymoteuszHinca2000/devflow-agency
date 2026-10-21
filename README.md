@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: zakres ETAPÓW 1 i 2 ukończony i zweryfikowany; ETAP 3 nierozpoczęty.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Design system, routing, układ aplikacji, stany, toasty i błędy przygotowano na gałęziach ETAPU 2. Bieżąca gałąź `chore/stage-2-verification` zawiera ich końcową kontrolę i poprawkę toastów na niskich ekranach. [Raport ETAPU 2](docs/stage-2-report.md). Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: ETAPY 1 i 2 scalone do `main`; kod i weryfikacja ETAPU 3 gotowe, trzeci commit czeka na użytkownika.** PR #1 (`56029a8`) wprowadził fundament, a PR #2 (`dc8d1ad`) design system i układ aplikacji. Dwie migracje tworzą 15 tabel, polityki ról i prywatny Storage w developerskim Supabase. Gałąź `feat/supabase-integration` dodaje typowanego klienta, walidację konfiguracji, generowane typy i kontrole rzeczywistych usług. [Raport ETAPU 3](docs/stage-3-report.md) · [Integracja](docs/supabase-integration.md) · [Model bazy](docs/database.md) · [Uprawnienia i pliki](docs/database-security.md). Formularze logowania i moduły biznesowe pozostają zaplanowane. Aplikacja nie prezentuje fixture testów jako rzeczywistych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -12,6 +12,11 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Vite, alias `@/` i Tailwind CSS 4 przez oficjalny plugin Vite.
 - ESLint z kontrolą typów, Prettier, EditorConfig i spójne końce linii.
 - Struktura katalogów przygotowana pod moduły biznesowe.
+- Wersjonowany schemat PostgreSQL: 15 tabel, złożone klucze obce, indeksy, profile Auth, ograniczenia i RLS z politykami ról.
+- Ograniczone granty kolumn, zawieszanie dostępu do projektu, prywatne pliki agencji i awatary oraz ochrona przed eskalacją uprawnień.
+- Typowany klient Supabase, walidacja URL i publicznego klucza oraz generowanie typów bez sieci i Dockera.
+- Izolowane testy SQL na PGlite, kontrola zgodności typów z migracjami i opcjonalny, domyślnie wyłączony seed developerski.
+- Zweryfikowana integracja zdalnych Auth, Data API, RLS i fizycznego Storage HTTP; jawny skrypt bezpiecznego odczytu kontrolnego.
 - Vitest, React Testing Library i konfiguracja Playwright dla desktopu i telefonu.
 - `.env.example`, wykluczenie lokalnej konfiguracji i wersjonowany lockfile.
 - Nagłówek z nawigacją desktopową i wysuwanym, modalnym panelem mobilnym.
@@ -42,7 +47,7 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 2.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-ETAP 2 jest gotowy do odbioru i zapisania wyników weryfikacji. Kolejny etap wymaga osobnej decyzji oraz konfiguracji Supabase. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych. [Stany interfejsu](docs/ui-states.md) · [Toasty](docs/toasts.md) · [Obsługa błędów](docs/error-handling.md).
+Klient Supabase jest gotowy do użycia w serwisach kolejnych modułów. Obecne adresy modułów pokazują opis planowanej realizacji; nie pobierają jeszcze danych biznesowych. Nie ma wdrożonego demo aplikacji. [Stany interfejsu](docs/ui-states.md) · [Toasty](docs/toasts.md) · [Obsługa błędów](docs/error-handling.md).
 
 ## Podgląd aktualnej sekcji powitalnej
 
@@ -54,14 +59,14 @@ Motyw wybierzesz w nawigacji. Przy szerokości do 1000 px otwórz wysuwany panel
 
 ## Stack
 
-| Obszar                  | Zainstalowane                                                                              | Planowane                                                 |
-| ----------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
-| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4, React Router 8.4.0                             | TanStack Query                                            |
-| Interfejs               | Tailwind CSS 4.3.3, shadcn/ui (Radix), Sonner 2.0.8, Lucide React, fonty Manrope i DM Sans | Recharts, dnd-kit                                         |
-| Formularze i stan       | Stan lokalny React                                                                         | React Hook Form, Zod; Zustand przy rzeczywistej potrzebie |
-| Backend                 | Brak integracji w ETAPIE 1                                                                 | Supabase, PostgreSQL, Auth, Storage, RLS, Edge Functions  |
-| Jakość                  | ESLint 10, Prettier 3, Vitest 5, Testing Library, Playwright, axe-core                     | Testy modułów i izolacji organizacji                      |
-| Automatyzacja i hosting | Lokalne skrypty kontroli jakości                                                           | GitHub Actions, Vercel                                    |
+| Obszar                  | Zainstalowane                                                                                        | Planowane                                                 |
+| ----------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4, React Router 8.4.0                                       | TanStack Query                                            |
+| Interfejs               | Tailwind CSS 4.3.3, shadcn/ui (Radix), Sonner 2.0.8, Lucide React, fonty Manrope i DM Sans           | Recharts, dnd-kit                                         |
+| Formularze i stan       | Stan lokalny React                                                                                   | React Hook Form, Zod; Zustand przy rzeczywistej potrzebie |
+| Backend                 | Supabase JS 2.118.0, CLI 2.121.0, PostgreSQL, RLS, prywatny Storage, PGlite 0.5.10 i generator typów | Formularze i sesje Auth, Edge Functions                   |
+| Jakość                  | ESLint 10, Prettier 3, Vitest 5, Testing Library, Playwright, axe-core                               | Testy modułów i izolacji organizacji                      |
+| Automatyzacja i hosting | Lokalne skrypty kontroli jakości                                                                     | GitHub Actions, Vercel                                    |
 
 Dokładne wersje są w `package.json` i `package-lock.json`. TypeScript 6.0.3 wybrano dla zgodności: zainstalowane `typescript-eslint` wspiera TypeScript `<6.1.0`. Nie wymuszamy nieobsługiwanych zależności przez `--force` ani `--legacy-peer-deps`.
 
@@ -89,7 +94,7 @@ Dla nowej kopii repozytorium:
 ```powershell
 git clone https://github.com/TymoteuszHinca2000/devflow-agency.git
 cd devflow-agency
-git switch chore/stage-2-verification
+git switch feat/supabase-integration
 npm ci
 npm run dev
 ```
@@ -109,36 +114,41 @@ Kliknij „Zobacz moduły aplikacji” albo dopisz `/app` do lokalnego adresu. S
 
 ## Środowisko
 
-**ETAPY 1 i 2 działają bez `.env`, konta Supabase i kluczy.** `.env.example` dokumentuje wyłącznie przyszłe publiczne wartości:
+**Ekran powitalny i kontrole offline działają bez konfiguracji Supabase.** Klient przy pierwszym użyciu serwisu oraz kontrole zdalne wymagają `.env.local` z publicznymi wartościami projektu:
 
 ```dotenv
 VITE_SUPABASE_URL=
 VITE_SUPABASE_PUBLISHABLE_KEY=
 ```
 
-Dopiero w ETAPIE 3, po uzgodnieniu konfiguracji Supabase:
+W nowej kopii repozytorium utwórz plik tylko wtedy, gdy jeszcze nie istnieje, i uzupełnij publiczne wartości projektu developerskiego:
 
 ```powershell
-Copy-Item .env.example .env.local
+if (-not (Test-Path .env.local)) { Copy-Item .env.example .env.local }
 ```
 
 Wszystkie `VITE_*` trafiają do przeglądarki. Nigdy nie umieszczaj w nich sekretów, `service_role` ani hasła PostgreSQL. Lokalne pliki `.env*` są ignorowane przez Git z wyjątkiem pustego `.env.example`.
 
 ## Skrypty i testy
 
-| Polecenie              | Działanie                                              |
-| ---------------------- | ------------------------------------------------------ |
-| `npm run dev`          | Serwer Vite z HMR                                      |
-| `npm run typecheck`    | Kontrola typów aplikacji, konfiguracji i E2E           |
-| `npm run lint`         | ESLint bez dopuszczania ostrzeżeń                      |
-| `npm run format`       | Prettier; modyfikuje pliki                             |
-| `npm run format:check` | Sprawdzenie formatowania bez zapisu                    |
-| `npm test`             | Jednorazowy Vitest                                     |
-| `npm run test:watch`   | Vitest w trybie obserwowania                           |
-| `npm run build`        | Kontrola typów i build do `dist/`                      |
-| `npm run preview`      | Podgląd istniejącego buildu                            |
-| `npm run check`        | Lint, formatowanie, Vitest i build z typami            |
-| `npm run test:e2e`     | Playwright: desktop i telefon na produkcyjnym buildzie |
+| Polecenie                    | Działanie                                                      |
+| ---------------------------- | -------------------------------------------------------------- |
+| `npm run dev`                | Serwer Vite z HMR                                              |
+| `npm run typecheck`          | Kontrola typów aplikacji, konfiguracji i E2E                   |
+| `npm run lint`               | ESLint bez dopuszczania ostrzeżeń                              |
+| `npm run format`             | Prettier; modyfikuje pliki                                     |
+| `npm run format:check`       | Sprawdzenie formatowania bez zapisu                            |
+| `npm test`                   | Jednorazowy Vitest                                             |
+| `npm run test:watch`         | Vitest w trybie obserwowania                                   |
+| `npm run test:db`            | Migracje i integralność danych na izolowanym PostgreSQL PGlite |
+| `npm run db:types`           | Generowanie typów z migracji bez sieci i Dockera               |
+| `npm run db:types:check`     | Sprawdzenie zgodności wygenerowanych typów z migracjami        |
+| `npm run supabase:verify`    | Jawny odczyt kontrolny Auth i anonimowej odmowy Data API       |
+| `npm run supabase -- --help` | Przypięty Supabase CLI                                         |
+| `npm run build`              | Kontrola typów i build do `dist/`                              |
+| `npm run preview`            | Podgląd istniejącego buildu                                    |
+| `npm run check`              | Lint, formatowanie, Vitest, testy bazy, zgodność typów i build |
+| `npm run test:e2e`           | Playwright: desktop i telefon na produkcyjnym buildzie         |
 
 Podstawowa kontrola:
 
@@ -158,7 +168,7 @@ Testy importują `test` i `expect` z `e2e/fixtures.ts`. Każdy test uruchamia po
 
 Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `test-results/`; oba katalogi są ignorowane przez Git.
 
-**Weryfikacja ekranu powitalnego, katalogu i roadmapy na Node 24.19.0:**
+**Weryfikacja ekranu powitalnego, katalogu i roadmapy przy zakończeniu ETAPU 2 na Node 24.19.0:**
 
 - Lint, formatowanie, TypeScript i build: poprawne.
 - Vitest / Testing Library: 27 zaliczonych testów.
@@ -180,6 +190,8 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Kolejne sekcje i moduły otrzymają testy w ramach swoich zadań.
 
 Wspólne toasty przeszły również osobną kontrolę w 5 wariantach rozmiaru i motywu: czas wyświetlania, wstrzymanie i wznowienie odliczania, trwałe komunikaty, aktualizacja, akcja, klawiatura, motywy oraz axe. [Opis API i screenshoty](docs/toasts.md).
+
+**ETAP 3 — model i bezpieczeństwo:** kontrole obejmują lint, formatowanie, 27 testów React, 100 testów SQL, typy i build. Przy konfiguracji publiczne API projektu developerskiego odpowiedziało HTTP 200. Testy SQL używają PGlite i nie zmieniają projektu zdalnego; migracji nie wdrożono jeszcze do Supabase. Interfejs pozostał bez zmian, więc w tej części nie powtarzano E2E. [Model i diagram](docs/database.md) · [Macierz uprawnień i zakres testów](docs/database-security.md).
 
 ## Architektura
 
@@ -211,7 +223,10 @@ src/
   test/
 e2e/
 supabase/
+  config.toml
   migrations/
+  seed.sql
+  tests/
   functions/
 ```
 
@@ -219,7 +234,7 @@ Komponenty, hooki, serwisy, walidacja i typy modułu pozostają w jego katalogu 
 
 Katalog na stronie startowej ma dane opisowe w `src/features/welcome/data/planned-modules.ts` oraz osobne style w `src/features/welcome/styles/module-overview.css`. Filtry działają lokalnie w React. Opisy przedstawiają plan produktu i nie zastępują danych z przyszłego backendu.
 
-Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz style w `src/features/welcome/styles/development-roadmap.css`. Natywne elementy HTML `details` i `summary` obsługują rozwijanie i klawiaturę. Pierwszy obszar obejmuje etapy 1–2; etykieta wskazuje zakończenie weryfikacji i oczekiwanie na odbiór przed kolejnym etapem.
+Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz style w `src/features/welcome/styles/development-roadmap.css`. Natywne elementy HTML `details` i `summary` obsługują rozwijanie i klawiaturę. Domyślnie rozwinięty jest obszar etapów 3–5 z etykietą zakończonej weryfikacji ETAPU 3; logowanie i organizacje pozostają kolejnymi krokami.
 
 Wspólne tokeny znajdują się w `src/styles/tokens.css`, a provider motywu w `src/lib/theme/`. `public/theme-init.js` odczytuje preferencję przed uruchomieniem aplikacji. Szczegóły użycia i architektury: [Wspólne style i motyw](docs/design-tokens.md).
 
@@ -229,7 +244,7 @@ Komponenty UI są w `src/components/ui/`, a adapter ich semantycznych tokenów w
 
 Trasy `/app` korzystają z `AppLayout` i wspólnej nawigacji w `src/components/layout/`. Sidebar, topbar i menu mobilne są osobnymi komponentami; ich style znajdują się w `src/styles/app-shell.css`. Nieznane adresy wewnątrz `/app` zachowują układ aplikacji. [Opis układu](docs/app-shell.md).
 
-Docelowo PostgreSQL i RLS zapewnią izolację organizacji, Storage będzie prywatny, a operacje wymagające zaufanej logiki obsłużą Edge Functions. W ETAPIE 1 nie ma migracji, seeda ani połączenia z bazą. Szczegóły: [ROADMAP.md](ROADMAP.md) i [AGENTS.md](AGENTS.md).
+Dwie migracje PostgreSQL definiują relacje, granty kolumn, RLS i prywatny Storage. Klient jest w `src/lib/supabase/`, generowane typy w `src/types/database.types.ts`, a skrypty kontroli w `scripts/`. Operacje wymagające zaufanej logiki obsłużą serwerowe funkcje we właściwych modułach. Szczegóły: [Integracja](docs/supabase-integration.md), [Model bazy](docs/database.md), [Uprawnienia](docs/database-security.md), [ROADMAP.md](ROADMAP.md) i [AGENTS.md](AGENTS.md).
 
 ## Planowane funkcjonalności
 
@@ -249,7 +264,7 @@ To zakres docelowy, a nie obecnie dostępne funkcje.
 
 Każda nowa funkcjonalność ma osobną gałąź, także w ramach tego samego etapu. Agent podaje polecenia jej utworzenia i publikacji oraz czeka na potwierdzenie przed kodowaniem. Użytkownik wykonuje także staging, commity i push. Po każdym logicznym zadaniu agent zatrzymuje edycję do potwierdzenia wykonania poleceń.
 
-Bieżący branch: `chore/stage-2-verification`, utworzony z `feat/error-handling` przy `a98b4e3`. Zawiera cały zakres ETAPU 2. Gałąź `feat/error-handling` powstała z `feat/toasts` przy `12174ff`, `feat/toasts` z `feat/ui-states` przy `455e832`, a `feat/ui-states` z `feat/app-shell` przy `4e080ce`. Gałąź ETAPU 2, `feat/app-shell`, powstała z `main` po scaleniu ETAPU 1 przez PR #1 (`56029a8`). Scalenie zakresu ETAPU 2 pozostaje osobną czynnością użytkownika.
+Bieżący branch: `feat/supabase-integration`, utworzony przez użytkownika z `feat/supabase-foundation` przy `c59cd28`. ETAP 3 obejmuje dwie gałęzie i trzy spójne commity: model i polityki/Storage są już zapisane, a klient i weryfikacja czekają na trzeci commit. Jeden przyszły PR integracji do `main` obejmie cały etap. Po każdym commicie agent czeka na potwierdzenie; utworzenie kolejnej gałęzi również wykonuje użytkownik przed rozpoczęciem jej kodowania.
 
 Przed pracą sprawdzaj:
 

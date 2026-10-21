@@ -157,3 +157,5 @@ playwright-report/
 test-results/
 blob-report/
 .supabase/
+supabase/.temp/
+supabase/.branches/

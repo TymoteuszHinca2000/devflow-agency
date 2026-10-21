@@ -50,7 +50,7 @@ export function DevelopmentRoadmap() {
                     {phase.range}
                     {phase.current && (
                       <span className="phase-status">
-                        <span className="status-dot" /> Gotowe do odbioru
+                        <span className="status-dot" /> ETAP 3 gotowy
                       </span>
                     )}
                   </span>
@@ -62,7 +62,7 @@ export function DevelopmentRoadmap() {
                 <p>{phase.description}</p>
                 {phase.current && (
                   <span className="phase-current-label">
-                    ETAP 2 zweryfikowany. Kolejny etap po zatwierdzeniu.
+                    ETAP 3 zweryfikowany. Kolejny etap po zatwierdzeniu.
                   </span>
                 )}
               </div>

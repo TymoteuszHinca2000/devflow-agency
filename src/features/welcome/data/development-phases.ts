@@ -13,7 +13,7 @@ export const developmentPhases: readonly DevelopmentPhase[] = [
     number: '01',
     title: 'Solidne fundamenty',
     range: 'Etapy 1–2',
-    current: true,
+    current: false,
     description:
       'Architektura projektu, ekran powitalny, design system i responsywny układ aplikacji.',
   },
@@ -22,9 +22,9 @@ export const developmentPhases: readonly DevelopmentPhase[] = [
     number: '02',
     title: 'Twoja przestrzeń pracy',
     range: 'Etapy 3–5',
-    current: false,
+    current: true,
     description:
-      'Baza danych, logowanie, organizacje i role. Podstawa bezpiecznej współpracy zespołu.',
+      'Baza danych i uprawnienia są gotowe. Kolejne kroki to logowanie i organizacje, które połączą zespół w jednej przestrzeni.',
   },
   {
     id: 'workflow',
