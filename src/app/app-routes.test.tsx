@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -25,13 +25,19 @@ describe('Application routing', () => {
     const user = userEvent.setup()
     renderRoute('/app')
     await user.selectOptions(screen.getByRole('combobox', { name: 'Motyw kolorystyczny' }), 'dark')
-    await user.click(screen.getByRole('link', { name: /Klienci/ }))
+    await user.click(
+      within(screen.getByRole('navigation', { name: 'Moduły aplikacji' })).getByRole('link', {
+        name: /Klienci/,
+      }),
+    )
     expect(screen.getByRole('heading', { level: 1, name: 'Klienci' })).toBeVisible()
     expect(screen.getByText('Ten moduł jest w planie.')).toBeVisible()
     await waitFor(() => expect(screen.getByRole('main')).toHaveFocus())
     expect(document.title).toBe('Klienci — DevFlow Agency')
     expect(screen.getByRole('combobox', { name: 'Motyw kolorystyczny' })).toHaveValue('dark')
-    await user.click(screen.getByRole('link', { name: 'Wszystkie moduły' }))
+    await user.click(
+      within(screen.getByRole('main')).getByRole('link', { name: 'Wszystkie moduły' }),
+    )
     expect(screen.getByRole('navigation', { name: 'Moduły aplikacji' })).toBeVisible()
   })
 

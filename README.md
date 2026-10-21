@@ -24,6 +24,9 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - React Router: publiczny ekran `/`, lista obszarów `/app` i osobne adresy dziesięciu planowanych modułów.
 - Link „Zobacz moduły aplikacji” na stronie głównej oraz strona 404 z działającymi linkami powrotu.
 - Zmiana tytułu dokumentu i fokusu po przejściu między stronami, historia przeglądarki i powrót do sekcji planu rozwoju.
+- Stały sidebar aplikacji na komputerze i topbar ze ścieżką bieżącej strony oraz wyborem motywu.
+- Aktywne linki modułów z `aria-current`, wspólna nawigacja i wysuwane z lewej menu do szerokości 1000 px.
+- Zamykanie menu po wyborze modułu, zmianie ścieżki i przejściu na desktop; obsługa Escape, tła oraz przekazywania fokusu.
 - Wspólny przycisk w akcjach strony i wspólna karta w katalogu; stany pól przygotowane do kolejnych formularzy.
 - Wybór motywu jasnego, ciemnego lub systemowego z zapamiętywaniem ustawienia i obsługą ograniczenia ruchu.
 - Reakcja na zmianę motywu systemu i synchronizacja wyboru między kartami przeglądarki.
@@ -35,7 +38,7 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 2.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Następne małe zadanie ETAPU 2 to sidebar i responsywny topbar aplikacji. Dalsze komponenty i stany interfejsu pozostają w planie tego etapu. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych.
+Następne małe zadanie ETAPU 2 to wspólne stany ładowania i braku danych. Toasty i obsługa błędów pozostają kolejnymi zadaniami. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych.
 
 ## Podgląd aktualnej sekcji powitalnej
 
@@ -98,7 +101,7 @@ npm run dev
 
 Vite wypisze lokalny adres, zwykle `http://127.0.0.1:5173`. Jeśli port jest zajęty, użyj adresu wyświetlonego przez serwer. Zatrzymanie: `Ctrl+C`.
 
-Kliknij „Zobacz moduły aplikacji” albo dopisz `/app` do lokalnego adresu. Sprawdź też bezpośrednie wejście na `/app/projects`, odświeżenie i nieznany adres, np. `/brak-strony`. Mapa adresów, architektura i zrzuty: [Routing aplikacji](docs/routing.md).
+Kliknij „Zobacz moduły aplikacji” albo dopisz `/app` do lokalnego adresu. Sprawdź też bezpośrednie wejście na `/app/projects`, odświeżenie i nieznany adres, np. `/brak-strony`. Mapa adresów: [Routing aplikacji](docs/routing.md). Układ, obsługa menu i zrzuty: [Sidebar i topbar](docs/app-shell.md).
 
 ## Środowisko
 
@@ -154,8 +157,8 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 **Weryfikacja ekranu powitalnego, katalogu i roadmapy na Node 24.19.0:**
 
 - Lint, formatowanie, TypeScript i build: poprawne.
-- Vitest / Testing Library: 15 zaliczonych testów.
-- Playwright / Chromium: 62 zaliczone scenariusze na desktopie i telefonie; proces zakończył się kodem `0`.
+- Vitest / Testing Library: 17 zaliczonych testów.
+- Playwright / Chromium: 74 zaliczone scenariusze na desktopie i telefonie; proces zakończył się kodem `0`.
 - Sprawdzono filtrowanie, licznik wyników, nawigację do sekcji, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
 - Roadmapa: domyślnie otwarty bieżący obszar, niezależne rozwijanie pozostałych, obsługa Enter i Spacji oraz zachowanie fokusu.
 - Sprawdzono ręczne nadpisanie motywu systemowego, zapis i odświeżanie, reakcję na zmiany systemu, klawiaturę, synchronizację kart, nieprawidłowy zapis i blokadę pamięci przeglądarki.
@@ -168,6 +171,7 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 - W odizolowanym podglądzie tabeli sprawdzono 6 wariantów szerokości i motywu oraz widok z danymi i pusty. Przewijanie strzałkami, przechodzenie fokusu, semantyka nagłówków i podpisu, brak przepełnienia strony oraz audyty axe zakończyły się poprawnie. Szczegóły i zrzuty: [Wspólne komponenty UI](docs/ui-components.md).
 - Routing: przejścia bez przeładowania dokumentu, wszystkie adresy modułów, odświeżenie bezpośredniego adresu, Wstecz/Dalej, zachowanie motywu, tytuły, fokus, kotwice i odzyskanie nawigacji ze strony 404.
 - Strony `/app`, podgląd modułu i 404 przeszły audyty axe w obu motywach na desktopie i telefonie. Sprawdzono również szerokość 320 px, skip link oraz nieprawidłowy fragment URL.
+- Sidebar i topbar: aktywny link, ścieżka strony, historia, zachowanie przy przewijaniu i dostępność dolnych linków na niskim ekranie. Menu aplikacji: fokus, blokada tła, Escape, zamknięcie przyciskiem i tłem, wybór bieżącego lub innego modułu oraz powiększenie do desktopu. Audyty axe przeszły także dla otwartego menu w obu motywach.
 
 Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Kolejne sekcje i moduły otrzymają testy w ramach swoich zadań.
 
@@ -216,6 +220,8 @@ Wspólne tokeny znajdują się w `src/styles/tokens.css`, a provider motywu w `s
 Komponenty UI są w `src/components/ui/`, a adapter ich semantycznych tokenów w `src/styles/ui.css`. `components.json` opisuje konfigurację shadcn/ui. Przykłady i podgląd: [Wspólne komponenty UI](docs/ui-components.md).
 
 `src/app/app-routes.tsx` określa trasy, `app-modules.ts` opisy obszarów, a `route-effects.tsx` tytuły i przekazywanie fokusu. Widoki planowanych modułów są w `src/app/pages/`; ich funkcje biznesowe powstaną w katalogach `features/` we właściwych etapach. [Szczegóły routingu](docs/routing.md).
+
+Trasy `/app` korzystają z `AppLayout` i wspólnej nawigacji w `src/components/layout/`. Sidebar, topbar i menu mobilne są osobnymi komponentami; ich style znajdują się w `src/styles/app-shell.css`. Nieznane adresy wewnątrz `/app` zachowują układ aplikacji. [Opis układu](docs/app-shell.md).
 
 Docelowo PostgreSQL i RLS zapewnią izolację organizacji, Storage będzie prywatny, a operacje wymagające zaufanej logiki obsłużą Edge Functions. W ETAPIE 1 nie ma migracji, seeda ani połączenia z bazą. Szczegóły: [ROADMAP.md](ROADMAP.md) i [AGENTS.md](AGENTS.md).
 

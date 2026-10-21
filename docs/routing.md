@@ -25,12 +25,13 @@ Adresy modułów pokazują opisy i informację „Ten moduł jest w planie”. F
 ## Struktura
 
 - `src/app/app.tsx`: wspólny `ThemeProvider` i `BrowserRouter`.
-- `src/app/app-routes.tsx`: ekran publiczny, zagnieżdżone trasy `/app` i fallback nieznanego adresu.
+- `src/app/app-routes.tsx`: ekran publiczny, zagnieżdżone trasy `/app` we wspólnym układzie i fallbacki nieznanych adresów.
 - `src/app/app-modules.ts`: nazwy, ścieżki, opisy, ikony i planowane etapy obszarów.
 - `src/app/pages/`: lista obszarów, wspólny podgląd planowanego modułu i strona 404.
-- `src/components/layout/route-layout.tsx`: nagłówek, skip link, jeden element `main`, stopka i wybór motywu nowych stron. Sidebar i topbar aplikacji powstaną w kolejnym zadaniu.
+- `src/components/layout/app-layout.tsx`: sidebar, topbar, lewe menu mobilne, skip link, jeden `main` i stopka dla `/app` oraz jego nieznanych adresów. [Szczegóły układu](app-shell.md).
+- `src/components/layout/route-layout.tsx`: prosty nagłówek, główna treść i stopka globalnej strony 404 poza `/app`.
 - `src/app/route-effects.tsx`: tytuł dokumentu i obsługa fokusu oraz przewijania między stronami.
-- `src/styles/routes.css`: responsywne style nowych stron we wspólnej palecie.
+- `src/styles/routes.css` i `src/styles/app-shell.css`: style stron i układu we wspólnej palecie.
 
 Logika i widoki rzeczywistych modułów powstaną w odpowiednich katalogach `features/`. Obecny wspólny podgląd nie zastępuje ich implementacji.
 
@@ -64,7 +65,7 @@ npm run build
 npm run test:e2e -- e2e/routing.spec.ts
 ```
 
-Pełna kontrola zakończyła się poprawnie na Node 24.19.0: lint, formatowanie, TypeScript, build, 15 testów React i 62 scenariusze E2E. Testy routingu obejmują dziesięć adresów modułów, odświeżanie, historię, nawigację bez przeładowania, motyw, tytuły, fokus, kotwice, nieznane adresy i nieprawidłowy fragment URL. Audyty axe na liście obszarów, podglądzie modułu i stronie 404 przeszły w obu motywach na desktopie i telefonie. Sprawdzono też skip link i szerokość 320 px.
+Pełna kontrola zakończyła się poprawnie na Node 24.19.0: lint, formatowanie, TypeScript, build, 17 testów React i 74 scenariusze E2E. Testy routingu obejmują dziesięć adresów modułów, odświeżanie, historię, nawigację bez przeładowania, motyw, tytuły, fokus, kotwice, nieznane adresy i nieprawidłowy fragment URL. Audyty axe na liście obszarów, podglądzie modułu, stronie 404 i otwartym menu aplikacji przeszły w obu motywach na desktopie i telefonie. Sprawdzono też skip link, aktywne linki, krótkie ekrany i szerokość 320 px.
 
 Bezpośrednie adresy i odświeżanie sprawdzono na lokalnym podglądzie produkcyjnego buildu Vite. W ETAPIE 15 zweryfikujemy konfigurację hostingu Vercel i odpowiedzi HTTP. Obecne 404 jest widokiem routera w aplikacji SPA, nie serwerowym statusem HTTP 404. Automatyczne testy dostępności nie zastępują pełnego audytu.
 
