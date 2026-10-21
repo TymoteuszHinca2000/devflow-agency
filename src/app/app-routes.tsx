@@ -7,28 +7,36 @@ import { ModulePreviewPage } from './pages/module-preview-page'
 import { NotFoundPage } from './pages/not-found-page'
 import { WorkspaceIndexPage } from './pages/workspace-index-page'
 import { RouteEffects } from './route-effects'
+import { RequireAuth } from '@/features/auth/components/require-auth'
+import { LoginPage } from '@/features/auth/pages/login-page'
+import { AccountControls } from '@/features/auth/components/account-controls'
+import { useAuth } from '@/features/auth/hooks/use-auth'
 
 export function AppRoutes() {
+  const { state } = useAuth()
   return (
     <>
       <Routes>
         <Route path="/" element={<WelcomePage />} />
-        <Route path="app" element={<AppLayout />}>
-          <Route index element={<WorkspaceIndexPage />} />
-          {appModules.map((module) => (
-            <Route
-              key={module.path}
-              path={module.path}
-              element={<ModulePreviewPage module={module} />}
-            />
-          ))}
-          <Route path="*" element={<NotFoundPage />} />
+        <Route element={<RequireAuth />}>
+          <Route path="app" element={<AppLayout accountControls={<AccountControls />} />}>
+            <Route index element={<WorkspaceIndexPage />} />
+            {appModules.map((module) => (
+              <Route
+                key={module.path}
+                path={module.path}
+                element={<ModulePreviewPage module={module} />}
+              />
+            ))}
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
         </Route>
         <Route element={<RouteLayout />}>
+          <Route path="login" element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
-      <RouteEffects />
+      <RouteEffects sessionStatus={state.status} />
     </>
   )
 }

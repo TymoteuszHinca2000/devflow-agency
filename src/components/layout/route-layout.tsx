@@ -2,8 +2,9 @@ import { Link, Outlet } from 'react-router'
 import { PageErrorBoundary } from '@/app/errors/page-error-boundary'
 import { Brand } from '@/components/shared/brand'
 import { ThemeSelector } from '@/components/shared/theme-selector'
+import type { ReactNode } from 'react'
 
-export function RouteLayout() {
+export function RouteLayout({ children }: { children?: ReactNode }) {
   return (
     <div className="route-shell">
       <a className="skip-link" href="#main-content">
@@ -22,9 +23,7 @@ export function RouteLayout() {
         tabIndex={-1}
         aria-labelledby="route-title"
       >
-        <PageErrorBoundary>
-          <Outlet />
-        </PageErrorBoundary>
+        <PageErrorBoundary>{children ?? <Outlet />}</PageErrorBoundary>
       </main>
       <footer className="route-footer page-width">
         <span>DevFlow Agency · Rozwijane krok po kroku.</span>

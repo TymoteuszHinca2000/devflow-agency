@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from './fixtures'
+test.use({ authState: 'signed-in' })
 
 test('opens module routes without reloading and supports browser history with focus and theme', async ({
   page,
@@ -106,6 +107,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
     }
     await page.setViewportSize({ width: 320, height: 700 })
     await page.goto('/app/projects')
+    await expect(page.getByRole('heading', { name: 'Projekty', exact: true })).toBeVisible()
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
     await page.keyboard.press('Tab')
     await expect(page.getByRole('link', { name: 'Przejdź do treści' })).toBeFocused()

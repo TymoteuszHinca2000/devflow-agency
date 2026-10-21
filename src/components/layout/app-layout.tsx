@@ -1,10 +1,11 @@
 import { useRef } from 'react'
+import type { ReactNode } from 'react'
 import { Link, Outlet } from 'react-router'
 import { PageErrorBoundary } from '@/app/errors/page-error-boundary'
 import { AppSidebar } from './app-sidebar'
 import { AppTopbar } from './app-topbar'
 
-export function AppLayout() {
+export function AppLayout({ accountControls }: { accountControls?: ReactNode }) {
   const sidebarRef = useRef<HTMLElement>(null)
 
   return (
@@ -14,7 +15,7 @@ export function AppLayout() {
       </a>
       <AppSidebar sidebarRef={sidebarRef} />
       <div className="app-shell-body">
-        <AppTopbar sidebarRef={sidebarRef} />
+        <AppTopbar sidebarRef={sidebarRef} accountControls={accountControls} />
         <main id="main-content" className="app-main" tabIndex={-1} aria-labelledby="route-title">
           <PageErrorBoundary>
             <Outlet />

@@ -1,6 +1,6 @@
 # Sidebar i topbar aplikacji
 
-Trasy `/app` korzystają ze wspólnego `AppLayout`. Na komputerze nawigacja jest stale widoczna w bocznym panelu; do szerokości 1000 px zastępuje ją lewe menu `Sheet`. Topbar pokazuje ścieżkę bieżącej strony i wybór motywu.
+Trasy `/app` korzystają ze wspólnego `AppLayout` po zweryfikowaniu sesji przez Auth. Na komputerze nawigacja jest stale widoczna w bocznym panelu; do szerokości 1000 px zastępuje ją lewe menu `Sheet`. Topbar pokazuje ścieżkę bieżącej strony, wybór motywu i przycisk wylogowania; na większym ekranie także e-mail konta.
 
 ## Komponenty
 
@@ -24,7 +24,9 @@ Menu otwiera się z fokusem na aktywnym module lub pierwszym linku, gdy adres je
 
 Zmiana ścieżki, również przez historię przeglądarki, zamyka menu. Po poszerzeniu okna do co najmniej 1001 px panel zamyka się, a fokus trafia do aktywnego linku sidebara lub pierwszego linku przy nieznanym adresie. Po ponownym zwężeniu menu pozostaje zamknięte. Mechanizm modalny korzysta ze wspólnego `Sheet`, opartego na [Radix Dialog](https://www.radix-ui.com/primitives/docs/components/dialog).
 
-Provider motywu pozostaje ponad routerem; wybór zachowuje się przy przejściu między modułami. Treść modułów nadal wskazuje ich planowany zakres. Widoki biznesowe i logowanie powstaną w odpowiednich etapach.
+Provider motywu pozostaje ponad routerem; wybór zachowuje się przy przejściu między modułami. Treść modułów nadal wskazuje ich planowany zakres. Widoki biznesowe powstaną w odpowiednich etapach.
+
+Kontrolki konta z modułu Auth są przekazywane do `AppLayout` i `AppTopbar` przez opcjonalny slot `accountControls`. Wspólny layout nie importuje funkcjonalności Auth. Bez zweryfikowanej sesji cały układ prywatny zastępuje przekierowanie do logowania albo stan sprawdzania/błędu. Wylogowanie dotyczy bieżącej przeglądarki. [Logowanie i sesje](authentication.md).
 
 ## Sprawdzenie
 
@@ -32,21 +34,23 @@ Provider motywu pozostaje ponad routerem; wybór zachowuje się przy przejściu 
 npm run dev
 ```
 
-1. Otwórz `/app/projects`, wybierz inny moduł w sidebarze i sprawdź aktywny link oraz ścieżkę w topbarze.
+1. Otwórz `/app/projects`, zaloguj się istniejącym kontem Auth, wybierz inny moduł w sidebarze i sprawdź aktywny link oraz ścieżkę w topbarze.
 2. Przejdź do listy modułów i przewiń stronę. Sidebar i topbar powinny pozostać widoczne.
 3. Zwęź okno do 1000 px lub mniej. Otwórz „Menu aplikacji” klawiaturą i sprawdź aktywny link, Tab, Shift+Tab oraz Escape.
 4. Wybierz moduł, otwórz menu ponownie i powiększ okno do desktopu. Panel powinien się zamknąć bez zablokowania strony.
 5. Sprawdź wybór motywu i dostęp do dolnych linków na niskim ekranie.
+6. Wyloguj się przyciskiem w topbarze. Odświeżenie i Wstecz nie powinny otworzyć prywatnego układu.
 
 ```powershell
 npm test -- src/components/layout/app-layout.test.tsx
-npm run build
 npm run test:e2e -- e2e/app-shell.spec.ts
 ```
 
-Aktualny pełny zestaw to 27 testów React i 80 scenariuszy E2E. Nowe testy obejmują aktywny link, ścieżkę strony, historię, przyklejone panele, fokus menu, tło i przewijanie, wszystkie sposoby zamknięcia, wybór bieżącego modułu, zmianę szerokości i ekrany 320 × 320 px oraz 1280 × 320 px. Sprawdzono granicę 1000/1001 px i audyty axe w obu motywach z otwartym oraz zamkniętym menu. Audyt po otwarciu oczekuje na zakończenie animacji, aby mierzyć końcowe kolory panelu. Kontrole automatyczne nie zastępują pełnego audytu dostępności.
+Aktualny pełny zestaw to 83 testy aplikacji, 100 testów SQL i 98 scenariuszy E2E. Testy układu korzystają z izolowanego stanu zalogowanego i nie używają kont Supabase. Regresja obejmuje aktywny link, ścieżkę strony, historię, przyklejone panele, fokus menu, tło i przewijanie, wszystkie sposoby zamknięcia, wybór bieżącego modułu, zmianę szerokości i ekrany 320 × 320 px oraz 1280 × 320 px. Sprawdzono granicę 1000/1001 px i audyty axe w obu motywach z otwartym oraz zamkniętym menu. Audyt po otwarciu oczekuje na zakończenie animacji, aby mierzyć końcowe kolory panelu. Kontrole automatyczne nie zastępują pełnego audytu dostępności.
 
 ## Podgląd
+
+Zrzuty poniżej przedstawiają układ z ETAPU 2, przed dodaniem kontrolek konta. Aktualny ekran logowania: [podgląd Auth](authentication.md#podgląd).
 
 ![Sidebar i topbar — widok desktopowy](screenshots/app-shell-desktop.png)
 

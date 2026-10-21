@@ -4,13 +4,16 @@ import { MemoryRouter } from 'react-router'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ThemeProvider } from '@/lib/theme/theme-provider'
 import { AppRoutes } from './app-routes'
+import { TestAuthProvider } from '@/test/test-auth-provider'
 
 function renderRoute(path: string) {
   return render(
     <ThemeProvider>
-      <MemoryRouter initialEntries={[path]}>
-        <AppRoutes />
-      </MemoryRouter>
+      <TestAuthProvider>
+        <MemoryRouter initialEntries={[path]}>
+          <AppRoutes />
+        </MemoryRouter>
+      </TestAuthProvider>
     </ThemeProvider>,
   )
 }

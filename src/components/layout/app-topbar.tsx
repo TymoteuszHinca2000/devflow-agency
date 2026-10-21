@@ -1,11 +1,17 @@
 import { ChevronRight } from 'lucide-react'
-import type { RefObject } from 'react'
+import type { ReactNode, RefObject } from 'react'
 import { Link, matchPath, useLocation } from 'react-router'
 import { appModules } from '@/app/app-modules'
 import { ThemeSelector } from '@/components/shared/theme-selector'
 import { AppMobileNavigation } from './app-mobile-navigation'
 
-export function AppTopbar({ sidebarRef }: { sidebarRef: RefObject<HTMLElement | null> }) {
+export function AppTopbar({
+  sidebarRef,
+  accountControls,
+}: {
+  sidebarRef: RefObject<HTMLElement | null>
+  accountControls?: ReactNode
+}) {
   const { pathname } = useLocation()
   const module = appModules.find(({ path }) => matchPath(`/app/${path}`, pathname))
   const title =
@@ -26,6 +32,7 @@ export function AppTopbar({ sidebarRef }: { sidebarRef: RefObject<HTMLElement | 
         </ol>
       </nav>
       <ThemeSelector />
+      {accountControls}
     </header>
   )
 }

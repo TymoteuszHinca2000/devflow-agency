@@ -10,6 +10,7 @@ export default defineConfig([
   // Official generated code is verified by TypeScript and db:types:check.
   globalIgnores([
     'dist',
+    'dist-e2e',
     'coverage',
     'playwright-report',
     'test-results',
