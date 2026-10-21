@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAPY 1 i 2 scalone do `main`; ETAP 3 w realizacji.** PR #1 (`56029a8`) wprowadził fundament i ekran powitalny, a PR #2 (`dc8d1ad`) design system, routing, układ, stany, toasty i obsługę błędów. Na gałęzi `feat/supabase-foundation` przygotowano pierwszą migrację 15 tabel i testy relacyjnego modelu. Migracja nie została jeszcze zastosowana do zdalnego Supabase; integracja React i polityki ról są następnymi krokami. [Raport ETAPU 2](docs/stage-2-report.md) · [Model bazy](docs/database.md). Logowanie i moduły biznesowe pozostają zaplanowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: ETAPY 1 i 2 scalone do `main`; ETAP 3 w realizacji.** PR #1 (`56029a8`) wprowadził fundament i ekran powitalny, a PR #2 (`dc8d1ad`) design system, routing, układ, stany, toasty i obsługę błędów. Na gałęzi `feat/supabase-foundation` przygotowano model 15 tabel, polityki ról, prywatny Storage i testy SQL. Migracje nie zostały jeszcze zastosowane do zdalnego Supabase; integracja React i rzeczywistych usług jest kolejnym krokiem na drugiej gałęzi. [Raport ETAPU 2](docs/stage-2-report.md) · [Model bazy](docs/database.md) · [Uprawnienia i pliki](docs/database-security.md). Logowanie i moduły biznesowe pozostają zaplanowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -12,8 +12,9 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Vite, alias `@/` i Tailwind CSS 4 przez oficjalny plugin Vite.
 - ESLint z kontrolą typów, Prettier, EditorConfig i spójne końce linii.
 - Struktura katalogów przygotowana pod moduły biznesowe.
-- Wersjonowany schemat PostgreSQL: 15 tabel, złożone klucze obce, indeksy, profile Auth, ograniczenia i domyślna odmowa dostępu RLS.
-- Izolowane testy SQL na PGlite i opcjonalny, domyślnie wyłączony seed developerski. Szczegółowe polityki ról oraz integracja klienta Supabase są kolejnymi częściami ETAPU 3.
+- Wersjonowany schemat PostgreSQL: 15 tabel, złożone klucze obce, indeksy, profile Auth, ograniczenia i RLS z politykami ról.
+- Ograniczone granty kolumn, zawieszanie dostępu do projektu, prywatne pliki agencji i awatary oraz ochrona przed eskalacją uprawnień.
+- Izolowane testy SQL na PGlite i opcjonalny, domyślnie wyłączony seed developerski. Integracja klienta i usług Supabase jest kolejną częścią ETAPU 3.
 - Vitest, React Testing Library i konfiguracja Playwright dla desktopu i telefonu.
 - `.env.example`, wykluczenie lokalnej konfiguracji i wersjonowany lockfile.
 - Nagłówek z nawigacją desktopową i wysuwanym, modalnym panelem mobilnym.
@@ -56,14 +57,14 @@ Motyw wybierzesz w nawigacji. Przy szerokości do 1000 px otwórz wysuwany panel
 
 ## Stack
 
-| Obszar                  | Zainstalowane                                                                              | Planowane                                                    |
-| ----------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
-| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4, React Router 8.4.0                             | TanStack Query                                               |
-| Interfejs               | Tailwind CSS 4.3.3, shadcn/ui (Radix), Sonner 2.0.8, Lucide React, fonty Manrope i DM Sans | Recharts, dnd-kit                                            |
-| Formularze i stan       | Stan lokalny React                                                                         | React Hook Form, Zod; Zustand przy rzeczywistej potrzebie    |
-| Backend                 | Migracja PostgreSQL, bazowe RLS i testy PGlite 0.5.10                                      | Klient Supabase, polityki ról, Storage, Auth, Edge Functions |
-| Jakość                  | ESLint 10, Prettier 3, Vitest 5, Testing Library, Playwright, axe-core                     | Testy modułów i izolacji organizacji                         |
-| Automatyzacja i hosting | Lokalne skrypty kontroli jakości                                                           | GitHub Actions, Vercel                                       |
+| Obszar                  | Zainstalowane                                                                              | Planowane                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
+| Frontend                | React 19.3.1, TypeScript 6.0.3, Vite 8.3.4, React Router 8.4.0                             | TanStack Query                                            |
+| Interfejs               | Tailwind CSS 4.3.3, shadcn/ui (Radix), Sonner 2.0.8, Lucide React, fonty Manrope i DM Sans | Recharts, dnd-kit                                         |
+| Formularze i stan       | Stan lokalny React                                                                         | React Hook Form, Zod; Zustand przy rzeczywistej potrzebie |
+| Backend                 | Migracje PostgreSQL, RLS, polityki prywatnego Storage i testy PGlite 0.5.10                | Klient Supabase, integracja usług, Auth, Edge Functions   |
+| Jakość                  | ESLint 10, Prettier 3, Vitest 5, Testing Library, Playwright, axe-core                     | Testy modułów i izolacji organizacji                      |
+| Automatyzacja i hosting | Lokalne skrypty kontroli jakości                                                           | GitHub Actions, Vercel                                    |
 
 Dokładne wersje są w `package.json` i `package-lock.json`. TypeScript 6.0.3 wybrano dla zgodności: zainstalowane `typescript-eslint` wspiera TypeScript `<6.1.0`. Nie wymuszamy nieobsługiwanych zależności przez `--force` ani `--legacy-peer-deps`.
 
@@ -184,7 +185,7 @@ Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Ko
 
 Wspólne toasty przeszły również osobną kontrolę w 5 wariantach rozmiaru i motywu: czas wyświetlania, wstrzymanie i wznowienie odliczania, trwałe komunikaty, aktualizacja, akcja, klawiatura, motywy oraz axe. [Opis API i screenshoty](docs/toasts.md).
 
-**ETAP 3 — model danych:** `npm run check` zakończyło się kodem 0: lint, formatowanie, 27 testów React, 38 testów SQL, typy i build. Publiczne API projektu developerskiego odpowiedziało HTTP 200. Testy SQL używają PGlite i nie zmieniają projektu zdalnego; migracji nie wdrożono jeszcze do Supabase. Interfejs pozostał bez zmian, więc w tej części nie powtarzano E2E. [Model, diagram i zakres testów](docs/database.md).
+**ETAP 3 — model i bezpieczeństwo:** kontrole obejmują lint, formatowanie, 27 testów React, 100 testów SQL, typy i build. Przy konfiguracji publiczne API projektu developerskiego odpowiedziało HTTP 200. Testy SQL używają PGlite i nie zmieniają projektu zdalnego; migracji nie wdrożono jeszcze do Supabase. Interfejs pozostał bez zmian, więc w tej części nie powtarzano E2E. [Model i diagram](docs/database.md) · [Macierz uprawnień i zakres testów](docs/database-security.md).
 
 ## Architektura
 
@@ -237,7 +238,7 @@ Komponenty UI są w `src/components/ui/`, a adapter ich semantycznych tokenów w
 
 Trasy `/app` korzystają z `AppLayout` i wspólnej nawigacji w `src/components/layout/`. Sidebar, topbar i menu mobilne są osobnymi komponentami; ich style znajdują się w `src/styles/app-shell.css`. Nieznane adresy wewnątrz `/app` zachowują układ aplikacji. [Opis układu](docs/app-shell.md).
 
-Pierwsza migracja PostgreSQL definiuje relacje i domyślną odmowę dostępu RLS. Kolejne części ETAPU 3 dodadzą polityki ról, prywatny Storage i klienta React. Operacje wymagające zaufanej logiki obsłużą serwerowe funkcje we właściwych modułach. Szczegóły: [Model bazy](docs/database.md), [ROADMAP.md](ROADMAP.md) i [AGENTS.md](AGENTS.md).
+Dwie migracje PostgreSQL definiują relacje, granty kolumn, RLS i prywatny Storage. Kolejna część ETAPU 3 doda klienta React, generowane typy i weryfikację usług. Operacje wymagające zaufanej logiki obsłużą serwerowe funkcje we właściwych modułach. Szczegóły: [Model bazy](docs/database.md), [Uprawnienia](docs/database-security.md), [ROADMAP.md](ROADMAP.md) i [AGENTS.md](AGENTS.md).
 
 ## Planowane funkcjonalności
 

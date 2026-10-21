@@ -6,8 +6,12 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 ### Dodano
 
+- Drugą migrację ETAPU 3: polityki dla ról agencji, dostęp pracowników do przypisanych projektów i granty konkretnych kolumn.
+- Prywatne zasobniki `agency-files` (20 MiB) i `avatars` (2 MiB), polityki odczytu/uploadu/usuwania i restrykcyjną ochronę przed nadpisaniem, przenoszeniem oraz upublicznieniem bucketów.
+- Zawieszanie dostępu do projektu bez kasowania historii, sprawdzanie aktywności przy przypisaniu zadania i serwerowe ograniczenie zmian ról, zaproszeń, audytu, stawek i cyklu wycen.
+- 62 testy pełnego łańcucha migracji uprawnień, Storage i seed, łącznie 100 testów SQL, oraz dokumentację macierzy dostępu i ograniczeń integracji.
 - Pierwszą część ETAPU 3: wersjonowaną migrację 15 tabel PostgreSQL ze złożonymi kluczami obcymi, indeksami, UUID i znacznikami czasu.
-- Domyślną odmowę dostępu RLS i jawne cofnięcie uprawnień przeglądarkowych; szczegółowe polityki ról powstaną w następnym commicie.
+- Domyślną odmowę dostępu RLS i jawne cofnięcie uprawnień przeglądarkowych w pierwszej migracji, rozszerzone o szczegółowe polityki w drugiej.
 - Profile powiązane z Supabase Auth, ochronę tożsamości i organizacji wiersza, cykli podzadań, pojedynczego timera oraz dokładne kwoty pozycji wyceny.
 - Izolowane testy migracji i integralności na PGlite 0.5.10, polecenie `npm run test:db` włączone do `npm run check` oraz dokumentację modelu bazy.
 - Opcjonalny seed oznaczony `[DEMO]`, wyłączony domyślnie i wymagający istniejącego konta Auth oraz jawnego wyboru środowiska developerskiego.

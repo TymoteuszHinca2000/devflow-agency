@@ -1,7 +1,16 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import { after, before, describe, it } from 'node:test'
-import { createTestDatabase, expectSqlError, inRollback, tables } from './helpers/database.mjs'
+import {
+  createTestDatabase as createMigratedDatabase,
+  expectSqlError,
+  inRollback,
+  tables,
+} from './helpers/database.mjs'
+
+// Keep proving the secure baseline before the additive role/Storage migration.
+const createTestDatabase = () =>
+  createMigratedDatabase({ through: '20261021000100_create_agency_schema.sql' })
 
 const userA = '10000000-0000-4000-8000-000000000001'
 const userB = '10000000-0000-4000-8000-000000000002'
@@ -19,7 +28,7 @@ const taskB = '50000000-0000-4000-8000-000000000002'
 const quoteA = '60000000-0000-4000-8000-000000000001'
 const quoteB = '60000000-0000-4000-8000-000000000002'
 
-describe('Versioned agency schema', () => {
+describe('Foundational agency schema (first migration)', () => {
   let db
   before(async () => {
     db = await createTestDatabase()
@@ -40,7 +49,7 @@ describe('Versioned agency schema', () => {
   }
 
   scenario(
-    'applies every migration and creates 15 tables with UUID identity, timestamps and RLS',
+    'applies the initial migration and creates 15 tables with UUID identity, timestamps and RLS',
     async ({ query }) => {
       const result = await query(`
       select table_name, column_name, data_type, is_nullable, column_default

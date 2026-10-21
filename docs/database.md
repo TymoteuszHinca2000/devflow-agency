@@ -1,6 +1,6 @@
 # Baza danych — fundament ETAPU 3
 
-Pierwsza część ETAPU 3 definiuje pełny relacyjny model w wersjonowanej migracji. Plik tworzy 15 tabel, ograniczenia, indeksy, znaczniki czasu i bezpieczny punkt wyjścia RLS. Nie został jeszcze zastosowany do zdalnego projektu. Klient React, szczegółowe polityki ról i prywatny Storage należą do kolejnych dwóch commitów tego etapu.
+Dwie migracje ETAPU 3 definiują pełny relacyjny model oraz szczegółowe uprawnienia ról i prywatny Storage. Pierwsza tworzy 15 tabel, ograniczenia, indeksy, znaczniki czasu i domyślną odmowę dostępu. Druga nadaje ograniczone uprawnienia, polityki RLS oraz zasobniki plików i awatarów. Nie zostały jeszcze zastosowane do zdalnego projektu. Klient React i końcowa weryfikacja na Supabase należą do trzeciego commita, na drugiej gałęzi. [Macierz dostępu i polityki plików](database-security.md).
 
 ## Tabele i odpowiedzialności
 
@@ -12,7 +12,7 @@ Pierwsza część ETAPU 3 definiuje pełny relacyjny model w wersjonowanej migra
 | `organization_invitations` | Serwerowe zaproszenie, adres e-mail, skrót tokenu, wygaśnięcie i stan wykorzystania |
 | `clients`                  | Dane kontaktowe i firmowe oraz archiwizacja                                         |
 | `projects`                 | Klient, status, budżet, waluta, terminy i archiwizacja                              |
-| `project_members`          | Członkowie zespołu projektu należący do tej samej organizacji                       |
+| `project_members`          | Członkowie projektu w tej samej organizacji, z aktywnym lub zawieszonym dostępem    |
 | `tasks`                    | Projekt, podzadania, status, priorytet, kolejność i przypisanie                     |
 | `task_comments`            | Treść, autor i domyślna widoczność wewnętrzna                                       |
 | `time_entries`             | Użytkownik projektu, zadanie, przedział czasu, stawka i waluta                      |
@@ -53,12 +53,12 @@ Diagram pokazuje główne relacje. Migracja zawiera również autorów, indeksy 
 - Klucze obce obejmują `organization_id`, a tam, gdzie potrzeba, również projekt albo klienta. Baza odrzuca np. projekt klienta innej agencji, przypisanie zadania osobie spoza projektu, komentarz do obcego zadania i wycenę klienta innego niż klient projektu.
 - Indeksy pokrywają początki wszystkich kluczy obcych. Dodatkowe indeksy obsługują aktywnych klientów i projekty, Kanban, raporty czasu, nieodczytane powiadomienia i historię encji.
 - Usuwanie danych z zależnościami jest ograniczone przez `RESTRICT`. Archiwizacja i zawieszenie członkostwa zachowują historię. Usuwanie konta z historią biznesową wymaga przyszłej procedury przeniesienia lub anonimizacji, a nie automatycznego kasowania agencji.
-- RLS jest włączone na wszystkich tabelach. Cofnięto uprawnienia `PUBLIC`, `anon` i `authenticated`. Pierwszy commit celowo nie dodaje polityk zezwalających; role przeglądarkowe nie mogą jeszcze czytać ani zapisywać danych. Polityki członków i Storage powstaną w drugim commicie.
+- RLS jest włączone na wszystkich tabelach. Pierwsza migracja cofa uprawnienia `PUBLIC`, `anon` i `authenticated`. Druga przyznaje wybrane operacje oraz dostęp do konkretnych kolumn i wierszy. `anon` nadal nie ma dostępu do tabel aplikacji; konto klienta nie ma jeszcze dostępu do modułów biznesowych.
 - `service_role` otrzymuje jawne uprawnienia DML. Jego sekret jest przeznaczony wyłącznie dla zaufanego kodu serwerowego; nie należy do zmiennych `VITE_*`.
 - Nowe konto Supabase Auth otrzymuje profil przez trigger; istniejące konta mają backfill. Metadane użytkownika służą wyłącznie do ograniczonej długością nazwy, nigdy do przypisywania roli ani organizacji.
 - Funkcje triggerów są w schemacie `private`, mają przypięty pusty `search_path` i cofnięte publiczne uprawnienie wykonania. `private` nie należy do schematów udostępnianych przez Data API.
 
-Role modelu to `owner`, `admin`, `member` i `client`; członkostwo może być aktywne lub zawieszone. Rola klienta wymaga klienta tej samej agencji, pozostałe role go nie przyjmują. Implementacja tworzenia organizacji, zaproszeń, przyjmowania członków i ochrony ostatniego właściciela należy do ETAPU 5. W pierwszym commicie żadna rola nie otrzymuje tych operacji z przeglądarki.
+Role modelu to `owner`, `admin`, `member` i `client`; członkostwo może być aktywne lub zawieszone. Rola klienta wymaga klienta tej samej agencji, pozostałe role go nie przyjmują. Zawieszenie członkostwa w projekcie zachowuje historię i odbiera dostęp zwykłego pracownika do projektu. Właściciel i administrator zachowują dostęp do projektów agencji przez swoją rolę. Nowe przypisanie zadania wymaga aktywnego pracownika organizacji i projektu. Tworzenie organizacji, zaproszenia, przyjmowanie członków i ochrona ostatniego właściciela należą do ETAPU 5; bezpośrednie zapisy członkostwa pozostają niedostępne z przeglądarki.
 
 ## Reguły modułów przygotowane w schemacie
 
@@ -70,7 +70,7 @@ Kwoty i ilości korzystają z `numeric`, a nie z liczb zmiennoprzecinkowych. Poz
 
 Zaproszenie zapisuje wyłącznie 32-bajtowy skrót SHA-256 tokenu. Surowy token zostanie wygenerowany i wysłany przez przyszłą logikę serwerową. Kolejne zaproszenie pod ten sam adres wymaga unieważnienia poprzedniego niewykorzystanego zaproszenia, także wygasłego.
 
-Załącznik ma rozmiar do 20 MiB i generowaną ścieżkę `organization_id/attachment_id` w przyszłym prywatnym buckecie `agency-files`. Nazwa wyświetlana nie staje się ścieżką obiektu. Sam zapis metadanych nie oznacza przesłania pliku; polityki Storage i weryfikacja uploadu będą osobnym krokiem.
+Załącznik ma rozmiar do 20 MiB i generowaną ścieżkę `organization_id/attachment_id` w prywatnym buckecie `agency-files`. Nazwa wyświetlana nie staje się ścieżką obiektu. Sam zapis metadanych nie oznacza przesłania pliku. Druga migracja dodaje polityki Storage i prywatny bucket `avatars` do 2 MiB; faktyczny upload HTTP zostanie zweryfikowany przy integracji. [Szczegóły](database-security.md).
 
 ## Odtwarzalne testy
 
@@ -82,9 +82,9 @@ npm run check
 
 `test:db` używa Node test runner i PGlite 0.5.10 (PostgreSQL 18.6 w WebAssembly). Uruchamia rzeczywiste, nieprzepisywane migracje SQL na izolowanej bazie w pamięci, tworzy dane testowe i zamyka bazę po przebiegu. Nie używa `.env.local`, sieci ani projektu użytkownika. PGlite jest tylko zależnością developerską; nie trafia do aplikacji ani nie zastępuje Supabase.
 
-Fixture `supabase/tests/fixtures/bootstrap.sql` definiuje minimalny kontrakt testowy `auth.users`, `auth.uid()` i ról. Nie jest migracją i nie wolno wykonywać go na Supabase. Pozwala sprawdzać klucze obce, triggery, uprawnienia i RLS, ale nie testuje prawdziwego JWT, Auth HTTP, Storage HTTP, ani współbieżnych połączeń. Konfiguracja lokalnego Supabase używa PostgreSQL 17; ostateczna weryfikacja na docelowym Supabase nastąpi po przygotowaniu polityk i integracji.
+Fixture `supabase/tests/fixtures/bootstrap.sql` definiuje minimalny kontrakt testowy `auth.users`, `auth.uid()`, ról i tabel Storage. Nie jest migracją i nie wolno wykonywać go na Supabase. Testy ustawiają kontekst użytkownika na potrzeby SQL; nie walidują podpisu JWT ani usług HTTP. Sprawdzają klucze obce, triggery, granty i RLS, ale nie fizyczne pliki, Auth HTTP, Storage HTTP ani współbieżne połączenia. Konfiguracja lokalnego Supabase używa PostgreSQL 17; ostateczna weryfikacja na docelowym Supabase nastąpi przy integracji.
 
-Testy obejmują wszystkie tabele, poprawny zapis całego modelu, 17 odrzucanych powiązań między encjami, domyślną odmowę dostępu, niezmienność tożsamości, profile, cykle zadań, timer, obliczenia, zaproszenia, metadane załączników i seed. `npm run check` obejmuje także testy bazy. Zmiany nie dodają jeszcze interfejsu modułów ani logowania.
+Łącznie 100 testów obejmuje 38 testów schematu i opcjonalnego seed oraz 62 testy kompletnej migracji uprawnień, Storage i zgodności seed z całym łańcuchem. Pierwszy zestaw odtwarza stan po pierwszej migracji; drugi uruchamia cały łańcuch. Sprawdzają poprawne operacje i odmowy, osiem kontekstów ról, brak tożsamości, obce organizacje i projekty, zawieszenie i zmianę ról, pola chronione oraz pliki. `npm run check` obejmuje także testy bazy. Zmiany nie dodają jeszcze interfejsu modułów ani logowania.
 
 Pełne lokalne Supabase na Windows wymaga Supabase CLI i zgodnego środowiska kontenerów, np. Docker Desktop. Nie jest wymagane do uruchomienia obecnych testów PGlite. CLI i zastosowanie migracji do projektu developerskiego zostaną przygotowane po sprawdzeniu kolejnej migracji bezpieczeństwa.
 

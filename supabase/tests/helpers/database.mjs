@@ -19,7 +19,7 @@ export const tables = [
   'activity_logs',
 ]
 
-export async function createTestDatabase() {
+export async function createTestDatabase({ through } = {}) {
   const db = await PGlite.create()
   try {
     await db.exec(await readFile(new URL('../fixtures/bootstrap.sql', import.meta.url), 'utf8'))
@@ -28,8 +28,10 @@ export async function createTestDatabase() {
       .filter((file) => /^\d{14}_.+\.sql$/.test(file))
       .sort()
     if (migrations.length === 0) throw new Error('No versioned migrations found')
+    if (through && !migrations.includes(through)) throw new Error('Requested migration not found')
     for (const migration of migrations) {
       await db.exec(await readFile(new URL(migration, directory), 'utf8'))
+      if (migration === through) break
     }
     await db.exec(await readFile(new URL('../fixtures/agency.sql', import.meta.url), 'utf8'))
     return db

@@ -56,12 +56,13 @@ Bieżące kontrole ETAPU 2: lint, formatowanie, typy, build, 27 testów React i 
 - [x] Migracje: `quotes`, `quote_items`, `attachments`, `notifications`, `activity_logs`.
 - [x] UUID, klucze obce, indeksy, ograniczenia, `created_at` i `updated_at`.
 - [x] Integralność powiązań organizacji i RLS z domyślną odmową dostępu.
-- [ ] Szczegółowe polityki odczytu i zapisu dla ról, z testami izolacji.
-- [ ] Prywatny Storage i polityki dostępu do plików.
+- [x] Szczegółowe polityki odczytu i zapisu dla ról, z testami izolacji.
+- [x] Prywatny Storage i polityki dostępu do plików.
 - [x] Jawny, opcjonalny `supabase/seed.sql` tylko dla środowiska developerskiego.
-- [ ] Testy migracji, izolacji organizacji i dostępu anonimowego.
+- [x] Testy SQL migracji, izolacji organizacji i dostępu anonimowego.
+- [ ] Zastosowanie migracji do projektu developerskiego i testy rzeczywistych usług Supabase.
 
-Uzgodniony podział: dwie gałęzie i około trzy commity. `feat/supabase-foundation` powstała z `main` przy `dc8d1ad`; pierwszy commit obejmuje pełny model i testy integralności, drugi polityki ról oraz prywatny Storage. Druga gałąź `feat/supabase-integration` powstanie po potwierdzeniu poleceń użytkownika i obejmie klienta React, generowane typy oraz końcową weryfikację. Projekt zdalny jest developerski; konfiguracja pozostaje w ignorowanym `.env.local`. Pierwsza migracja nie została jeszcze wdrożona do tego projektu. Testy schematu korzystają z izolowanego PostgreSQL PGlite. [Szczegóły modelu i ograniczenia testów](docs/database.md).
+Uzgodniony podział: dwie gałęzie i około trzy commity. `feat/supabase-foundation` powstała z `main` przy `dc8d1ad`. Pierwszy commit `0503a24` z modelem i testami został wypchnięty. Drugi zakres dodaje polityki ról, granty kolumn, zawieszanie dostępu do projektu, prywatne pliki i awatary. Testy SQL obejmują 100 scenariuszy: 38 bazowych oraz 62 dla pełnego łańcucha uprawnień, Storage i seed. Druga gałąź `feat/supabase-integration` powstanie po potwierdzeniu poleceń użytkownika i obejmie klienta React, generowane typy oraz końcową weryfikację. Projekt zdalny jest developerski; konfiguracja pozostaje w ignorowanym `.env.local`. Migracji nie wdrożono jeszcze do tego projektu. Testy korzystają z izolowanego PostgreSQL PGlite i minimalnego kontraktu Auth/Storage. [Model i ograniczenia testów](docs/database.md) · [Macierz uprawnień](docs/database-security.md).
 
 ## ETAP 4 — Uwierzytelnianie i sesje · TODO
 
@@ -181,7 +182,7 @@ Uzgodniony podział: dwie gałęzie i około trzy commity. `feat/supabase-founda
 
 ## Najbliższy krok
 
-1. Użytkownik zapisuje i publikuje pierwszy commit ETAPU 3: model 15 tabel i testy SQL.
-2. Po potwierdzeniu agent przygotuje drugi commit na tej samej gałęzi: polityki ról, prywatny Storage i testy bezpieczeństwa.
-3. Na drugiej gałęzi zostanie przygotowana integracja klienta Supabase, typy bazy i końcowy raport ETAPU 3. Logowanie pozostaje zakresem ETAPU 4.
+1. Użytkownik zapisuje i publikuje drugi commit ETAPU 3 na `feat/supabase-foundation`: polityki ról, prywatny Storage i testy bezpieczeństwa.
+2. Po potwierdzeniu agent poda komendy utworzenia `feat/supabase-integration` z obecnej gałęzi zawierającej oba commity; kodowanie integracji poczeka na potwierdzenie nowej gałęzi.
+3. Na drugiej gałęzi zostaną przygotowane klient Supabase, typy bazy, zastosowanie migracji do środowiska developerskiego i końcowa weryfikacja usług. Logowanie pozostaje zakresem ETAPU 4.
 4. Po każdym uzgodnionym commicie agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia. Kolejny etap wymaga osobnej decyzji użytkownika.
