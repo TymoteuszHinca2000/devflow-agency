@@ -14,6 +14,11 @@ describe('DevFlow welcome screen', () => {
       'href',
       '#mozliwosci',
     )
+    expect(screen.getByRole('link', { name: 'Zobacz plan' })).toHaveAttribute(
+      'href',
+      '#plan-rozwoju',
+    )
+    expect(screen.getByRole('region', { name: /Dobry flow/ })).toBeVisible()
   })
 
   it('closes the navigation with Escape and returns focus to its toggle', async () => {

@@ -70,6 +70,9 @@ for (const colorScheme of ['light', 'dark'] as const) {
     await page.emulateMedia({ colorScheme })
     await page.goto('/')
     await page.evaluate(() => document.fonts.ready)
+    for (const phase of await page.locator('details').all()) {
+      if ((await phase.getAttribute('open')) === null) await phase.locator('summary').click()
+    }
     const result = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze()

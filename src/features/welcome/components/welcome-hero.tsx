@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Check } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import { ActionLink } from '@/components/ui/action-link'
 import { WorkspaceIllustration } from './workspace-illustration'
 
@@ -27,14 +27,8 @@ export function WelcomeHero() {
           <ActionLink href="#mozliwosci">
             Poznaj możliwości <ArrowRight size={18} aria-hidden="true" />
           </ActionLink>
-          <ActionLink
-            href="https://github.com/TymoteuszHinca2000/devflow-agency/blob/feat/project-foundation/ROADMAP.md"
-            variant="secondary"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Zobacz plan <ArrowUpRight size={17} aria-hidden="true" />
-            <span className="sr-only"> (otwiera nową kartę)</span>
+          <ActionLink href="#plan-rozwoju" variant="secondary">
+            Zobacz plan <ArrowRight size={17} aria-hidden="true" />
           </ActionLink>
         </div>
         <p className="hero-note">

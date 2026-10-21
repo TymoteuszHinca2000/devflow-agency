@@ -17,15 +17,15 @@ Statusy: **TODO**, **IN PROGRESS**, **DONE**. Zakończenie etapu oznacza działa
 | AGENTS, README, ROADMAP i CHANGELOG                             | DONE   |
 | Nagłówek, menu mobilne, główna sekcja powitalna i stopka        | DONE   |
 | Katalog planowanych modułów z filtrowaniem                      | DONE   |
-| Wizualny, rozwijany plan rozwoju na stronie                     | TODO   |
+| Wizualny, rozwijany plan rozwoju na stronie                     | DONE   |
 | Screenshoty aktualnej sekcji powitalnej                         | DONE   |
-| Końcowa weryfikacja: typy, lint, build, testy, klawiatura i RWD | TODO   |
+| Końcowa weryfikacja: typy, lint, build, testy, klawiatura i RWD | DONE   |
 | Naprawa zamykania runnera Playwright w Windows                  | DONE   |
 | Raport i decyzja o ETAPIE 2                                     | TODO   |
 
 Nie implementować logowania ani bazy. Katalogi przyszłych modułów rezerwują miejsce na dalszy rozwój.
 
-Bieżący ekran z katalogiem przeszedł lint, formatowanie, kontrolę typów, build, 4 testy React i 18 scenariuszy Playwright, w tym filtrowanie klawiaturą i kontrole axe-core obu motywów. Następna sekcja otrzyma osobny commit po potwierdzeniu użytkownika.
+Bieżący ekran z katalogiem i roadmapą przeszedł lint, formatowanie, kontrolę typów, build, 4 testy React i 24 scenariusze Playwright. Sprawdzono filtrowanie, rozwijanie opisów Enterem i Spacją, fokus, linki do obu sekcji i kontrole axe-core obu motywów ze wszystkimi opisami roadmapy otwartymi. Etap oczekuje na zatwierdzenie ostatniej sekcji, raport końcowy i decyzję użytkownika.
 
 ## ETAP 2 — Design system i układ aplikacji · TODO
 
@@ -168,7 +168,7 @@ Bieżący ekran z katalogiem przeszedł lint, formatowanie, kontrolę typów, bu
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza i zapisuje katalog: `feat(welcome): add filterable module catalog`.
-2. Agent czeka na potwierdzenie commita i push, a następnie przygotowuje sekcję roadmapy.
-3. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia.
-4. Po zakończeniu ETAPU 1 użytkownik podejmuje osobną decyzję o ETAPIE 2. Nowy branch także tworzy użytkownik po otrzymaniu poleceń.
+1. Użytkownik sprawdza i zapisuje roadmapę: `feat(welcome): add expandable development roadmap`.
+2. Agent czeka na potwierdzenie commita i push, a następnie podsumowuje ETAP 1.
+3. Użytkownik podejmuje osobną decyzję o rozpoczęciu ETAPU 2. Nowy branch także tworzy użytkownik po otrzymaniu poleceń.
+4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia.

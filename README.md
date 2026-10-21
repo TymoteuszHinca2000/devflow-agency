@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAP 1 w trakcie realizacji.** Działa fundament React + TypeScript + Vite, ekran powitalny i katalog planowanych modułów z filtrowaniem. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: ETAP 1 oczekuje na podsumowanie i decyzję użytkownika.** Działa fundament React + TypeScript + Vite, ekran powitalny, katalog planowanych modułów z filtrowaniem i rozwijana roadmapa. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -22,12 +22,14 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Katalog sześciu planowanych modułów z filtrami „Wszystkie”, „Praca zespołu” i „Relacje z klientami”.
 - Licznik wyników dostępny dla czytników ekranu oraz obsługa filtrów klawiaturą.
 - Przejście do katalogu przez przycisk „Poznaj możliwości” i link w nagłówku.
+- Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 1.
+- Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Rozwijana roadmapa na stronie pozostaje kolejnym małym zadaniem ETAPU 1. Ręczny wybór motywu jest zaplanowany na ETAP 2. Nie ma jeszcze wdrożonego demo.
+Zakres kodu ETAPU 1 jest przygotowany i sprawdzony. Po zatwierdzeniu ostatniej sekcji pozostają podsumowanie etapu i osobna decyzja o dalszej pracy. Ręczny wybór motywu jest zaplanowany na ETAP 2. Nie ma jeszcze wdrożonego demo.
 
 ## Podgląd aktualnej sekcji powitalnej
 
-![DevFlow Agency — ekran powitalny i katalog planowanych modułów](docs/screenshots/welcome-desktop.png)
+![DevFlow Agency — ekran powitalny, katalog modułów i plan rozwoju](docs/screenshots/welcome-desktop.png)
 
 [Ciemny motyw](docs/screenshots/welcome-dark.png) · [Widok mobilny](docs/screenshots/welcome-mobile.png)
 
@@ -135,13 +137,14 @@ Testy importują `test` i `expect` z `e2e/fixtures.ts`. Każdy test uruchamia po
 
 Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `test-results/`; oba katalogi są ignorowane przez Git.
 
-**Weryfikacja ekranu powitalnego i katalogu na Node 24.19.0:**
+**Weryfikacja ekranu powitalnego, katalogu i roadmapy na Node 24.19.0:**
 
 - Lint, formatowanie, TypeScript i build: poprawne.
 - Vitest / Testing Library: 4 zaliczone testy.
-- Playwright / Chromium: 18 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
-- Sprawdzono filtrowanie, licznik wyników, nawigację do katalogu, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
-- axe-core: brak automatycznie wykrytych naruszeń WCAG A/AA w jasnym i ciemnym widoku na obu urządzeniach.
+- Playwright / Chromium: 24 zaliczone scenariusze na desktopie i telefonie; proces zakończył się kodem `0`.
+- Sprawdzono filtrowanie, licznik wyników, nawigację do sekcji, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
+- Roadmapa: domyślnie otwarty bieżący obszar, niezależne rozwijanie pozostałych, obsługa Enter i Spacji oraz zachowanie fokusu.
+- axe-core: brak automatycznie wykrytych naruszeń WCAG A/AA w jasnym i ciemnym widoku na obu urządzeniach, także po otwarciu wszystkich opisów roadmapy.
 - Przejrzano zrzuty dla szerokości 320, 390, 768 i 1440 px; bez poziomego przepełnienia.
 
 Kontrole automatyczne i wizualne nie stanowią pełnego audytu dostępności. Kolejne sekcje i moduły otrzymają testy w ramach swoich zadań.
@@ -183,6 +186,8 @@ supabase/
 Komponenty, hooki, serwisy, walidacja i typy modułu pozostają w jego katalogu `features/`. Elementy rzeczywiście wspólne trafiają do katalogów współdzielonych. Katalogi z `.gitkeep` są na razie puste.
 
 Katalog na stronie startowej ma dane opisowe w `src/features/welcome/data/planned-modules.ts` oraz osobne style w `src/features/welcome/styles/module-overview.css`. Filtry działają lokalnie w React. Opisy przedstawiają plan produktu i nie zastępują danych z przyszłego backendu.
+
+Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz style w `src/features/welcome/styles/development-roadmap.css`. Natywne elementy HTML `details` i `summary` obsługują rozwijanie i klawiaturę. Pierwszy obszar obejmuje etapy 1–2, ale etykieta wskazuje, że obecnie realizowany jest wyłącznie etap 1.
 
 Docelowo PostgreSQL i RLS zapewnią izolację organizacji, Storage będzie prywatny, a operacje wymagające zaufanej logiki obsłużą Edge Functions. W ETAPIE 1 nie ma migracji, seeda ani połączenia z bazą. Szczegóły: [ROADMAP.md](ROADMAP.md) i [AGENTS.md](AGENTS.md).
 

@@ -48,13 +48,7 @@ export function WelcomeHeader() {
           <a href="#mozliwosci" onClick={closeMenu}>
             Możliwości
           </a>
-          <a
-            href="https://github.com/TymoteuszHinca2000/devflow-agency/blob/feat/project-foundation/ROADMAP.md"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Plan rozwoju (otwiera nową kartę)"
-            onClick={closeMenu}
-          >
+          <a href="#plan-rozwoju" onClick={closeMenu}>
             Plan rozwoju
           </a>
           <a
