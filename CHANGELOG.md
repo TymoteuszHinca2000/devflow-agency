@@ -6,6 +6,12 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 ### Dodano
 
+- Pierwszą część ETAPU 3: wersjonowaną migrację 15 tabel PostgreSQL ze złożonymi kluczami obcymi, indeksami, UUID i znacznikami czasu.
+- Domyślną odmowę dostępu RLS i jawne cofnięcie uprawnień przeglądarkowych; szczegółowe polityki ról powstaną w następnym commicie.
+- Profile powiązane z Supabase Auth, ochronę tożsamości i organizacji wiersza, cykli podzadań, pojedynczego timera oraz dokładne kwoty pozycji wyceny.
+- Izolowane testy migracji i integralności na PGlite 0.5.10, polecenie `npm run test:db` włączone do `npm run check` oraz dokumentację modelu bazy.
+- Opcjonalny seed oznaczony `[DEMO]`, wyłączony domyślnie i wymagający istniejącego konta Auth oraz jawnego wyboru środowiska developerskiego.
+- Lokalną konfigurację Supabase CLI i wykluczenie jego katalogów roboczych. Migracje nie zostały jeszcze zastosowane do zdalnego projektu.
 - Raport zakończenia weryfikacji ETAPU 2: odtworzenie zależności w osobnym katalogu, kontrolę 35 widoków, 26 par kontrastu i ponowną kontrolę komponentów UI.
 - Cztery przebiegi regresji toastów na desktopie i telefonie, obejmujące kolejkę, zmianę wysokości okna, fokus oraz akcję w długim komunikacie.
 

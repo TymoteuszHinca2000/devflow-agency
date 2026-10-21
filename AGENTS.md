@@ -86,6 +86,7 @@ supabase/
 
 ## Git workflow
 
+- Uzgodniony ETAP 3 obejmuje dwie gałęzie i około trzy spójne commity: model danych oraz polityki/Storage na `feat/supabase-foundation`, następnie integrację klienta na `feat/supabase-integration`. Po każdym commicie czekaj na potwierdzenie użytkownika przed kolejnymi edycjami.
 - Funkcjonalności: `feat/nazwa-funkcji`; poprawki: `fix/nazwa-poprawki`.
 - Każda nowa, odrębna funkcjonalność dostaje własny branch, także w ramach tego samego etapu. Drobne poprawki bieżącej funkcjonalności pozostają na jej gałęzi.
 - Przed kodowaniem nowej funkcjonalności podaj użytkownikowi komendy utworzenia i publikacji brancha, a następnie czekaj na potwierdzenie. Nowy branch opieraj na uzgodnionej, aktualnej bazie; jawnie opisz zależność od innej niescalonej gałęzi.

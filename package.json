@@ -16,8 +16,9 @@
     "format:check": "prettier . --check",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:db": "node --test --test-concurrency=1 supabase/tests/*.test.mjs",
     "test:e2e": "playwright test",
-    "check": "npm run lint && npm run format:check && npm run test && npm run build",
+    "check": "npm run lint && npm run format:check && npm run test && npm run test:db && npm run build",
     "build": "npm run typecheck && vite build",
     "preview": "vite preview --host 127.0.0.1"
   },
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
+    "@electric-sql/pglite": "0.5.10",
     "@eslint/js": "10.0.1",
     "@playwright/test": "1.64.1",
     "@tailwindcss/vite": "4.3.3",
