@@ -27,7 +27,7 @@ Nie implementować logowania ani bazy. Katalogi przyszłych modułów rezerwują
 
 Etap zakończono raportem i decyzją użytkownika o dalszej pracy. Zmiany scalono do `main` przez PR #1 (`56029a8`). Weryfikacja zamykająca etap: lint, formatowanie, typy, build, 4 testy React i 24 scenariusze Playwright, w tym filtrowanie, rozwijanie opisów klawiaturą, fokus, RWD i kontrole axe-core obu motywów.
 
-## ETAP 2 — Design system i układ aplikacji · IN PROGRESS
+## ETAP 2 — Design system i układ aplikacji · DONE
 
 - [x] Tokeny kolorów, typografii, odstępów i stanów interakcji.
 - [x] Konfiguracja shadcn/ui oraz wspólne przyciski, pola, etykiety i karty.
@@ -39,13 +39,13 @@ Etap zakończono raportem i decyzją użytkownika o dalszej pracy. Zmiany scalon
 - [x] Skeletony i wspólne stany ładowania oraz braku danych.
 - [x] Toasty.
 - [x] Obsługa błędów.
-- [ ] Weryfikacja klawiatury, kontrastu, dialogów i urządzeń mobilnych.
+- [x] Weryfikacja klawiatury, kontrastu, dialogów i urządzeń mobilnych.
 
-Bieżąca gałąź: `feat/error-handling`, utworzona z `feat/toasts` przy `12174ff`. Obejmuje zależności od toastów, stanów interfejsu i układu aplikacji, które nie zostały jeszcze scalone do `main`.
+Bieżąca gałąź: `chore/stage-2-verification`, utworzona z `feat/error-handling` przy `a98b4e3`. Zawiera wcześniejsze zmiany ETAPU 2. Zakres techniczny został ukończony i sprawdzony; zapis Git, odbiór raportu i decyzja o kolejnym etapie pozostają po stronie użytkownika. [Raport weryfikacji](docs/stage-2-report.md).
 
 Gotowe są tokeny, motywy, podstawowe komponenty shadcn/ui, dialogi, panel mobilny, tabela, routing, sidebar i topbar oraz stany ładowania i braku danych. Toasty mają wspólną instancję, typowane API, cztery rodzaje komunikatów, opcjonalną akcję, kontrolowany czas wyświetlania i obsługę klawiatury. Ich użycie w modułach będzie powiązane z rzeczywistymi operacjami. [Szczegóły i podgląd](docs/toasts.md).
 
-Bieżące kontrole: lint, formatowanie, typy, build, 27 testów React i 76 scenariuszy E2E. Osobne podglądy objęły dialogi i panele w 20 kombinacjach, tabelę w 6 wariantach, stany interfejsu w 15 widokach, toasty w 5 wariantach oraz błędy w 10 widokach. Gotowy jest `ErrorState` i granice błędów renderowania całej aplikacji oraz pojedynczej strony, z ponowieniem, zachowaniem nawigacji i odzyskiwaniem fokusu. [Zakres obsługi błędów](docs/error-handling.md). Do zamknięcia etapu pozostaje końcowa weryfikacja i raport.
+Bieżące kontrole: lint, formatowanie, typy, build, 27 testów React i 80 scenariuszy E2E. Ponownie sprawdzono kontrolki, dialogi, panele, tabelę, stany, toasty i błędy. Końcowa kontrola objęła 35 widoków, 26 par kontrastu i ekrany do 320 × 256 px. Poprawiono kolejkę toastów na niskim ekranie i dostęp do akcji w długiej treści. Gotowe są `ErrorState` oraz granice błędów aplikacji i pojedynczej strony. [Zakres obsługi błędów](docs/error-handling.md). ETAP 3 pozostaje nierozpoczęty.
 
 ## ETAP 3 — Supabase i relacyjny model danych · TODO
 
@@ -178,7 +178,7 @@ Bieżące kontrole: lint, formatowanie, typy, build, 27 testów React i 76 scena
 
 ## Najbliższy krok
 
-1. Użytkownik sprawdza i zapisuje obsługę błędów: `feat(ui): add error boundaries and recovery states`.
-2. Agent czeka na potwierdzenie commita i push. Następne małe zadanie obejmie końcową weryfikację oraz raport ETAPU 2.
+1. Użytkownik sprawdza raport i zapisuje weryfikację: `chore: complete stage two verification`.
+2. Agent czeka na potwierdzenie commita i push. Następnie można przygotować scalenie zakresu ETAPU 2 do `main`.
 3. ETAP 3 wymaga osobnej decyzji i konfiguracji Supabase; baza i logowanie nie są jeszcze zaimplementowane.
 4. Po każdym zadaniu agent przekazuje polecenia Git i zatrzymuje edycję do potwierdzenia. Kolejny etap wymaga osobnej decyzji użytkownika.

@@ -45,7 +45,7 @@ Informacje i potwierdzenia znikają po 8 sekundach. Ostrzeżenia, błędy oraz k
 - `Tab` wybiera kartę, następnie przycisk zamknięcia i opcjonalną akcję. `Enter` uruchamia wybrany przycisk.
 - `Escape` wraca do poprzednio aktywnego elementu i pozwala Sonnerowi wznowić odliczanie. Samo `Escape` nie usuwa komunikatu.
 - Przycisk „Zamknij powiadomienie” oraz akcja mają co najmniej 44 px. Dekoracyjne ikony są ukryte przed czytnikami ekranu.
-- Domyślny stos znajduje się na dole po prawej. Sonner pokazuje maksymalnie trzy karty; starsze czekają do zwolnienia miejsca. Ukryte karty nie trafiają do kolejności tabulacji.
+- Domyślny stos znajduje się na dole po prawej. Sonner pokazuje maksymalnie trzy karty, a przy wysokości okna do 600 px jedną. Starsze czekają do zwolnienia miejsca. Ukryte karty nie trafiają do kolejności tabulacji. Długa treść przewija się w karcie; akcję można osiągnąć klawiaturą także na niskim ekranie.
 - Na telefonie obowiązują odstępy 16 px z uwzględnieniem bezpiecznych krawędzi. Tekst zawija się, a animacje respektują ograniczenie ruchu.
 
 `src/styles/toasts.css` korzysta z tokenów DevFlow, w tym jasnej i ciemnej powierzchni, tekstu oraz fokusu. Importuje go centralnie `globals.css`. Jest to świadomie ograniczony selektorami adapter bez warstwy CSS: Sonner wstrzykuje własne style bez warstwy. Wariant `unstyled` pozwala ustalić układ kart i większe przyciski, a zmienne adaptera ujednolicają także domyślne style ciemnego motywu biblioteki.
@@ -56,9 +56,12 @@ Informacje i potwierdzenia znikają po 8 sekundach. Ostrzeżenia, błędy oraz k
 npm test -- src/components/ui/sonner.test.tsx
 npm run check
 npm run test:e2e
+npm run test:e2e -- e2e/toasts.spec.ts
 ```
 
-Testy React sprawdzają aktualizację bez duplikatu, usuwanie poprzedniej akcji i opisu, wykonanie akcji, brak automatycznej zmiany fokusu, skrót, zamknięcie klawiaturą, powrót fokusu i zmianę motywu. Aktualny pełny zestaw aplikacji obejmuje 27 testów React i 76 scenariuszy E2E.
+Testy React sprawdzają aktualizację bez duplikatu, usuwanie poprzedniej akcji i opisu, wykonanie akcji, brak automatycznej zmiany fokusu, skrót, zamknięcie klawiaturą, powrót fokusu i zmianę motywu. Aktualny pełny zestaw aplikacji obejmuje 27 testów React i 80 scenariuszy E2E.
+
+Scenariusze `e2e/toasts.spec.ts` sprawdzają kolejkę po zmniejszeniu okna, brak utraty komunikatów i fokusu, zamykanie klawiaturą oraz przewijanie długiego opisu do akcji przy 320 × 256 px. Uruchamiają odizolowany fixture na własnym serwerze Vite; nie dodają trasy do produktu.
 
 Osobny podgląd prawdziwych komponentów sprawdzono w pięciu wariantach: jasny i ciemny desktop 1440 px, tablet 768 px, telefon 390 px oraz mały ekran 320 px. Kontrole objęły czas wyświetlania i jego wstrzymanie, trwałe komunikaty, aktualizację, akcję, klawiaturę, motyw ręczny i systemowy, granice ekranu, 44-pikselowe przyciski oraz axe w obu motywach. Nie wykryto naruszeń sprawdzanych reguł WCAG A/AA ani błędów wykonania. Podgląd nie jest trasą aplikacji. Kontrole automatyczne nie zastępują pełnego audytu z czytnikiem ekranu.
 

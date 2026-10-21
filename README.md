@@ -2,7 +2,7 @@
 
 Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadaniami, zespołem, czasem pracy i wycenami. Projekt portfolio rozwijany stopniowo z naciskiem na typowanie, dostępność, bezpieczeństwo danych i przejrzystą historię zmian.
 
-**Stan: ETAP 1 zakończony, ETAP 2 w realizacji.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Design system, routing i układ aplikacji rozwinięto na `feat/app-shell`, stany interfejsu na `feat/ui-states`, a toasty na `feat/toasts`. Bieżąca gałąź `feat/error-handling` dodaje obsługę błędów renderowania i wspólny stan błędu. Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
+**Stan: zakres ETAPÓW 1 i 2 ukończony i zweryfikowany; ETAP 3 nierozpoczęty.** Fundament i ekran powitalny zostały scalone do `main` przez PR #1. Design system, routing, układ aplikacji, stany, toasty i błędy przygotowano na gałęziach ETAPU 2. Bieżąca gałąź `chore/stage-2-verification` zawiera ich końcową kontrolę i poprawkę toastów na niskich ekranach. [Raport ETAPU 2](docs/stage-2-report.md). Logowanie, baza oraz moduły biznesowe są zaplanowane; nie są jeszcze zaimplementowane. Aplikacja nie korzysta z fikcyjnego backendu ani demonstracyjnych statystyk.
 
 [Repozytorium](https://github.com/TymoteuszHinca2000/devflow-agency) · [Roadmapa](ROADMAP.md) · [Zasady pracy](AGENTS.md) · [Historia zmian](CHANGELOG.md)
 
@@ -42,7 +42,7 @@ Modularna aplikacja SaaS do zarządzania agencją: klientami, projektami, zadani
 - Roadmapa czterech obszarów obejmujących 15 etapów, z rozwijanymi opisami i oznaczeniem bieżącego etapu 2.
 - Nawigacja do roadmapy z menu i przycisku „Zobacz plan” oraz odnośnik do pełnego dokumentu na GitHubie.
 
-Do zamknięcia ETAPU 2 pozostaje końcowa weryfikacja i raport, po potwierdzeniu bieżącego commita. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych. [Stany interfejsu](docs/ui-states.md) · [Toasty](docs/toasts.md) · [Obsługa błędów](docs/error-handling.md).
+ETAP 2 jest gotowy do odbioru i zapisania wyników weryfikacji. Kolejny etap wymaga osobnej decyzji oraz konfiguracji Supabase. Nie ma jeszcze wdrożonego demo. Adresy modułów pokazują opis i informację o planowanej realizacji; nie udostępniają jeszcze funkcji biznesowych. [Stany interfejsu](docs/ui-states.md) · [Toasty](docs/toasts.md) · [Obsługa błędów](docs/error-handling.md).
 
 ## Podgląd aktualnej sekcji powitalnej
 
@@ -89,7 +89,7 @@ Dla nowej kopii repozytorium:
 ```powershell
 git clone https://github.com/TymoteuszHinca2000/devflow-agency.git
 cd devflow-agency
-git switch feat/error-handling
+git switch chore/stage-2-verification
 npm ci
 npm run dev
 ```
@@ -162,7 +162,7 @@ Raporty HTML trafiają do `playwright-report/`, materiały diagnostyczne do `tes
 
 - Lint, formatowanie, TypeScript i build: poprawne.
 - Vitest / Testing Library: 27 zaliczonych testów.
-- Playwright / Chromium: 76 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
+- Playwright / Chromium: 80 zaliczonych scenariuszy na desktopie i telefonie; proces zakończył się kodem `0`.
 - Sprawdzono filtrowanie, licznik wyników, nawigację do sekcji, menu mobilne, klawiaturę, fokus i ograniczenie ruchu.
 - Roadmapa: domyślnie otwarty bieżący obszar, niezależne rozwijanie pozostałych, obsługa Enter i Spacji oraz zachowanie fokusu.
 - Sprawdzono ręczne nadpisanie motywu systemowego, zapis i odświeżanie, reakcję na zmiany systemu, klawiaturę, synchronizację kart, nieprawidłowy zapis i blokadę pamięci przeglądarki.
@@ -219,7 +219,7 @@ Komponenty, hooki, serwisy, walidacja i typy modułu pozostają w jego katalogu 
 
 Katalog na stronie startowej ma dane opisowe w `src/features/welcome/data/planned-modules.ts` oraz osobne style w `src/features/welcome/styles/module-overview.css`. Filtry działają lokalnie w React. Opisy przedstawiają plan produktu i nie zastępują danych z przyszłego backendu.
 
-Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz style w `src/features/welcome/styles/development-roadmap.css`. Natywne elementy HTML `details` i `summary` obsługują rozwijanie i klawiaturę. Pierwszy obszar obejmuje etapy 1–2, a etykieta wskazuje obecnie realizowany etap 2.
+Roadmapa ma osobne dane w `src/features/welcome/data/development-phases.ts` oraz style w `src/features/welcome/styles/development-roadmap.css`. Natywne elementy HTML `details` i `summary` obsługują rozwijanie i klawiaturę. Pierwszy obszar obejmuje etapy 1–2; etykieta wskazuje zakończenie weryfikacji i oczekiwanie na odbiór przed kolejnym etapem.
 
 Wspólne tokeny znajdują się w `src/styles/tokens.css`, a provider motywu w `src/lib/theme/`. `public/theme-init.js` odczytuje preferencję przed uruchomieniem aplikacji. Szczegóły użycia i architektury: [Wspólne style i motyw](docs/design-tokens.md).
 
@@ -249,7 +249,7 @@ To zakres docelowy, a nie obecnie dostępne funkcje.
 
 Każda nowa funkcjonalność ma osobną gałąź, także w ramach tego samego etapu. Agent podaje polecenia jej utworzenia i publikacji oraz czeka na potwierdzenie przed kodowaniem. Użytkownik wykonuje także staging, commity i push. Po każdym logicznym zadaniu agent zatrzymuje edycję do potwierdzenia wykonania poleceń.
 
-Bieżący branch: `feat/error-handling`, utworzony z `feat/toasts` przy commicie `12174ff`. Zawiera toasty, stany interfejsu i wcześniejszy układ aplikacji, które nie zostały jeszcze scalone do `main`. Gałąź `feat/toasts` powstała z `feat/ui-states` przy `455e832`, a `feat/ui-states` z `feat/app-shell` przy `4e080ce`. Gałąź ETAPU 2, `feat/app-shell`, powstała z `main` po scaleniu ETAPU 1 przez PR #1 (`56029a8`).
+Bieżący branch: `chore/stage-2-verification`, utworzony z `feat/error-handling` przy `a98b4e3`. Zawiera cały zakres ETAPU 2. Gałąź `feat/error-handling` powstała z `feat/toasts` przy `12174ff`, `feat/toasts` z `feat/ui-states` przy `455e832`, a `feat/ui-states` z `feat/app-shell` przy `4e080ce`. Gałąź ETAPU 2, `feat/app-shell`, powstała z `main` po scaleniu ETAPU 1 przez PR #1 (`56029a8`). Scalenie zakresu ETAPU 2 pozostaje osobną czynnością użytkownika.
 
 Przed pracą sprawdzaj:
 

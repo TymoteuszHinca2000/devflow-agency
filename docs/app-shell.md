@@ -44,7 +44,7 @@ npm run build
 npm run test:e2e -- e2e/app-shell.spec.ts
 ```
 
-Aktualny pełny zestaw to 27 testów React i 76 scenariuszy E2E. Nowe testy obejmują aktywny link, ścieżkę strony, historię, przyklejone panele, fokus menu, tło i przewijanie, wszystkie sposoby zamknięcia, wybór bieżącego modułu, zmianę szerokości i ekrany 320 × 320 px oraz 1280 × 320 px. Sprawdzono granicę 1000/1001 px i audyty axe w obu motywach z otwartym oraz zamkniętym menu. Audyt po otwarciu oczekuje na zakończenie animacji, aby mierzyć końcowe kolory panelu. Kontrole automatyczne nie zastępują pełnego audytu dostępności.
+Aktualny pełny zestaw to 27 testów React i 80 scenariuszy E2E. Nowe testy obejmują aktywny link, ścieżkę strony, historię, przyklejone panele, fokus menu, tło i przewijanie, wszystkie sposoby zamknięcia, wybór bieżącego modułu, zmianę szerokości i ekrany 320 × 320 px oraz 1280 × 320 px. Sprawdzono granicę 1000/1001 px i audyty axe w obu motywach z otwartym oraz zamkniętym menu. Audyt po otwarciu oczekuje na zakończenie animacji, aby mierzyć końcowe kolory panelu. Kontrole automatyczne nie zastępują pełnego audytu dostępności.
 
 ## Podgląd
 

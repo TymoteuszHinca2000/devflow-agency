@@ -6,6 +6,9 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 ### Dodano
 
+- Raport zakończenia weryfikacji ETAPU 2: odtworzenie zależności w osobnym katalogu, kontrolę 35 widoków, 26 par kontrastu i ponowną kontrolę komponentów UI.
+- Cztery przebiegi regresji toastów na desktopie i telefonie, obejmujące kolejkę, zmianę wysokości okna, fokus oraz akcję w długim komunikacie.
+
 - Fundament React, TypeScript strict i Vite oraz alias `@/`.
 - Integrację Tailwind CSS 4 przez plugin Vite.
 - ESLint z kontrolą typów, Prettier, EditorConfig i konwencje końców linii.
@@ -56,9 +59,12 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 - Kontrolowany czas wyświetlania: 8 sekund dla informacji i potwierdzeń oraz ręczne zamykanie ostrzeżeń, błędów i komunikatów z akcją.
 - Wspólny `ErrorState`, `ApplicationErrorBoundary` i `PageErrorBoundary` na react-error-boundary 6.1.6; bezpieczne komunikaty, ponowienie oraz nawigację po błędzie strony.
 - Ekran awarii aplikacji działający bez providerów i routera oraz odzyskiwanie tytułu i fokusu po udanym ponowieniu.
-- Aktualne screenshoty oraz testy ekranu: 27 testów React i 76 scenariuszy E2E; dodatkowe podglądy toastów w 5 wariantach oraz błędów w 10 widokach, z kontrolą klawiatury, akcji, ponowienia, nawigacji i axe.
+- Aktualne screenshoty oraz testy ekranu: 27 testów React i 80 scenariuszy E2E; dodatkowe podglądy toastów w 5 wariantach oraz błędów w 10 widokach, z kontrolą klawiatury, akcji, ponowienia, nawigacji i axe.
 
 ### Naprawiono
+
+- Toasty na niskich ekranach: jedna widoczna karta do wysokości 600 px, zachowanie kolejki i przewijanie treści do przycisku akcji.
+- Status publicznej roadmapy: ETAP 2 jest zweryfikowany i gotowy do odbioru; kolejny etap oczekuje na decyzję.
 
 - Zamykanie runnera Playwright w sprawdzonym środowisku Windows: fixture zarządza podglądem przez API Vite i zamyka serwer w `finally`.
 - Kolejność ładowania warstw CSS dialogów: style są importowane centralnie po Tailwind CSS, aby reset nie nadpisywał odstępów i typografii.
@@ -67,10 +73,10 @@ Opisujemy istotne, rzeczywiście przygotowane zmiany. `Unreleased` nie oznacza o
 
 - ETAP 1 zakończono i scalono do `main` przez PR #1 (`56029a8`).
 - ETAP 2 rozpoczęto na `feat/app-shell`; pierwsze zadanie obejmuje wspólne tokeny i wybór motywu.
-- Przygotowano podstawowe komponenty UI, dialogi, panel nawigacji mobilnej, wspólną tabelę, routing, sidebar i topbar, stany ładowania i braku danych, toasty oraz obsługę błędów renderowania. Do zamknięcia ETAPU 2 pozostaje końcowa weryfikacja i raport.
+- Zakres ETAPU 2 został ukończony i zweryfikowany na `chore/stage-2-verification`, utworzonym z `feat/error-handling` przy `a98b4e3`. Raport jest gotowy do odbioru. Commit, push i scalenie pozostają czynnościami użytkownika; ETAP 3 nie został rozpoczęty.
 - `feat/ui-states` powstał z `feat/app-shell` przy `4e080ce`; zależność od niescalonego układu jest opisana w dokumentacji.
 - `feat/toasts` powstał z `feat/ui-states` przy `455e832` i obejmuje obie zależności. Nie dodano demonstracyjnych operacji biznesowych.
 - `feat/error-handling` powstał z `feat/toasts` przy `12174ff` i obejmuje wcześniejsze zmiany ETAPU 2. Kontrolowane awarie były wywoływane wyłącznie w testach i odizolowanym podglądzie.
 - Logowanie, baza danych i moduły biznesowe nie są zaimplementowane.
-- Kontrole aktualnego ekranu i pełny przebieg 76 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0; axe-core sprawdza ekran powitalny, roadmapę, nawigację mobilną, listę modułów, podgląd modułu, 404 oraz otwarte menu aplikacji w obu motywach. Dialog i cztery kierunki panelu przeszły osobną kontrolę w 20 kombinacjach rozmiarów i motywów.
+- Kontrole aktualnego ekranu i pełny przebieg 80 scenariuszy E2E zakończyły się poprawnie na Node 24.19.0; axe-core sprawdza ekran powitalny, roadmapę, nawigację mobilną, listę modułów, podgląd modułu, 404 oraz otwarte menu aplikacji w obu motywach. Dialog i cztery kierunki panelu przeszły osobną kontrolę w 20 kombinacjach rozmiarów i motywów.
 - Operacje Git wykonuje użytkownik po sprawdzeniu zmian i otrzymaniu poleceń od agenta.

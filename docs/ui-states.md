@@ -49,7 +49,7 @@ npm run build
 npm run test:e2e -- e2e/ui-states.spec.ts
 ```
 
-Aktualny pełny zestaw: 27 testów React i 76 scenariuszy Playwright. Testy sprawdzają przejście od zajętej zawartości do pustego stanu, zachowanie fokusu, wykonanie akcji, powiązanie opisów wielu sekcji oraz nawigację z planowanego modułu klawiaturą.
+Aktualny pełny zestaw: 27 testów React i 80 scenariuszy Playwright. Testy sprawdzają przejście od zajętej zawartości do pustego stanu, zachowanie fokusu, wykonanie akcji, powiązanie opisów wielu sekcji oraz nawigację z planowanego modułu klawiaturą.
 
 Odizolowany podgląd sprawdzono w pięciu wariantach rozmiaru i motywu: 320, 390, 768 i 1440 px, z jasnym i ciemnym desktopem. Każdy obejmował ładowanie kart, listy i pusty wynik — łącznie 15 widoków. Sprawdzono klawiaturę, status i zajętość, dekoracyjne szkielety, włączoną i ograniczoną animację, brak poziomego przepełnienia oraz audyty axe. Podgląd nie jest dodatkową stroną aplikacji. Automatyczne kontrole nie zastępują pełnego audytu dostępności.
 

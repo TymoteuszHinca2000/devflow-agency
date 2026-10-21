@@ -1,10 +1,20 @@
 import { CircleCheck, Info, OctagonX, TriangleAlert, X } from 'lucide-react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useSyncExternalStore } from 'react'
 import { Toaster as Sonner } from 'sonner'
 import { useTheme } from '@/lib/theme/theme-context'
 
+function subscribeToViewport(onChange: () => void) {
+  window.addEventListener('resize', onChange)
+  return () => window.removeEventListener('resize', onChange)
+}
+
+function isShortViewport() {
+  return window.innerHeight <= 600
+}
+
 export function Toaster() {
   const { preference } = useTheme()
+  const shortViewport = useSyncExternalStore(subscribeToViewport, isShortViewport)
   const regionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -43,7 +53,7 @@ export function Toaster() {
       className="devflow-toaster"
       customAriaLabel="Powiadomienia (Alt+T)"
       position="bottom-right"
-      visibleToasts={3}
+      visibleToasts={shortViewport ? 1 : 3}
       closeButton
       gap={12}
       offset={24}

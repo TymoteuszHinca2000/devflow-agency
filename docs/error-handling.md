@@ -52,7 +52,7 @@ npm run check
 npm run test:e2e
 ```
 
-Pięć testów sprawdza ekran bez providerów, bezpieczną treść, ponowienie klawiaturą, trwałą przyczynę błędu, zachowanie nawigacji i toastów, przejście do innego modułu oraz odzyskanie tytułu i fokusu. Aktualny pełny zestaw: 27 testów React i 76 scenariuszy E2E.
+Pięć testów sprawdza ekran bez providerów, bezpieczną treść, ponowienie klawiaturą, trwałą przyczynę błędu, zachowanie nawigacji i toastów, przejście do innego modułu oraz odzyskanie tytułu i fokusu. Aktualny pełny zestaw: 27 testów React i 80 scenariuszy E2E.
 
 Odizolowany podgląd wywoływał kontrolowany błąd w rzeczywistych komponentach. Sprawdzono awarię aplikacji i pojedynczej strony w pięciu wariantach: jasny i ciemny desktop 1440 px, tablet 768 px, telefon 390 px i mały ekran 320 px — łącznie 10 widoków. Ponowienie, nawigacja, menu mobilne, fokus, tytuły, motywy oraz brak przepełnienia działały poprawnie. Axe nie wykrył naruszeń sprawdzanych reguł WCAG A/AA. To osobna kontrola komponentów, poza zestawem E2E aplikacji, bez dodatkowej trasy produktu. Nie zastępuje pełnego audytu z czytnikiem ekranu.
 

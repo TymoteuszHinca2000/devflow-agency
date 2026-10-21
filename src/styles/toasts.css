@@ -16,6 +16,9 @@
   gap: 12px;
   width: var(--width);
   min-height: 84px;
+  max-height: calc((100dvh - 96px) / 3);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 20px 60px 20px 20px;
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
@@ -106,6 +109,12 @@
 .devflow-toaster button:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
+}
+
+@media (max-height: 600px) {
+  .devflow-toaster [data-sonner-toast] {
+    max-height: calc(100dvh - 48px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
